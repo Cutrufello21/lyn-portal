@@ -33,17 +33,21 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="portal__login-bg">
-      <div className="portal__login-card">
-        <h1 className="portal__login-title">Pharmacy Portal</h1>
-        <p className="portal__login-subtitle">LYN Software</p>
+    <div className="lyn__login-bg">
+      <div className="lyn__login-card">
+        <div className="lyn__login-logo">
+          <span className="lyn__login-logo-text">
+            LYN<span className="lyn__login-logo-dot" />
+          </span>
+        </div>
+        <p className="lyn__login-subtitle">Pharmacy Portal</p>
 
-        <form onSubmit={handleSubmit} className="portal__login-form">
-          <label className="portal__label">
+        <form onSubmit={handleSubmit} className="lyn__login-form">
+          <label className="lyn__login-label">
             Email
             <input
               type="email"
-              className="portal__input"
+              className="lyn__login-input"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -52,11 +56,11 @@ export default function LoginPage() {
             />
           </label>
 
-          <label className="portal__label">
+          <label className="lyn__login-label">
             Password
             <input
               type="password"
-              className="portal__input"
+              className="lyn__login-input"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -65,11 +69,11 @@ export default function LoginPage() {
             />
           </label>
 
-          {error && <div className="portal__error">{error}</div>}
+          {error && <div className="lyn__login-error">{error}</div>}
 
           <button
             type="submit"
-            className="portal__btn portal__btn--primary"
+            className="lyn__login-btn"
             disabled={submitting}
           >
             {submitting ? 'Signing in...' : 'Sign In'}
