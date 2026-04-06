@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
 <style>
 /* ========================================
    RESET & BASE
@@ -675,84 +677,112 @@ img { max-width: 100%; }
 }
 
 /* ========================================
-   HOW IT WORKS
+   LIVE DEMO
    ======================================== */
-.how-it-works {
-  padding: 120px 0;
-}
+.demo { padding: 120px 0; }
+.demo-header { text-align: center; margin-bottom: 48px; }
+.demo-tabs { display: flex; justify-content: center; gap: 4px; margin-bottom: 24px; background: #2A2A2E; border-radius: 14px; padding: 4px; width: fit-content; margin-left: auto; margin-right: auto; }
+.demo-tab { padding: 12px 28px; border-radius: 10px; border: none; background: transparent; color: #9CA3AF; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.demo-tab:hover { color: #fff; }
+.demo-tab--active { background: #10B981; color: #fff; }
+.demo-panel-wrap { background: #2A2A2E; border: 1px solid #3A3A3E; border-radius: 20px; overflow: hidden; position: relative; min-height: 600px; }
+.demo-panel { display: none; padding: 24px; animation: demoFadeIn 0.4s ease; }
+.demo-panel--active { display: block; }
+@keyframes demoFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-.how-header {
-  text-align: center;
-  margin-bottom: 80px;
-}
+/* Map stats */
+.demo-map-stats { display: flex; gap: 32px; padding: 20px 24px; background: rgba(28,28,30,0.9); border-top: 1px solid #3A3A3E; }
+.demo-map-stat { display: flex; flex-direction: column; gap: 2px; }
+.demo-map-stat-val { font-size: 24px; font-weight: 800; color: #fff; }
+.demo-map-stat-label { font-size: 12px; color: #9CA3AF; font-weight: 500; }
 
-.steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  position: relative;
-}
+/* Delivery stats */
+.demo-del-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px 24px 0; margin-bottom: 20px; }
+.demo-del-stat { background: #1C1C1E; border-radius: 14px; padding: 20px; text-align: center; }
+.demo-del-stat-num { display: block; font-size: 32px; font-weight: 800; color: #fff; }
+.demo-del-stat-label { font-size: 12px; color: #9CA3AF; font-weight: 500; margin-top: 4px; display: block; }
+.demo-del-stat--emerald .demo-del-stat-num { color: #10B981; }
+.demo-del-stat--amber .demo-del-stat-num { color: #F59E0B; }
+.demo-del-stat--red .demo-del-stat-num { color: #EF4444; }
 
-/* Connecting line */
-.steps::before {
-  content: '';
-  position: absolute;
-  top: 44px;
-  left: calc(16.66% + 30px);
-  right: calc(16.66% + 30px);
-  height: 2px;
-  background: linear-gradient(90deg, #3A3A3E, rgba(16, 185, 129, 0.3), #3A3A3E);
-}
+/* Delivery table */
+.demo-del-table-wrap { overflow-x: auto; padding: 0 24px 24px; }
+.demo-del-table { width: 100%; border-collapse: collapse; }
+.demo-del-table th { text-align: left; padding: 14px 16px; color: #9CA3AF; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 1px solid #3A3A3E; white-space: nowrap; }
+.demo-del-table td { padding: 12px 16px; font-size: 13px; color: #fff; white-space: nowrap; border-bottom: 1px solid rgba(58,58,62,0.5); }
+.demo-del-table tbody tr { transition: background 0.2s; cursor: pointer; }
+.demo-del-table tbody tr:nth-child(odd) { background: #1C1C1E; }
+.demo-del-table tbody tr:nth-child(even) { background: #242428; }
+.demo-del-table tbody tr:hover { background: #30303A; }
+.demo-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.demo-badge--delivered { background: rgba(16,185,129,0.15); color: #10B981; }
+.demo-badge--pending { background: rgba(245,158,11,0.15); color: #F59E0B; }
+.demo-badge--failed { background: rgba(239,68,68,0.15); color: #EF4444; }
+.demo-badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+.demo-badge--delivered .demo-badge-dot { background: #10B981; }
+.demo-badge--pending .demo-badge-dot { background: #F59E0B; }
+.demo-badge--failed .demo-badge-dot { background: #EF4444; }
+.demo-pod-btn { background: transparent; border: 1px solid #3A3A3E; color: #10B981; padding: 5px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.demo-pod-btn:hover { background: rgba(16,185,129,0.1); border-color: #10B981; }
 
-.step {
-  text-align: center;
-  padding: 0 32px;
-  position: relative;
-}
+/* Dispatch */
+.demo-disp-banner { background: linear-gradient(90deg, rgba(16,185,129,0.1), rgba(45,212,191,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; padding: 16px 24px; color: #10B981; font-size: 14px; font-weight: 600; margin: 24px 24px 24px; text-align: center; }
+.demo-disp-drivers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 0 24px 24px; }
+.demo-disp-driver { background: #1C1C1E; border-radius: 14px; padding: 20px; }
+.demo-disp-driver-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+.demo-disp-driver-sub { font-size: 12px; color: #9CA3AF; margin-bottom: 12px; }
+.demo-disp-progress { height: 6px; background: #3A3A3E; border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
+.demo-disp-progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #10B981, #2DD4BF); transition: width 1s ease; }
+.demo-disp-driver-pct { font-size: 20px; font-weight: 800; color: #10B981; }
+.demo-disp-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 24px 24px; }
+.demo-disp-payroll, .demo-disp-chart { background: #1C1C1E; border-radius: 14px; padding: 20px; }
+.demo-disp-payroll h4, .demo-disp-chart h4 { font-size: 14px; font-weight: 700; margin-bottom: 16px; color: #fff; }
+.demo-disp-payroll-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; color: #9CA3AF; border-bottom: 1px solid rgba(58,58,62,0.4); }
+.demo-disp-payroll-total { display: flex; justify-content: space-between; padding: 12px 0 0; font-size: 14px; font-weight: 700; color: #fff; }
+.demo-disp-bars { display: flex; align-items: flex-end; gap: 12px; height: 140px; }
+.demo-disp-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
+.demo-disp-bar { width: 100%; background: linear-gradient(180deg, #10B981, #2DD4BF); border-radius: 6px 6px 0 0; min-height: 10px; transition: height 0.8s ease; }
+.demo-disp-bar-col span { font-size: 11px; color: #9CA3AF; margin-top: 8px; font-weight: 500; }
+.demo-disp-bar-col--today .demo-disp-bar { opacity: 0.5; }
+.demo-disp-bar-col--today span { color: #10B981; font-weight: 700; }
 
-.step-number {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 72px;
-  height: 72px;
-  border-radius: 50%;
-  background: #2A2A2E;
-  border: 2px solid #3A3A3E;
-  font-size: 22px;
-  font-weight: 800;
-  color: #10B981;
-  margin-bottom: 28px;
-  position: relative;
-  z-index: 1;
-  transition: all 0.3s;
-}
+/* POD Modal */
+.demo-pod-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; padding: 24px; animation: demoFadeIn 0.2s ease; }
+.demo-pod-modal--open { display: flex; }
+.demo-pod-modal-card { background: #2A2A2E; border: 1px solid #3A3A3E; border-radius: 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: demoSlideUp 0.3s ease; }
+@keyframes demoSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+.demo-pod-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px; border-bottom: 1px solid #3A3A3E; }
+.demo-pod-header h3 { font-size: 18px; font-weight: 700; }
+.demo-pod-close { width: 32px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid #3A3A3E; color: #9CA3AF; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.demo-pod-close:hover { background: #1C1C1E; color: #fff; }
+.demo-pod-body { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
+.demo-pod-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.demo-pod-field { display: flex; flex-direction: column; gap: 4px; }
+.demo-pod-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #6B7280; }
+.demo-pod-value { font-size: 14px; color: #fff; font-weight: 500; }
+.demo-pod-gps { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; color: #9CA3AF; }
+.demo-pod-verified { color: #10B981; font-weight: 600; }
+.demo-pod-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.demo-pod-photo-box { background: #1C1C1E; border: 1px dashed #3A3A3E; border-radius: 12px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
+.demo-pod-photo-icon { font-size: 28px; opacity: 0.4; }
+.demo-pod-photo-label { font-size: 12px; color: #6B7280; }
+.demo-pod-sig-box { background: #1C1C1E; border: 1px dashed #3A3A3E; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.demo-pod-sig-box canvas { background: transparent; }
+.demo-pod-footer { padding: 20px 28px; border-top: 1px solid #3A3A3E; display: flex; justify-content: flex-end; }
+.demo-pod-close-btn { padding: 10px 24px; border-radius: 10px; background: #10B981; color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-family: inherit; }
+.demo-pod-close-btn:hover { background: #0EA472; }
 
-.step:hover .step-number {
-  border-color: #10B981;
-  box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+@media (max-width: 900px) {
+  .demo-del-stats { grid-template-columns: repeat(2, 1fr); }
+  .demo-disp-drivers { grid-template-columns: repeat(2, 1fr); }
+  .demo-disp-bottom { grid-template-columns: 1fr; }
 }
-
-.step h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 14px;
-}
-
-.step p {
-  font-size: 15px;
-  color: #9CA3AF;
-  line-height: 1.7;
-}
-
-@media (max-width: 768px) {
-  .steps {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-  .steps::before {
-    display: none;
-  }
+@media (max-width: 600px) {
+  .demo-tabs { flex-wrap: wrap; }
+  .demo-del-stats { grid-template-columns: 1fr 1fr; }
+  .demo-disp-drivers { grid-template-columns: 1fr; }
+  .demo-pod-row { grid-template-columns: 1fr; }
+  .demo-pod-photos { grid-template-columns: 1fr; }
 }
 
 /* ========================================
@@ -1222,7 +1252,7 @@ img { max-width: 100%; }
         See the Platform
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </a>
-      <a href="#how-it-works" class="btn btn-ghost">
+      <a href="#demo" class="btn btn-ghost">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
         Watch Demo
       </a>
@@ -1296,6 +1326,89 @@ img { max-width: 100%; }
   </div>
 </section>
 
+<!-- ============ LIVE DEMO ============ -->
+<section class="demo" id="demo">
+  <div class="container">
+    <div class="demo-header">
+      <p class="eyebrow reveal">Live Demo</p>
+      <h2 class="section-headline reveal reveal-delay-1">See LYN running live.</h2>
+      <p class="section-sub reveal reveal-delay-2">This is a real demo. Real data. Real workflow.</p>
+    </div>
+    <div class="demo-tabs reveal reveal-delay-2">
+      <button class="demo-tab demo-tab--active" data-tab="map">Live Map</button>
+      <button class="demo-tab" data-tab="deliveries">Deliveries</button>
+      <button class="demo-tab" data-tab="dispatch">Dispatch</button>
+    </div>
+    <div class="demo-panel-wrap reveal reveal-delay-3">
+      <!-- TAB 1: LIVE MAP -->
+      <div class="demo-panel demo-panel--active" id="demo-map">
+        <div id="mapbox-map" style="width:100%;height:520px;border-radius:16px;overflow:hidden;"></div>
+        <div class="demo-map-stats">
+          <div class="demo-map-stat"><span class="demo-map-stat-val" id="demo-drivers-active">5</span><span class="demo-map-stat-label">Drivers Active</span></div>
+          <div class="demo-map-stat"><span class="demo-map-stat-val" id="demo-stops-remaining">47</span><span class="demo-map-stat-label">Stops Remaining</span></div>
+          <div class="demo-map-stat"><span class="demo-map-stat-val" id="demo-delivered-today">312</span><span class="demo-map-stat-label">Delivered Today</span></div>
+        </div>
+      </div>
+      <!-- TAB 2: DELIVERIES -->
+      <div class="demo-panel" id="demo-deliveries">
+        <div class="demo-del-stats">
+          <div class="demo-del-stat"><span class="demo-del-stat-num">387</span><span class="demo-del-stat-label">Total Today</span></div>
+          <div class="demo-del-stat demo-del-stat--emerald"><span class="demo-del-stat-num" id="demo-del-delivered">312</span><span class="demo-del-stat-label">Delivered</span></div>
+          <div class="demo-del-stat demo-del-stat--amber"><span class="demo-del-stat-num" id="demo-del-pending">68</span><span class="demo-del-stat-label">Pending</span></div>
+          <div class="demo-del-stat demo-del-stat--red"><span class="demo-del-stat-num">7</span><span class="demo-del-stat-label">Failed</span></div>
+        </div>
+        <div class="demo-del-table-wrap">
+          <table class="demo-del-table">
+            <thead><tr><th>Patient</th><th>Address</th><th>City</th><th>Driver</th><th>Status</th><th>Time</th><th>POD</th></tr></thead>
+            <tbody id="demo-del-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+      <!-- TAB 3: DISPATCH -->
+      <div class="demo-panel" id="demo-dispatch">
+        <div class="demo-disp-banner">Routes optimized · Saved 47 minutes today</div>
+        <div class="demo-disp-drivers" id="demo-disp-drivers"></div>
+        <div class="demo-disp-bottom">
+          <div class="demo-disp-payroll">
+            <h4>Weekly Payroll</h4>
+            <div class="demo-disp-payroll-row"><span>Marcus Rivera</span><span>$847.50</span></div>
+            <div class="demo-disp-payroll-row"><span>Angela Foster</span><span>$792.00</span></div>
+            <div class="demo-disp-payroll-row"><span>Derek Simmons</span><span>$715.50</span></div>
+            <div class="demo-disp-payroll-row"><span>Rachel Kim</span><span>$684.00</span></div>
+            <div class="demo-disp-payroll-row"><span>Brian O'Neill</span><span>$621.00</span></div>
+            <div class="demo-disp-payroll-total"><span>Total</span><span>$3,660.00</span></div>
+          </div>
+          <div class="demo-disp-chart">
+            <h4>This Week</h4>
+            <div class="demo-disp-bars">
+              <div class="demo-disp-bar-col"><div class="demo-disp-bar" style="height:65%"></div><span>Mon</span></div>
+              <div class="demo-disp-bar-col"><div class="demo-disp-bar" style="height:80%"></div><span>Tue</span></div>
+              <div class="demo-disp-bar-col"><div class="demo-disp-bar" style="height:72%"></div><span>Wed</span></div>
+              <div class="demo-disp-bar-col"><div class="demo-disp-bar" style="height:90%"></div><span>Thu</span></div>
+              <div class="demo-disp-bar-col demo-disp-bar-col--today"><div class="demo-disp-bar" style="height:55%"></div><span>Fri</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- POD MODAL -->
+<div class="demo-pod-modal" id="demo-pod-modal">
+  <div class="demo-pod-modal-card">
+    <div class="demo-pod-header"><h3>Proof of Delivery</h3><button class="demo-pod-close" onclick="closePodModal()">&times;</button></div>
+    <div class="demo-pod-body">
+      <div class="demo-pod-row"><div class="demo-pod-field"><span class="demo-pod-label">Patient</span><span class="demo-pod-value" id="pod-patient"></span></div><div class="demo-pod-field"><span class="demo-pod-label">Driver</span><span class="demo-pod-value" id="pod-driver"></span></div></div>
+      <div class="demo-pod-row"><div class="demo-pod-field"><span class="demo-pod-label">Address</span><span class="demo-pod-value" id="pod-address"></span></div><div class="demo-pod-field"><span class="demo-pod-label">Time</span><span class="demo-pod-value" id="pod-time"></span></div></div>
+      <div class="demo-pod-photos"><div class="demo-pod-photo-box"><span class="demo-pod-photo-icon">📦</span><span class="demo-pod-photo-label">Package Photo</span></div><div class="demo-pod-photo-box"><span class="demo-pod-photo-icon">🏠</span><span class="demo-pod-photo-label">Delivery Location</span></div></div>
+      <div class="demo-pod-sig-box"><canvas id="pod-sig-canvas" width="400" height="100"></canvas><span class="demo-pod-photo-label">Digital Signature</span></div>
+      <div class="demo-pod-row"><div class="demo-pod-field"><span class="demo-pod-label">GPS</span><span class="demo-pod-value demo-pod-gps" id="pod-gps"></span></div><div class="demo-pod-field"><span class="demo-pod-label">Geofence</span><span class="demo-pod-value demo-pod-verified" id="pod-geofence">✓ Within 42 ft — Verified</span></div></div>
+      <div class="demo-pod-field" style="margin-top:8px"><span class="demo-pod-label">Delivery Note</span><span class="demo-pod-value" id="pod-note"></span></div>
+    </div>
+    <div class="demo-pod-footer"><button class="demo-pod-close-btn" onclick="closePodModal()">Close</button></div>
+  </div>
+</div>
+
 <!-- ============ PRODUCT SECTION ============ -->
 <section class="product" id="product">
   <div class="container">
@@ -1329,32 +1442,6 @@ img { max-width: 100%; }
   </div>
 </section>
 
-<!-- ============ HOW IT WORKS ============ -->
-<section class="how-it-works" id="how-it-works">
-  <div class="container">
-    <div class="how-header">
-      <p class="eyebrow reveal">How It Works</p>
-      <h2 class="section-headline reveal reveal-delay-1">Three steps to proven delivery.</h2>
-    </div>
-    <div class="steps">
-      <div class="step reveal reveal-delay-1">
-        <div class="step-number">01</div>
-        <h3>Orders In</h3>
-        <p>Pharmacy sends delivery orders. LYN's dispatch system assigns routes, optimizes stops, and pushes to drivers.</p>
-      </div>
-      <div class="step reveal reveal-delay-2">
-        <div class="step-number">02</div>
-        <h3>Drivers Deliver</h3>
-        <p>Drivers follow optimized routes with full PRO flow — geofence check, package photo, delivery photo, signature, and delivery note.</p>
-      </div>
-      <div class="step reveal reveal-delay-3">
-        <div class="step-number">03</div>
-        <h3>Proof Delivered</h3>
-        <p>Pharmacy sees proof of delivery instantly. Photos, signatures, GPS, timestamps — all in their portal. No phone calls needed.</p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ SOCIAL PROOF ============ -->
 <section class="social-proof" id="social-proof">
@@ -1629,6 +1716,208 @@ function handleSubmit(e) {
     }, 3000);
   }, 1000);
 }
+
+// ========== LIVE DEMO ==========
+const DEMO_DELIVERIES = [
+  { id:1, patient:'Margaret Thompson', address:'142 Oak St', city:'Fairlawn', zip:'44333', driver:'Marcus Rivera', status:'delivered', time:'1:12 PM', lat:41.1278, lng:-81.6190, note:'Front door' },
+  { id:2, patient:'Robert Williams', address:'891 Maple Ave', city:'Akron', zip:'44301', driver:'Marcus Rivera', status:'delivered', time:'1:34 PM', lat:41.0856, lng:-81.5115, note:'Left with patient' },
+  { id:3, patient:'Dorothy Evans', address:'2200 State Rd', city:'Cuyahoga Falls', zip:'44223', driver:'Marcus Rivera', status:'delivered', time:'1:58 PM', lat:41.1339, lng:-81.4845, note:'Back door' },
+  { id:4, patient:'James Anderson', address:'567 Highland Ave', city:'Akron', zip:'44302', driver:'Marcus Rivera', status:'pending', time:'—', lat:41.0780, lng:-81.5200, note:'' },
+  { id:5, patient:'Patricia Moore', address:'1100 Portage Trail', city:'Akron', zip:'44313', driver:'Marcus Rivera', status:'pending', time:'—', lat:41.1020, lng:-81.5450, note:'' },
+  { id:6, patient:'William Davis', address:'330 W Market St', city:'Akron', zip:'44303', driver:'Angela Foster', status:'delivered', time:'1:08 PM', lat:41.0814, lng:-81.5280, note:'Front door' },
+  { id:7, patient:'Barbara Taylor', address:'45 Merriman Rd', city:'Akron', zip:'44303', driver:'Angela Foster', status:'delivered', time:'1:29 PM', lat:41.0790, lng:-81.5310, note:'Mailbox' },
+  { id:8, patient:'Richard Brown', address:'780 E Tallmadge Ave', city:'Akron', zip:'44310', driver:'Angela Foster', status:'delivered', time:'1:52 PM', lat:41.0910, lng:-81.4980, note:'Left with patient' },
+  { id:9, patient:'Mary Jackson', address:'1550 Sand Run Rd', city:'Akron', zip:'44313', driver:'Angela Foster', status:'pending', time:'—', lat:41.1050, lng:-81.5520, note:'' },
+  { id:10, patient:'Charles White', address:'210 Ghent Rd', city:'Fairlawn', zip:'44333', driver:'Angela Foster', status:'pending', time:'—', lat:41.1300, lng:-81.6100, note:'' },
+  { id:11, patient:'Susan Harris', address:'920 N Main St', city:'North Canton', zip:'44720', driver:'Derek Simmons', status:'delivered', time:'1:15 PM', lat:40.8760, lng:-81.3910, note:'Front door' },
+  { id:12, patient:'Joseph Clark', address:'1445 Whipple Ave NW', city:'Canton', zip:'44708', driver:'Derek Simmons', status:'delivered', time:'1:42 PM', lat:40.8340, lng:-81.4250, note:'Left with patient' },
+  { id:13, patient:'Nancy Lewis', address:'603 12th St NW', city:'Canton', zip:'44703', driver:'Derek Simmons', status:'delivered', time:'2:05 PM', lat:40.8080, lng:-81.3920, note:'Front door' },
+  { id:14, patient:'Thomas Robinson', address:'2800 Tuscarawas St W', city:'Canton', zip:'44708', driver:'Derek Simmons', status:'pending', time:'—', lat:40.7950, lng:-81.4350, note:'' },
+  { id:15, patient:'Ruth Nelson', address:'415 Grant St', city:'Akron', zip:'44311', driver:'Brian O\'Neill', status:'failed', time:'2:45 PM', lat:41.0680, lng:-81.4830, note:'Patient not home' },
+];
+
+const DEMO_DRIVERS = [
+  { name:'Marcus Rivera', stops:28, done:22, color:'#10B981' },
+  { name:'Angela Foster', stops:26, done:19, color:'#2DD4BF' },
+  { name:'Derek Simmons', stops:24, done:21, color:'#6366F1' },
+  { name:'Rachel Kim', stops:22, done:18, color:'#F59E0B' },
+  { name:'Brian O\'Neill', stops:20, done:14, color:'#EF4444' },
+];
+
+const PHARMACY_PINS = [
+  { name:'Sterling Health', lat:41.0534, lng:-81.5185 },
+  { name:'Aultman Pharmacy', lat:40.7989, lng:-81.3784 },
+  { name:'Giant Eagle Rx', lat:41.1100, lng:-81.5600 },
+];
+
+// Tab switching
+document.querySelectorAll('.demo-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('demo-tab--active'));
+    document.querySelectorAll('.demo-panel').forEach(p => { p.classList.remove('demo-panel--active'); });
+    tab.classList.add('demo-tab--active');
+    const panel = document.getElementById('demo-' + tab.dataset.tab);
+    if (panel) { panel.classList.add('demo-panel--active'); }
+    if (tab.dataset.tab === 'map' && !window._demoMapInit) initDemoMap();
+  });
+});
+
+// Delivery table
+function renderDeliveryTable() {
+  const tbody = document.getElementById('demo-del-tbody');
+  if (!tbody) return;
+  tbody.innerHTML = DEMO_DELIVERIES.map(d => `
+    <tr onclick="${d.status === 'delivered' || d.status === 'failed' ? `openPodModal(${d.id})` : ''}" style="${d.status !== 'delivered' && d.status !== 'failed' ? 'cursor:default' : ''}">
+      <td>${d.patient}</td>
+      <td>${d.address}, ${d.city}</td>
+      <td>${d.city}</td>
+      <td>${d.driver}</td>
+      <td><span class="demo-badge demo-badge--${d.status}"><span class="demo-badge-dot"></span>${d.status.charAt(0).toUpperCase() + d.status.slice(1)}</span></td>
+      <td>${d.time}</td>
+      <td>${d.status === 'delivered' || d.status === 'failed' ? '<button class="demo-pod-btn" onclick="event.stopPropagation();openPodModal(' + d.id + ')">View</button>' : '—'}</td>
+    </tr>
+  `).join('');
+}
+renderDeliveryTable();
+
+// Auto-flip pending to delivered every 4 seconds
+let demoDeliveredCount = 312;
+let demoPendingCount = 68;
+setInterval(() => {
+  const pending = DEMO_DELIVERIES.filter(d => d.status === 'pending');
+  if (pending.length === 0) return;
+  const flip = pending[Math.floor(Math.random() * pending.length)];
+  flip.status = 'delivered';
+  const h = new Date().getHours();
+  const m = new Date().getMinutes();
+  flip.time = `${h > 12 ? h - 12 : h}:${String(m).padStart(2, '0')} PM`;
+  flip.note = ['Front door', 'Back door', 'Left with patient', 'Mailbox', 'With neighbor', 'Side door'][Math.floor(Math.random() * 6)];
+  demoDeliveredCount++;
+  demoPendingCount--;
+  renderDeliveryTable();
+  const delEl = document.getElementById('demo-del-delivered');
+  const penEl = document.getElementById('demo-del-pending');
+  const mapDelEl = document.getElementById('demo-delivered-today');
+  const mapRemEl = document.getElementById('demo-stops-remaining');
+  if (delEl) delEl.textContent = demoDeliveredCount;
+  if (penEl) penEl.textContent = Math.max(0, demoPendingCount);
+  if (mapDelEl) mapDelEl.textContent = demoDeliveredCount;
+  if (mapRemEl) mapRemEl.textContent = Math.max(0, parseInt(mapRemEl.textContent) - 1);
+}, 4000);
+
+// Dispatch driver cards
+function renderDispatchDrivers() {
+  const container = document.getElementById('demo-disp-drivers');
+  if (!container) return;
+  container.innerHTML = DEMO_DRIVERS.map(d => {
+    const pct = Math.round((d.done / d.stops) * 100);
+    return `<div class="demo-disp-driver">
+      <div class="demo-disp-driver-name">${d.name}</div>
+      <div class="demo-disp-driver-sub">${d.done}/${d.stops} stops</div>
+      <div class="demo-disp-progress"><div class="demo-disp-progress-fill" style="width:${pct}%"></div></div>
+      <div class="demo-disp-driver-pct">${pct}%</div>
+    </div>`;
+  }).join('');
+}
+renderDispatchDrivers();
+
+// POD Modal
+function openPodModal(id) {
+  const d = DEMO_DELIVERIES.find(x => x.id === id);
+  if (!d) return;
+  document.getElementById('pod-patient').textContent = d.patient;
+  document.getElementById('pod-driver').textContent = d.driver;
+  document.getElementById('pod-address').textContent = d.address + ', ' + d.city + ' ' + d.zip;
+  document.getElementById('pod-time').textContent = d.time;
+  document.getElementById('pod-gps').textContent = d.lat.toFixed(4) + ', ' + d.lng.toFixed(4);
+  document.getElementById('pod-note').textContent = d.note || 'Front door';
+  const dist = Math.floor(Math.random() * 120) + 10;
+  document.getElementById('pod-geofence').textContent = '\u2713 Within ' + dist + ' ft \u2014 Verified';
+  document.getElementById('pod-geofence').style.color = dist <= 150 ? '#10B981' : '#EF4444';
+  // Draw signature
+  const canvas = document.getElementById('pod-sig-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, 400, 100);
+    ctx.strokeStyle = '#9CA3AF';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    let x = 20;
+    ctx.moveTo(x, 50 + Math.random() * 20);
+    for (let i = 0; i < 12; i++) {
+      x += 30 + Math.random() * 10;
+      ctx.quadraticCurveTo(x - 15, 20 + Math.random() * 60, x, 40 + Math.random() * 30);
+    }
+    ctx.stroke();
+  }
+  document.getElementById('demo-pod-modal').classList.add('demo-pod-modal--open');
+}
+function closePodModal() {
+  document.getElementById('demo-pod-modal').classList.remove('demo-pod-modal--open');
+}
+
+// Mapbox
+window._demoMapInit = false;
+function initDemoMap() {
+  if (window._demoMapInit) return;
+  window._demoMapInit = true;
+  if (!window.mapboxgl) return;
+  mapboxgl.accessToken = 'pk.eyJ1IjoiY3V0cnVmZWxsbzIxIiwiYSI6ImNtODljeHgxNjBheTYybHB3bm14a3V5dnoifQ.pCGbVeMn6MHSfKaDSJWCuQ';
+  const map = new mapboxgl.Map({
+    container: 'mapbox-map',
+    style: 'mapbox://styles/mapbox/dark-v11',
+    center: [-81.48, 41.00],
+    zoom: 10.2,
+    interactive: true,
+    attributionControl: false
+  });
+  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
+  map.on('load', () => {
+    // Pharmacy pins
+    PHARMACY_PINS.forEach(p => {
+      const el = document.createElement('div');
+      el.style.cssText = 'width:28px;height:28px;background:#EF4444;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.4);';
+      el.textContent = '+';
+      new mapboxgl.Marker(el).setLngLat([p.lng, p.lat]).setPopup(new mapboxgl.Popup({offset:20}).setHTML('<strong>' + p.name + '</strong>')).addTo(map);
+    });
+    // Driver pins with animation
+    const driverMarkers = DEMO_DRIVERS.map((d, i) => {
+      const stops = DEMO_DELIVERIES.filter(s => s.driver === d.name);
+      const firstStop = stops[0];
+      if (!firstStop) return null;
+      const el = document.createElement('div');
+      el.style.cssText = 'display:flex;flex-direction:column;align-items:center;pointer-events:auto;cursor:pointer;';
+      el.innerHTML = '<div style="background:' + d.color + ';color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.3);">' + d.name.split(' ')[0] + ' \u00b7 ' + d.stops + '</div><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid ' + d.color + ';"></div>';
+      const marker = new mapboxgl.Marker(el).setLngLat([firstStop.lng, firstStop.lat]).addTo(map);
+      return { marker, stops, idx: 0 };
+    }).filter(Boolean);
+    // Animate drivers
+    setInterval(() => {
+      driverMarkers.forEach(dm => {
+        dm.idx = (dm.idx + 1) % dm.stops.length;
+        const s = dm.stops[dm.idx];
+        const cur = dm.marker.getLngLat();
+        const newLng = cur.lng + (s.lng - cur.lng) * 0.3 + (Math.random() - 0.5) * 0.002;
+        const newLat = cur.lat + (s.lat - cur.lat) * 0.3 + (Math.random() - 0.5) * 0.002;
+        dm.marker.setLngLat([newLng, newLat]);
+      });
+    }, 3000);
+    // Route lines
+    const routeCoords = DEMO_DELIVERIES.filter(d => d.lat && d.lng).map(d => [d.lng, d.lat]);
+    map.addSource('demo-route', { type: 'geojson', data: { type: 'Feature', geometry: { type: 'LineString', coordinates: routeCoords } } });
+    map.addLayer({ id: 'demo-route-line', type: 'line', source: 'demo-route', paint: { 'line-color': '#2DD4BF', 'line-width': 2, 'line-opacity': 0.4, 'line-dasharray': [2, 4] } });
+    // Stop dots
+    DEMO_DELIVERIES.forEach(d => {
+      if (!d.lat) return;
+      const el = document.createElement('div');
+      const clr = d.status === 'delivered' ? '#10B981' : d.status === 'failed' ? '#EF4444' : '#F59E0B';
+      el.style.cssText = 'width:10px;height:10px;background:' + clr + ';border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.3);';
+      new mapboxgl.Marker(el).setLngLat([d.lng, d.lat]).addTo(map);
+    });
+  });
+}
+// Init map when tab is visible or on first load if map tab is active
+setTimeout(() => { if (document.querySelector('.demo-tab--active')?.dataset.tab === 'map') initDemoMap(); }, 1000);
 </script>
 </body>
 </html>
