@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LYN Software — Every delivery. Proven.</title>
+<meta name="description" content="LYN gives pharmacies real-time proof of every delivery and gives courier companies the dispatch infrastructure to run at scale.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+/* ========================================
+   RESET & BASE
+   ======================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #1C1C1E;
+  color: #FFFFFF;
+  font-size: 17px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img { max-width: 100%; }
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.eyebrow {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: #10B981;
+  margin-bottom: 16px;
+}
+
+.section-headline {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 24px;
+  letter-spacing: -0.5px;
+}
+
+.section-subhead {
+  font-size: 18px;
+  color: #9CA3AF;
+  line-height: 1.7;
+  max-width: 640px;
+}
+
+/* Scroll animation base */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+.reveal-delay-5 { transition-delay: 0.5s; }
+
+/* ========================================
+   BUTTONS
+   ======================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  font-family: 'Inter', sans-serif;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: #10B981;
+  color: #FFFFFF;
+}
+
+.btn-primary:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #FFFFFF;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 10px 24px;
+  font-size: 14px;
+}
+
+/* ========================================
+   NAV
+   ======================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 20px 0;
+  transition: all 0.4s ease;
+}
+
+.nav.scrolled {
+  background: rgba(28, 28, 30, 0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(58, 58, 62, 0.5);
+}
+
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-logo {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.nav-logo .dot {
+  width: 8px;
+  height: 8px;
+  background: #10B981;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 1px;
+  margin-bottom: -2px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+
+.nav-links a {
+  font-size: 14px;
+  font-weight: 500;
+  color: #9CA3AF;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: #FFFFFF;
+}
+
+.nav-cta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 4px;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 2px;
+  background: #FFFFFF;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Mobile nav */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(28, 28, 30, 0.98);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.mobile-menu.open {
+  display: flex;
+  opacity: 1;
+}
+
+.mobile-menu a {
+  font-size: 24px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+@media (max-width: 768px) {
+  .nav-links, .nav-cta {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}
+
+/* ========================================
+   HERO
+   ======================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 120px 24px 100px;
+}
+
+/* Animated grid background */
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.hero-bg::before {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    repeating-linear-gradient(
+      -30deg,
+      transparent,
+      transparent 80px,
+      rgba(45, 212, 191, 0.03) 80px,
+      rgba(45, 212, 191, 0.03) 81px
+    ),
+    repeating-linear-gradient(
+      60deg,
+      transparent,
+      transparent 80px,
+      rgba(45, 212, 191, 0.03) 80px,
+      rgba(45, 212, 191, 0.03) 81px
+    );
+  animation: gridShift 20s linear infinite;
+}
+
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    repeating-linear-gradient(
+      -30deg,
+      transparent,
+      transparent 160px,
+      rgba(16, 185, 129, 0.04) 160px,
+      rgba(16, 185, 129, 0.04) 161px
+    ),
+    repeating-linear-gradient(
+      60deg,
+      transparent,
+      transparent 160px,
+      rgba(16, 185, 129, 0.04) 160px,
+      rgba(16, 185, 129, 0.04) 161px
+    );
+  animation: gridShift 30s linear infinite reverse;
+}
+
+@keyframes gridShift {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(80px, 80px); }
+}
+
+/* Radial glow */
+.hero-glow {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
+  z-index: 0;
+  animation: glowPulse 6s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+}
+
+/* Shimmer lines */
+.hero-shimmer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-shimmer::before {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: repeating-linear-gradient(
+    -30deg,
+    transparent,
+    transparent 200px,
+    rgba(45, 212, 191, 0.015) 200px,
+    rgba(45, 212, 191, 0.04) 202px,
+    rgba(45, 212, 191, 0.015) 204px,
+    transparent 204px
+  );
+  animation: shimmer 8s linear infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(100px, 100px); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  max-width: 860px;
+}
+
+.hero h1 {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -2px;
+  margin-bottom: 28px;
+  background: linear-gradient(135deg, #FFFFFF 0%, #E5E7EB 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-sub {
+  font-size: 19px;
+  color: #9CA3AF;
+  line-height: 1.75;
+  margin-bottom: 48px;
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ========================================
+   TRUST BAR
+   ======================================== */
+.trust-bar {
+  padding: 60px 0;
+  border-top: 1px solid #2A2A2E;
+  border-bottom: 1px solid #2A2A2E;
+}
+
+.trust-label {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #6B7280;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 36px;
+}
+
+.trust-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.trust-stat {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 20px 24px;
+  background: #2A2A2E;
+  border: 1px solid #3A3A3E;
+  border-radius: 16px;
+  transition: all 0.3s;
+}
+
+.trust-stat:hover {
+  transform: translateY(-2px);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.trust-stat-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(16, 185, 129, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.trust-stat-icon svg {
+  width: 22px;
+  height: 22px;
+  color: #10B981;
+}
+
+.trust-stat-text {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .trust-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .trust-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   PROBLEM SECTION
+   ======================================== */
+.problem {
+  padding: 120px 0;
+}
+
+.problem-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.problem-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.problem-card {
+  background: #2A2A2E;
+  border: 1px solid #3A3A3E;
+  border-radius: 16px;
+  padding: 40px 32px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.problem-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(239, 68, 68, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.problem-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: rgba(239, 68, 68, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.problem-card-icon svg {
+  width: 26px;
+  height: 26px;
+  color: #EF4444;
+}
+
+.problem-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.problem-card p {
+  font-size: 15px;
+  color: #9CA3AF;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .problem-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   PRODUCT SECTION
+   ======================================== */
+.product {
+  padding: 120px 0;
+  background: linear-gradient(180deg, #1C1C1E 0%, #1A1A1C 50%, #1C1C1E 100%);
+}
+
+.product-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.product-card {
+  background: #2A2A2E;
+  border: 1px solid #3A3A3E;
+  border-radius: 16px;
+  padding: 44px 32px;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #10B981, #2DD4BF);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(16, 185, 129, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+.product-card:hover::before {
+  opacity: 1;
+}
+
+.product-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: rgba(16, 185, 129, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.product-card-icon svg {
+  width: 28px;
+  height: 28px;
+  color: #10B981;
+}
+
+.product-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.product-card p {
+  font-size: 15px;
+  color: #9CA3AF;
+  line-height: 1.75;
+}
+
+@media (max-width: 768px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   HOW IT WORKS
+   ======================================== */
+.how-it-works {
+  padding: 120px 0;
+}
+
+.how-header {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  position: relative;
+}
+
+/* Connecting line */
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 44px;
+  left: calc(16.66% + 30px);
+  right: calc(16.66% + 30px);
+  height: 2px;
+  background: linear-gradient(90deg, #3A3A3E, rgba(16, 185, 129, 0.3), #3A3A3E);
+}
+
+.step {
+  text-align: center;
+  padding: 0 32px;
+  position: relative;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #2A2A2E;
+  border: 2px solid #3A3A3E;
+  font-size: 22px;
+  font-weight: 800;
+  color: #10B981;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.step:hover .step-number {
+  border-color: #10B981;
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+}
+
+.step h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.step p {
+  font-size: 15px;
+  color: #9CA3AF;
+  line-height: 1.7;
+}
+
+@media (max-width: 768px) {
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .steps::before {
+    display: none;
+  }
+}
+
+/* ========================================
+   SOCIAL PROOF
+   ======================================== */
+.social-proof {
+  padding: 100px 0;
+  background: linear-gradient(180deg, #1C1C1E 0%, #1F1F22 50%, #1C1C1E 100%);
+}
+
+.quote-block {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  padding: 60px 40px;
+}
+
+.quote-mark {
+  font-size: 120px;
+  font-weight: 900;
+  color: #10B981;
+  opacity: 0.15;
+  line-height: 1;
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: Georgia, serif;
+}
+
+.quote-text {
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.3px;
+}
+
+.quote-accent {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #10B981, #2DD4BF);
+  margin: 0 auto 24px;
+  border-radius: 2px;
+}
+
+.quote-attribution {
+  font-size: 16px;
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+/* ========================================
+   TWO AUDIENCES
+   ======================================== */
+.audiences {
+  padding: 120px 0;
+}
+
+.audiences-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.audiences-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+
+.audience-card {
+  background: #2A2A2E;
+  border: 1px solid #3A3A3E;
+  border-radius: 16px;
+  padding: 48px 40px;
+  border-top: 3px solid #10B981;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.audience-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  border-color: rgba(16, 185, 129, 0.3);
+  border-top-color: #10B981;
+}
+
+.audience-card h3 {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 28px;
+  letter-spacing: -0.3px;
+}
+
+.audience-card ul {
+  list-style: none;
+  margin-bottom: 32px;
+}
+
+.audience-card li {
+  font-size: 15px;
+  color: #D1D5DB;
+  padding: 10px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  line-height: 1.5;
+}
+
+.audience-card li::before {
+  content: '';
+  display: block;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.1);
+  margin-top: 2px;
+  position: relative;
+}
+
+.audience-check {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  margin-top: 2px;
+  color: #10B981;
+}
+
+.audience-card li {
+  padding-left: 0;
+}
+
+.audience-card li::before {
+  display: none;
+}
+
+.audience-cta {
+  font-size: 15px;
+  font-weight: 600;
+  color: #10B981;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: gap 0.2s;
+}
+
+.audience-cta:hover {
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .audiences-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   COMPLIANCE
+   ======================================== */
+.compliance {
+  padding: 100px 0;
+  background: linear-gradient(180deg, #1C1C1E 0%, #1A1A1C 50%, #1C1C1E 100%);
+}
+
+.compliance-inner {
+  text-align: center;
+}
+
+.compliance-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.compliance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  background: #2A2A2E;
+  border: 1px solid #3A3A3E;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.compliance-badge:hover {
+  border-color: rgba(16, 185, 129, 0.4);
+  transform: translateY(-2px);
+}
+
+.compliance-badge svg {
+  width: 18px;
+  height: 18px;
+  color: #10B981;
+}
+
+/* ========================================
+   CTA / CONTACT
+   ======================================== */
+.cta-section {
+  padding: 120px 0;
+}
+
+.cta-inner {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.cta-form-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: #2A2A2E;
+  border: 1px solid #3A3A3E;
+  border-radius: 20px;
+  padding: 48px 44px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #9CA3AF;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.form-group input,
+.form-group textarea {
+  background: #1C1C1E;
+  border: 1px solid #3A3A3E;
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #FFFFFF;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #10B981;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #4B5563;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-submit {
+  margin-top: 8px;
+}
+
+.form-submit .btn {
+  width: 100%;
+  padding: 16px;
+  font-size: 16px;
+}
+
+@media (max-width: 480px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .cta-form-card {
+    padding: 32px 24px;
+  }
+}
+
+/* ========================================
+   FOOTER
+   ======================================== */
+.footer {
+  padding: 60px 0 40px;
+  border-top: 1px solid #2A2A2E;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 40px;
+  margin-bottom: 48px;
+}
+
+.footer-brand {
+  max-width: 280px;
+}
+
+.footer-logo {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.footer-logo .dot {
+  width: 7px;
+  height: 7px;
+  background: #10B981;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.footer-tagline {
+  font-size: 14px;
+  color: #6B7280;
+}
+
+.footer-links {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.footer-links a {
+  font-size: 14px;
+  color: #6B7280;
+  transition: color 0.2s;
+}
+
+.footer-links a:hover {
+  color: #FFFFFF;
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding-top: 32px;
+  border-top: 1px solid #2A2A2E;
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  color: #4B5563;
+}
+
+/* ========================================
+   RESPONSIVE
+   ======================================== */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 40px;
+    letter-spacing: -1px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+  }
+
+  .section-headline {
+    font-size: 32px;
+  }
+
+  .quote-text {
+    font-size: 20px;
+  }
+
+  .audience-card {
+    padding: 36px 28px;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero-ctas {
+    flex-direction: column;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+  }
+
+  .section-headline {
+    font-size: 28px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">LYN<span class="dot"></span></a>
+    <div class="nav-links">
+      <a href="#product">Product</a>
+      <a href="#audiences">Solutions</a>
+      <a href="#compliance">Compliance</a>
+      <a href="#contact">Request Demo</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-primary btn-sm">Request Demo</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#product" class="mobile-link">Product</a>
+  <a href="#audiences" class="mobile-link">Solutions</a>
+  <a href="#compliance" class="mobile-link">Compliance</a>
+  <a href="#contact" class="mobile-link">Request Demo</a>
+  <a href="#contact" class="btn btn-primary" style="margin-top: 16px;">Request Demo</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-shimmer"></div>
+  <div class="hero-content">
+    <h1 class="reveal">Every delivery. Proven.</h1>
+    <p class="hero-sub reveal reveal-delay-1">LYN gives pharmacies real-time proof of every delivery — photo, signature, GPS — and gives courier companies the dispatch infrastructure to run at scale.</p>
+    <div class="hero-ctas reveal reveal-delay-2">
+      <a href="#product" class="btn btn-primary">
+        See the Platform
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+      <a href="#how-it-works" class="btn btn-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
+        Watch Demo
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST BAR ============ -->
+<section class="trust-bar">
+  <div class="container">
+    <p class="trust-label reveal">Built by operators. Trusted by pharmacies.</p>
+    <div class="trust-stats">
+      <div class="trust-stat reveal reveal-delay-1">
+        <div class="trust-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        </div>
+        <span class="trust-stat-text">300+ Daily Deliveries</span>
+      </div>
+      <div class="trust-stat reveal reveal-delay-2">
+        <div class="trust-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <span class="trust-stat-text">17 Years Operational Knowledge</span>
+      </div>
+      <div class="trust-stat reveal reveal-delay-3">
+        <div class="trust-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+        <span class="trust-stat-text">HIPAA-Ready</span>
+      </div>
+      <div class="trust-stat reveal reveal-delay-4">
+        <div class="trust-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <span class="trust-stat-text">Real-Time POD</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROBLEM SECTION ============ -->
+<section class="problem" id="problem">
+  <div class="container">
+    <div class="problem-header">
+      <p class="eyebrow reveal">The Problem</p>
+      <h2 class="section-headline reveal reveal-delay-1">Pharma delivery is broken.</h2>
+    </div>
+    <div class="problem-cards">
+      <div class="problem-card reveal reveal-delay-1">
+        <div class="problem-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+        </div>
+        <h3>No proof a patient received their medication</h3>
+        <p>Pharmacies have zero visibility into whether a delivery actually happened. No photo. No signature. No GPS. Just trust.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-2">
+        <div class="problem-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h3>Couriers running on spreadsheets and phone calls</h3>
+        <p>Routes planned on paper. Payroll done by hand. No analytics. No accountability. No way to scale.</p>
+      </div>
+      <div class="problem-card reveal reveal-delay-3">
+        <div class="problem-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <h3>Pharmacies calling dispatch for every update</h3>
+        <p>Where's my delivery? Did the driver leave it? Was it signed for? Every question requires a phone call.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUCT SECTION ============ -->
+<section class="product" id="product">
+  <div class="container">
+    <div class="product-header">
+      <p class="eyebrow reveal">The Platform</p>
+      <h2 class="section-headline reveal reveal-delay-1">Everything a delivery operation needs.</h2>
+    </div>
+    <div class="product-grid">
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+        </div>
+        <h3>Proof of Delivery</h3>
+        <p>Every delivery captured with timestamped photos, digital signatures, GPS coordinates, and geofence verification. Instant access for pharmacy staff.</p>
+      </div>
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <h3>Dispatch Portal</h3>
+        <p>Route building, driver management, payroll automation, and real-time analytics. Built by dispatchers, for dispatchers.</p>
+      </div>
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <h3>Pharmacy Portal</h3>
+        <p>Live delivery tracking, on-demand POD records, compliance reporting. White-labeled per client. Accessible from any device.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how-it-works" id="how-it-works">
+  <div class="container">
+    <div class="how-header">
+      <p class="eyebrow reveal">How It Works</p>
+      <h2 class="section-headline reveal reveal-delay-1">Three steps to proven delivery.</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal reveal-delay-1">
+        <div class="step-number">01</div>
+        <h3>Orders In</h3>
+        <p>Pharmacy sends delivery orders. LYN's dispatch system assigns routes, optimizes stops, and pushes to drivers.</p>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-number">02</div>
+        <h3>Drivers Deliver</h3>
+        <p>Drivers follow optimized routes with full PRO flow — geofence check, package photo, delivery photo, signature, and delivery note.</p>
+      </div>
+      <div class="step reveal reveal-delay-3">
+        <div class="step-number">03</div>
+        <h3>Proof Delivered</h3>
+        <p>Pharmacy sees proof of delivery instantly. Photos, signatures, GPS, timestamps — all in their portal. No phone calls needed.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOCIAL PROOF ============ -->
+<section class="social-proof" id="social-proof">
+  <div class="container">
+    <div class="quote-block reveal">
+      <div class="quote-mark">"</div>
+      <div class="quote-accent"></div>
+      <p class="quote-text">We built this for our own operation. 300–600 deliveries a day, five days a week. Every single one — proven.</p>
+      <p class="quote-attribution">— CNC Delivery, Northeast Ohio</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TWO AUDIENCES ============ -->
+<section class="audiences" id="audiences">
+  <div class="container">
+    <div class="audiences-header">
+      <p class="eyebrow reveal">Solutions</p>
+      <h2 class="section-headline reveal reveal-delay-1">Built for both sides of the delivery.</h2>
+    </div>
+    <div class="audiences-grid">
+      <div class="audience-card reveal reveal-delay-1">
+        <h3>For Pharmacies</h3>
+        <ul>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            See every delivery happen in real time
+          </li>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Access POD records — photo, signature, GPS
+          </li>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Compliance-ready audit trail
+          </li>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            No more calling dispatch for updates
+          </li>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            White-labeled portal with your branding
+          </li>
+        </ul>
+        <a href="#contact" class="audience-cta">See the Pharmacy Portal <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+      <div class="audience-card reveal reveal-delay-2">
+        <h3>For Courier Companies</h3>
+        <ul>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Dispatch portal built by operators
+          </li>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Route optimization and driver management
+          </li>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Automated payroll from delivery data
+          </li>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Analytics that show what's actually happening
+          </li>
+          <li>
+            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            Scale without adding dispatch staff
+          </li>
+        </ul>
+        <a href="#contact" class="audience-cta">See the Dispatch Platform <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COMPLIANCE ============ -->
+<section class="compliance" id="compliance">
+  <div class="container">
+    <div class="compliance-inner">
+      <p class="eyebrow reveal">Compliance</p>
+      <h2 class="section-headline reveal reveal-delay-1">Built for healthcare accountability.</h2>
+      <div class="compliance-badges">
+        <div class="compliance-badge reveal reveal-delay-1">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          HIPAA-Ready
+        </div>
+        <div class="compliance-badge reveal reveal-delay-2">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          GPS Timestamped
+        </div>
+        <div class="compliance-badge reveal reveal-delay-3">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Photo + Signature POD
+        </div>
+        <div class="compliance-badge reveal reveal-delay-4">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Geofence Verified
+        </div>
+        <div class="compliance-badge reveal reveal-delay-5">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          Full Audit Trail
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA / CONTACT ============ -->
+<section class="cta-section" id="contact">
+  <div class="container">
+    <div class="cta-inner">
+      <p class="eyebrow reveal">Get Started</p>
+      <h2 class="section-headline reveal reveal-delay-1">Ready to see LYN in action?</h2>
+      <p class="section-subhead reveal reveal-delay-2" style="margin: 0 auto;">Request a demo and we'll show you how LYN can transform your delivery operation.</p>
+    </div>
+    <div class="cta-form-card reveal reveal-delay-2">
+      <form id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="company">Company</label>
+            <input type="text" id="company" name="company" placeholder="Company name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="you@company.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000">
+          </div>
+          <div class="form-group full-width">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Tell us about your delivery operation..."></textarea>
+          </div>
+        </div>
+        <div class="form-submit">
+          <button type="submit" class="btn btn-primary">Request Demo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-logo">LYN<span class="dot"></span></div>
+        <p class="footer-tagline">Every delivery. Proven.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#product">Product</a>
+        <a href="#audiences">Solutions</a>
+        <a href="#compliance">Compliance</a>
+        <a href="#contact">Request Demo</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 LYN Software. All rights reserved.</p>
+      <p>Built in Northeast Ohio</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ========================================
+   NAV SCROLL EFFECT
+   ======================================== */
+const nav = document.getElementById('nav');
+let lastScroll = 0;
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.scrollY;
+  if (currentScroll > 60) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+  lastScroll = currentScroll;
+}, { passive: true });
+
+/* ========================================
+   MOBILE MENU
+   ======================================== */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('active');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+
+// Close mobile menu on link click
+document.querySelectorAll('.mobile-link').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('active');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+
+/* ========================================
+   INTERSECTION OBSERVER — SCROLL ANIMATIONS
+   ======================================== */
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: '0px 0px -40px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll('.reveal').forEach(el => {
+  observer.observe(el);
+});
+
+/* ========================================
+   SMOOTH SCROLL FOR ANCHOR LINKS
+   ======================================== */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const targetId = this.getAttribute('href');
+    if (targetId === '#') return;
+    const target = document.querySelector(targetId);
+    if (target) {
+      e.preventDefault();
+      const navHeight = nav.offsetHeight;
+      const targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight - 20;
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
+      });
+    }
+  });
+});
+
+/* ========================================
+   FORM HANDLER
+   ======================================== */
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const originalText = btn.textContent;
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+
+  // Simulate submission (replace with real endpoint)
+  setTimeout(() => {
+    btn.textContent = 'Demo Requested!';
+    btn.style.background = '#059669';
+    setTimeout(() => {
+      btn.textContent = originalText;
+      btn.disabled = false;
+      btn.style.background = '';
+      e.target.reset();
+    }, 3000);
+  }, 1000);
+}
+</script>
+</body>
+</html>
