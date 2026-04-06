@@ -4,14 +4,32 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>LYN Software — Every delivery. Proven.</title>
-<meta name="description" content="LYN gives pharmacies real-time proof of every delivery and gives courier companies the dispatch infrastructure to run at scale.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link href="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css" rel="stylesheet">
 <script src="https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js"></script>
 <style>
+/* ========================================
+   CSS VARIABLES
+   ======================================== */
+:root {
+  --bg: #1C1C1E;
+  --bg-card: #2A2A2E;
+  --border: #3A3A3E;
+  --white: #FFFFFF;
+  --gray-100: #F5F5F7;
+  --gray-300: #A1A1AA;
+  --gray-500: #71717A;
+  --gray-700: #3F3F46;
+  --emerald: #34D399;
+  --emerald-dark: #059669;
+  --teal: #2DD4BF;
+  --amber: #FBBF24;
+  --red: #F87171;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
 /* ========================================
    RESET & BASE
    ======================================== */
@@ -23,1901 +41,2504 @@
 
 html {
   scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #1C1C1E;
-  color: #FFFFFF;
-  font-size: 17px;
-  line-height: 1.6;
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
   overflow-x: hidden;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img { max-width: 100%; }
-
 /* ========================================
-   UTILITIES
+   FLOATING NAV
    ======================================== */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.eyebrow {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  color: #10B981;
-  margin-bottom: 16px;
-}
-
-.section-headline {
-  font-size: 40px;
-  font-weight: 800;
-  line-height: 1.15;
-  margin-bottom: 24px;
-  letter-spacing: -0.5px;
-}
-
-.section-subhead {
-  font-size: 18px;
-  color: #9CA3AF;
-  line-height: 1.7;
-  max-width: 640px;
-}
-
-/* Scroll animation base */
-.reveal {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-.reveal-delay-5 { transition-delay: 0.5s; }
-
-/* ========================================
-   BUTTONS
-   ======================================== */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 14px 32px;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  border: none;
-  font-family: 'Inter', sans-serif;
-  gap: 8px;
-}
-
-.btn-primary {
-  background: #10B981;
-  color: #FFFFFF;
-}
-
-.btn-primary:hover {
-  background: #059669;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
-}
-
-.btn-ghost {
-  background: transparent;
-  color: #FFFFFF;
-  border: 1.5px solid rgba(255, 255, 255, 0.25);
-}
-
-.btn-ghost:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
-}
-
-.btn-sm {
-  padding: 10px 24px;
-  font-size: 14px;
-}
-
-/* ========================================
-   NAV
-   ======================================== */
-.nav {
+.floating-nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
-  padding: 20px 0;
-  transition: all 0.4s ease;
-}
-
-.nav.scrolled {
-  background: rgba(28, 28, 30, 0.92);
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  padding: 14px 0;
+  background: rgba(28, 28, 30, 0.8);
   border-bottom: 1px solid rgba(58, 58, 62, 0.5);
+  opacity: 0;
+  transform: translateY(-100%);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
 }
 
-.nav-inner {
-  max-width: 1200px;
-  margin: 0 auto;
+.floating-nav.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.nav-logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.nav-logo .dot {
+  color: var(--emerald);
+}
+
+.nav-cta {
+  display: inline-block;
+  padding: 10px 24px;
+  background: var(--emerald);
+  color: #000;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.nav-cta:hover {
+  background: var(--emerald-dark);
+  transform: translateY(-1px);
+}
+
+/* ========================================
+   SCROLL SECTIONS
+   ======================================== */
+.scroll-section {
+  position: relative;
+}
+
+.sticky-panel {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========================================
+   SECTION 1 — ARRIVAL
+   ======================================== */
+#arrival {
+  height: 80vh;
+}
+
+#arrival .sticky-panel {
+  height: 80vh;
+  position: relative;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.particle-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--teal);
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: drift linear infinite;
+}
+
+@keyframes drift {
+  0% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-15vh) translateX(10px); }
+  50% { transform: translateY(-30vh) translateX(-5px); }
+  75% { transform: translateY(-45vh) translateX(8px); }
+  100% { transform: translateY(-60vh) translateX(0); }
+}
+
+.arrival-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.arrival-logo {
+  font-size: 72px;
+  font-weight: 900;
+  letter-spacing: -2px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.arrival-logo.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.arrival-logo .dot {
+  color: var(--emerald);
+}
+
+.arrival-tagline {
+  display: flex;
+  gap: 16px;
+  font-size: 28px;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+}
+
+.arrival-tagline span {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.arrival-tagline span.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.arrival-hint {
+  font-size: 14px;
+  color: var(--gray-500);
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  margin-top: 16px;
+}
+
+.arrival-hint.visible {
+  opacity: 1;
+}
+
+/* ========================================
+   SECTION 2 — THE PROBLEM
+   ======================================== */
+#problem {
+  height: 150vh;
+}
+
+#problem .sticky-panel {
+  flex-direction: column;
+  gap: 20px;
+  background: var(--bg);
+}
+
+.problem-line {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  text-align: center;
+  max-width: 700px;
   padding: 0 24px;
+}
+
+.problem-line.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.problem-line-1 {
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--white);
+}
+
+.problem-line-2 {
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--gray-300);
+}
+
+.problem-line-3 {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--emerald);
+}
+
+/* ========================================
+   SECTION 3 — THE MAP
+   ======================================== */
+#map-section {
+  height: 180vh;
+}
+
+#map-section .sticky-panel {
+  padding: 0;
+}
+
+.map-container {
+  width: 100%;
+  height: 100%;
+}
+
+#lyn-map {
+  width: 100%;
+  height: 100%;
+}
+
+.map-hud {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  background: rgba(42, 42, 46, 0.9);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 28px;
+  display: flex;
+  gap: 32px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+  z-index: 10;
+}
+
+.map-hud.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hud-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hud-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.hud-dot.emerald { background: var(--emerald); }
+.hud-dot.amber { background: var(--amber); }
+.hud-dot.teal { background: var(--teal); }
+
+.hud-value {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.hud-label {
+  color: var(--gray-500);
+}
+
+/* Map marker styles */
+.pharmacy-marker {
+  width: 32px;
+  height: 32px;
+  background: var(--emerald);
+  border: 3px solid var(--white);
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+}
+
+.pharmacy-marker::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--emerald);
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.driver-marker {
+  width: 28px;
+  height: 28px;
+  background: var(--teal);
+  border: 2px solid var(--white);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: #000;
+}
+
+.mapboxgl-popup-content {
+  background: var(--bg-card) !important;
+  color: var(--white) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 8px !important;
+  padding: 8px 14px !important;
+  font-family: var(--font) !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
+}
+
+.mapboxgl-popup-tip {
+  border-top-color: var(--bg-card) !important;
+}
+
+.mapboxgl-popup-close-button {
+  color: var(--gray-500) !important;
+  font-size: 16px !important;
+}
+
+/* ========================================
+   SECTION 4 — A DELIVERY HAPPENS
+   ======================================== */
+#delivery-section {
+  height: 150vh;
+}
+
+#delivery-section .sticky-panel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 40px;
+  gap: 24px;
+  background: var(--bg);
+}
+
+.delivery-left {
+  flex: 0 0 55%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.delivery-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mini-map-card {
+  width: 100%;
+  height: 80%;
+  background: #0D0D0F;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-map-inner {
+  width: 100%;
+  height: 100%;
+}
+
+#mini-map {
+  width: 100%;
+  height: 100%;
+}
+
+.delivery-right {
+  flex: 0 0 42%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  overflow: hidden;
+  position: relative;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.delivery-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.delivery-counter {
+  font-size: 14px;
+  color: var(--gray-300);
+  font-weight: 500;
+  padding: 8px 0;
+}
+
+.delivery-counter span {
+  color: var(--emerald);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.delivery-table-wrap {
+  flex: 1;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-card);
+}
+
+.delivery-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.delivery-table thead {
+  background: rgba(58, 58, 62, 0.4);
+}
+
+.delivery-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-500);
+  border-bottom: 1px solid var(--border);
+}
+
+.delivery-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(58, 58, 62, 0.3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.delivery-table tr {
+  transition: background 0.3s ease;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.status-badge.pending {
+  background: rgba(251, 191, 36, 0.15);
+  color: var(--amber);
+}
+
+.status-badge.delivered {
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--emerald);
+}
+
+.status-badge.failed {
+  background: rgba(248, 113, 113, 0.15);
+  color: var(--red);
+}
+
+.status-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* POD Card */
+.pod-overlay {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 42%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 40px 0;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.pod-overlay.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+.pod-card {
+  width: 92%;
+  max-height: 85vh;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  overflow-y: auto;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+}
+
+.pod-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pod-title {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.pod-verified {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--emerald);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.pod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.pod-photo {
+  background: #1C1C1E;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  position: relative;
+}
+
+.pod-photo-label {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  font-size: 10px;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.pod-signature-section {
+  margin-bottom: 16px;
+}
+
+.pod-signature-label {
+  font-size: 11px;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.pod-signature-canvas {
+  width: 100%;
+  height: 80px;
+  background: #1C1C1E;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.pod-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pod-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.pod-detail-label {
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.pod-detail-value {
+  color: var(--white);
+  font-weight: 500;
+  text-align: right;
+}
+
+.pod-detail-value.emerald {
+  color: var(--emerald);
+}
+
+.pod-note {
+  margin-top: 12px;
+  padding: 12px;
+  background: #1C1C1E;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--gray-300);
+  font-style: italic;
+}
+
+/* ========================================
+   SECTION 5 — PHARMACY PORTAL
+   ======================================== */
+#pharmacy-section {
+  height: 120vh;
+}
+
+#pharmacy-section .sticky-panel {
+  padding: 60px 40px;
+  flex-direction: column;
+  gap: 32px;
+  background: var(--bg);
+}
+
+.portal-mockup {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.portal-mockup.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.portal-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(58, 58, 62, 0.2);
+}
+
+.portal-topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.portal-topbar-name {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.portal-topbar-badge {
+  font-size: 11px;
+  padding: 3px 8px;
+  background: rgba(52, 211, 153, 0.15);
+  color: var(--emerald);
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.portal-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--emerald-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.portal-stats {
+  display: flex;
+  gap: 0;
+  padding: 0 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.portal-stat {
+  flex: 1;
+  padding: 18px 0;
+  text-align: center;
+  border-right: 1px solid var(--border);
+}
+
+.portal-stat:last-child {
+  border-right: none;
+}
+
+.portal-stat-value {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.portal-stat-value.emerald { color: var(--emerald); }
+.portal-stat-value.amber { color: var(--amber); }
+.portal-stat-value.red { color: var(--red); }
+
+.portal-stat-label {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+.portal-table-wrap {
+  padding: 16px 24px 24px;
+}
+
+.portal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.portal-table th {
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-500);
+  border-bottom: 1px solid var(--border);
+}
+
+.portal-table td {
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(58, 58, 62, 0.3);
+}
+
+.portal-table tr:hover {
+  background: rgba(58, 58, 62, 0.15);
+}
+
+.portal-text {
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+  max-width: 600px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.portal-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.portal-text em {
+  color: var(--emerald);
+  font-style: normal;
+}
+
+/* ========================================
+   SECTION 6 — DISPATCH PORTAL
+   ======================================== */
+#dispatch-section {
+  height: 120vh;
+}
+
+#dispatch-section .sticky-panel {
+  padding: 60px 40px;
+  flex-direction: column;
+  gap: 32px;
+  background: var(--bg);
+}
+
+.dispatch-mockup {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.dispatch-mockup.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.dispatch-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.nav-logo {
-  font-size: 24px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  display: flex;
-  align-items: center;
-  gap: 2px;
-}
-
-.nav-logo .dot {
-  width: 8px;
-  height: 8px;
-  background: #10B981;
-  border-radius: 50%;
-  display: inline-block;
-  margin-left: 1px;
-  margin-bottom: -2px;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 36px;
-}
-
-.nav-links a {
-  font-size: 14px;
-  font-weight: 500;
-  color: #9CA3AF;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover {
-  color: #FFFFFF;
-}
-
-.nav-cta {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-/* Hamburger */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  padding: 4px;
-  background: none;
-  border: none;
-}
-
-.hamburger span {
-  width: 24px;
-  height: 2px;
-  background: #FFFFFF;
-  border-radius: 2px;
-  transition: all 0.3s;
-}
-
-.hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
-
-/* Mobile nav */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(28, 28, 30, 0.98);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  z-index: 999;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 32px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.mobile-menu.open {
-  display: flex;
-  opacity: 1;
-}
-
-.mobile-menu a {
-  font-size: 24px;
-  font-weight: 600;
-  color: #FFFFFF;
-}
-
-@media (max-width: 768px) {
-  .nav-links, .nav-cta {
-    display: none;
-  }
-  .hamburger {
-    display: flex;
-  }
-}
-
-/* ========================================
-   HERO
-   ======================================== */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 120px 24px 100px;
-}
-
-/* Animated grid background */
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  z-index: 0;
-}
-
-.hero-bg::before {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background:
-    repeating-linear-gradient(
-      -30deg,
-      transparent,
-      transparent 80px,
-      rgba(45, 212, 191, 0.03) 80px,
-      rgba(45, 212, 191, 0.03) 81px
-    ),
-    repeating-linear-gradient(
-      60deg,
-      transparent,
-      transparent 80px,
-      rgba(45, 212, 191, 0.03) 80px,
-      rgba(45, 212, 191, 0.03) 81px
-    );
-  animation: gridShift 20s linear infinite;
-}
-
-.hero-bg::after {
-  content: '';
-  position: absolute;
-  inset: -50%;
-  width: 200%;
-  height: 200%;
-  background:
-    repeating-linear-gradient(
-      -30deg,
-      transparent,
-      transparent 160px,
-      rgba(16, 185, 129, 0.04) 160px,
-      rgba(16, 185, 129, 0.04) 161px
-    ),
-    repeating-linear-gradient(
-      60deg,
-      transparent,
-      transparent 160px,
-      rgba(16, 185, 129, 0.04) 160px,
-      rgba(16, 185, 129, 0.04) 161px
-    );
-  animation: gridShift 30s linear infinite reverse;
-}
-
-@keyframes gridShift {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(80px, 80px); }
-}
-
-/* Radial glow */
-.hero-glow {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  height: 800px;
-  background: radial-gradient(circle, rgba(16, 185, 129, 0.06) 0%, transparent 70%);
-  z-index: 0;
-  animation: glowPulse 6s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-}
-
-/* Shimmer lines */
-.hero-shimmer {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  overflow: hidden;
-}
-
-.hero-shimmer::before {
-  content: '';
-  position: absolute;
-  top: -100%;
-  left: -100%;
-  width: 300%;
-  height: 300%;
-  background: repeating-linear-gradient(
-    -30deg,
-    transparent,
-    transparent 200px,
-    rgba(45, 212, 191, 0.015) 200px,
-    rgba(45, 212, 191, 0.04) 202px,
-    rgba(45, 212, 191, 0.015) 204px,
-    transparent 204px
-  );
-  animation: shimmer 8s linear infinite;
-}
-
-@keyframes shimmer {
-  0% { transform: translate(0, 0); }
-  100% { transform: translate(100px, 100px); }
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  max-width: 860px;
-}
-
-.hero h1 {
-  font-size: 64px;
-  font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -2px;
-  margin-bottom: 28px;
-  background: linear-gradient(135deg, #FFFFFF 0%, #E5E7EB 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hero-sub {
-  font-size: 19px;
-  color: #9CA3AF;
-  line-height: 1.75;
-  margin-bottom: 48px;
-  max-width: 680px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-ctas {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-/* ========================================
-   TRUST BAR
-   ======================================== */
-.trust-bar {
-  padding: 60px 0;
-  border-top: 1px solid #2A2A2E;
-  border-bottom: 1px solid #2A2A2E;
-}
-
-.trust-label {
-  text-align: center;
-  font-size: 14px;
-  font-weight: 500;
-  color: #6B7280;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  margin-bottom: 36px;
-}
-
-.trust-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-  max-width: 960px;
-  margin: 0 auto;
-}
-
-.trust-stat {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  padding: 20px 24px;
-  background: #2A2A2E;
-  border: 1px solid #3A3A3E;
-  border-radius: 16px;
-  transition: all 0.3s;
-}
-
-.trust-stat:hover {
-  transform: translateY(-2px);
-  border-color: rgba(16, 185, 129, 0.3);
-}
-
-.trust-stat-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  background: rgba(16, 185, 129, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.trust-stat-icon svg {
-  width: 22px;
-  height: 22px;
-  color: #10B981;
-}
-
-.trust-stat-text {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-@media (max-width: 768px) {
-  .trust-stats {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 480px) {
-  .trust-stats {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ========================================
-   PROBLEM SECTION
-   ======================================== */
-.problem {
-  padding: 120px 0;
-}
-
-.problem-header {
-  text-align: center;
-  margin-bottom: 64px;
-}
-
-.problem-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.problem-card {
-  background: #2A2A2E;
-  border: 1px solid #3A3A3E;
-  border-radius: 16px;
-  padding: 40px 32px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.problem-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(239, 68, 68, 0.3);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-.problem-card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: rgba(239, 68, 68, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 24px;
-}
-
-.problem-card-icon svg {
-  width: 26px;
-  height: 26px;
-  color: #EF4444;
-}
-
-.problem-card h3 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 12px;
-  line-height: 1.4;
-}
-
-.problem-card p {
-  font-size: 15px;
-  color: #9CA3AF;
-  line-height: 1.7;
-}
-
-@media (max-width: 768px) {
-  .problem-cards {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ========================================
-   PRODUCT SECTION
-   ======================================== */
-.product {
-  padding: 120px 0;
-  background: linear-gradient(180deg, #1C1C1E 0%, #1A1A1C 50%, #1C1C1E 100%);
-}
-
-.product-header {
-  text-align: center;
-  margin-bottom: 64px;
-}
-
-.product-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-}
-
-.product-card {
-  background: #2A2A2E;
-  border: 1px solid #3A3A3E;
-  border-radius: 16px;
-  padding: 44px 32px;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
-}
-
-.product-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #10B981, #2DD4BF);
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.product-card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(16, 185, 129, 0.3);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-}
-
-.product-card:hover::before {
-  opacity: 1;
-}
-
-.product-card-icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 14px;
-  background: rgba(16, 185, 129, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 28px;
-}
-
-.product-card-icon svg {
-  width: 28px;
-  height: 28px;
-  color: #10B981;
-}
-
-.product-card h3 {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 14px;
-}
-
-.product-card p {
-  font-size: 15px;
-  color: #9CA3AF;
-  line-height: 1.75;
-}
-
-@media (max-width: 768px) {
-  .product-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ========================================
-   LIVE DEMO
-   ======================================== */
-.demo { padding: 120px 0; }
-.demo-header { text-align: center; margin-bottom: 48px; }
-.demo-tabs { display: flex; justify-content: center; gap: 4px; margin-bottom: 24px; background: #2A2A2E; border-radius: 14px; padding: 4px; width: fit-content; margin-left: auto; margin-right: auto; }
-.demo-tab { padding: 12px 28px; border-radius: 10px; border: none; background: transparent; color: #9CA3AF; font-size: 14px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
-.demo-tab:hover { color: #fff; }
-.demo-tab--active { background: #10B981; color: #fff; }
-.demo-panel-wrap { background: #2A2A2E; border: 1px solid #3A3A3E; border-radius: 20px; overflow: hidden; position: relative; min-height: 600px; }
-.demo-panel { display: none; padding: 24px; animation: demoFadeIn 0.4s ease; }
-.demo-panel--active { display: block; }
-@keyframes demoFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-
-/* Map stats */
-.demo-map-stats { display: flex; gap: 32px; padding: 20px 24px; background: rgba(28,28,30,0.9); border-top: 1px solid #3A3A3E; }
-.demo-map-stat { display: flex; flex-direction: column; gap: 2px; }
-.demo-map-stat-val { font-size: 24px; font-weight: 800; color: #fff; }
-.demo-map-stat-label { font-size: 12px; color: #9CA3AF; font-weight: 500; }
-
-/* Delivery stats */
-.demo-del-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px 24px 0; margin-bottom: 20px; }
-.demo-del-stat { background: #1C1C1E; border-radius: 14px; padding: 20px; text-align: center; }
-.demo-del-stat-num { display: block; font-size: 32px; font-weight: 800; color: #fff; }
-.demo-del-stat-label { font-size: 12px; color: #9CA3AF; font-weight: 500; margin-top: 4px; display: block; }
-.demo-del-stat--emerald .demo-del-stat-num { color: #10B981; }
-.demo-del-stat--amber .demo-del-stat-num { color: #F59E0B; }
-.demo-del-stat--red .demo-del-stat-num { color: #EF4444; }
-
-/* Delivery table */
-.demo-del-table-wrap { overflow-x: auto; padding: 0 24px 24px; }
-.demo-del-table { width: 100%; border-collapse: collapse; }
-.demo-del-table th { text-align: left; padding: 14px 16px; color: #9CA3AF; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.6px; border-bottom: 1px solid #3A3A3E; white-space: nowrap; }
-.demo-del-table td { padding: 12px 16px; font-size: 13px; color: #fff; white-space: nowrap; border-bottom: 1px solid rgba(58,58,62,0.5); }
-.demo-del-table tbody tr { transition: background 0.2s; cursor: pointer; }
-.demo-del-table tbody tr:nth-child(odd) { background: #1C1C1E; }
-.demo-del-table tbody tr:nth-child(even) { background: #242428; }
-.demo-del-table tbody tr:hover { background: #30303A; }
-.demo-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; }
-.demo-badge--delivered { background: rgba(16,185,129,0.15); color: #10B981; }
-.demo-badge--pending { background: rgba(245,158,11,0.15); color: #F59E0B; }
-.demo-badge--failed { background: rgba(239,68,68,0.15); color: #EF4444; }
-.demo-badge-dot { width: 6px; height: 6px; border-radius: 50%; }
-.demo-badge--delivered .demo-badge-dot { background: #10B981; }
-.demo-badge--pending .demo-badge-dot { background: #F59E0B; }
-.demo-badge--failed .demo-badge-dot { background: #EF4444; }
-.demo-pod-btn { background: transparent; border: 1px solid #3A3A3E; color: #10B981; padding: 5px 14px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
-.demo-pod-btn:hover { background: rgba(16,185,129,0.1); border-color: #10B981; }
-
-/* Dispatch */
-.demo-disp-banner { background: linear-gradient(90deg, rgba(16,185,129,0.1), rgba(45,212,191,0.05)); border: 1px solid rgba(16,185,129,0.2); border-radius: 12px; padding: 16px 24px; color: #10B981; font-size: 14px; font-weight: 600; margin: 24px 24px 24px; text-align: center; }
-.demo-disp-drivers { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; padding: 0 24px 24px; }
-.demo-disp-driver { background: #1C1C1E; border-radius: 14px; padding: 20px; }
-.demo-disp-driver-name { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 4px; }
-.demo-disp-driver-sub { font-size: 12px; color: #9CA3AF; margin-bottom: 12px; }
-.demo-disp-progress { height: 6px; background: #3A3A3E; border-radius: 3px; overflow: hidden; margin-bottom: 8px; }
-.demo-disp-progress-fill { height: 100%; border-radius: 3px; background: linear-gradient(90deg, #10B981, #2DD4BF); transition: width 1s ease; }
-.demo-disp-driver-pct { font-size: 20px; font-weight: 800; color: #10B981; }
-.demo-disp-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 0 24px 24px; }
-.demo-disp-payroll, .demo-disp-chart { background: #1C1C1E; border-radius: 14px; padding: 20px; }
-.demo-disp-payroll h4, .demo-disp-chart h4 { font-size: 14px; font-weight: 700; margin-bottom: 16px; color: #fff; }
-.demo-disp-payroll-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; color: #9CA3AF; border-bottom: 1px solid rgba(58,58,62,0.4); }
-.demo-disp-payroll-total { display: flex; justify-content: space-between; padding: 12px 0 0; font-size: 14px; font-weight: 700; color: #fff; }
-.demo-disp-bars { display: flex; align-items: flex-end; gap: 12px; height: 140px; }
-.demo-disp-bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; }
-.demo-disp-bar { width: 100%; background: linear-gradient(180deg, #10B981, #2DD4BF); border-radius: 6px 6px 0 0; min-height: 10px; transition: height 0.8s ease; }
-.demo-disp-bar-col span { font-size: 11px; color: #9CA3AF; margin-top: 8px; font-weight: 500; }
-.demo-disp-bar-col--today .demo-disp-bar { opacity: 0.5; }
-.demo-disp-bar-col--today span { color: #10B981; font-weight: 700; }
-
-/* POD Modal */
-.demo-pod-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 9999; align-items: center; justify-content: center; padding: 24px; animation: demoFadeIn 0.2s ease; }
-.demo-pod-modal--open { display: flex; }
-.demo-pod-modal-card { background: #2A2A2E; border: 1px solid #3A3A3E; border-radius: 20px; width: 100%; max-width: 600px; max-height: 90vh; overflow-y: auto; animation: demoSlideUp 0.3s ease; }
-@keyframes demoSlideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-.demo-pod-header { display: flex; align-items: center; justify-content: space-between; padding: 24px 28px; border-bottom: 1px solid #3A3A3E; }
-.demo-pod-header h3 { font-size: 18px; font-weight: 700; }
-.demo-pod-close { width: 32px; height: 32px; border-radius: 8px; background: transparent; border: 1px solid #3A3A3E; color: #9CA3AF; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
-.demo-pod-close:hover { background: #1C1C1E; color: #fff; }
-.demo-pod-body { padding: 28px; display: flex; flex-direction: column; gap: 20px; }
-.demo-pod-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.demo-pod-field { display: flex; flex-direction: column; gap: 4px; }
-.demo-pod-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #6B7280; }
-.demo-pod-value { font-size: 14px; color: #fff; font-weight: 500; }
-.demo-pod-gps { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; color: #9CA3AF; }
-.demo-pod-verified { color: #10B981; font-weight: 600; }
-.demo-pod-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-.demo-pod-photo-box { background: #1C1C1E; border: 1px dashed #3A3A3E; border-radius: 12px; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; }
-.demo-pod-photo-icon { font-size: 28px; opacity: 0.4; }
-.demo-pod-photo-label { font-size: 12px; color: #6B7280; }
-.demo-pod-sig-box { background: #1C1C1E; border: 1px dashed #3A3A3E; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; align-items: center; gap: 8px; }
-.demo-pod-sig-box canvas { background: transparent; }
-.demo-pod-footer { padding: 20px 28px; border-top: 1px solid #3A3A3E; display: flex; justify-content: flex-end; }
-.demo-pod-close-btn { padding: 10px 24px; border-radius: 10px; background: #10B981; color: #fff; border: none; font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s; font-family: inherit; }
-.demo-pod-close-btn:hover { background: #0EA472; }
-
-@media (max-width: 900px) {
-  .demo-del-stats { grid-template-columns: repeat(2, 1fr); }
-  .demo-disp-drivers { grid-template-columns: repeat(2, 1fr); }
-  .demo-disp-bottom { grid-template-columns: 1fr; }
-}
-@media (max-width: 600px) {
-  .demo-tabs { flex-wrap: wrap; }
-  .demo-del-stats { grid-template-columns: 1fr 1fr; }
-  .demo-disp-drivers { grid-template-columns: 1fr; }
-  .demo-pod-row { grid-template-columns: 1fr; }
-  .demo-pod-photos { grid-template-columns: 1fr; }
-}
-
-/* ========================================
-   SOCIAL PROOF
-   ======================================== */
-.social-proof {
-  padding: 100px 0;
-  background: linear-gradient(180deg, #1C1C1E 0%, #1F1F22 50%, #1C1C1E 100%);
-}
-
-.quote-block {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
-  padding: 60px 40px;
-}
-
-.quote-mark {
-  font-size: 120px;
-  font-weight: 900;
-  color: #10B981;
-  opacity: 0.15;
-  line-height: 1;
-  position: absolute;
-  top: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-family: Georgia, serif;
-}
-
-.quote-text {
-  font-size: 26px;
-  font-weight: 600;
-  line-height: 1.6;
-  margin-bottom: 32px;
-  position: relative;
-  z-index: 1;
-  letter-spacing: -0.3px;
-}
-
-.quote-accent {
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, #10B981, #2DD4BF);
-  margin: 0 auto 24px;
-  border-radius: 2px;
-}
-
-.quote-attribution {
+.dispatch-header-title {
   font-size: 16px;
-  color: #9CA3AF;
+  font-weight: 700;
+}
+
+.dispatch-banner {
+  font-size: 13px;
+  color: var(--emerald);
   font-weight: 500;
-}
-
-/* ========================================
-   TWO AUDIENCES
-   ======================================== */
-.audiences {
-  padding: 120px 0;
-}
-
-.audiences-header {
-  text-align: center;
-  margin-bottom: 64px;
-}
-
-.audiences-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 28px;
-}
-
-.audience-card {
-  background: #2A2A2E;
-  border: 1px solid #3A3A3E;
-  border-radius: 16px;
-  padding: 48px 40px;
-  border-top: 3px solid #10B981;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.audience-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  border-color: rgba(16, 185, 129, 0.3);
-  border-top-color: #10B981;
-}
-
-.audience-card h3 {
-  font-size: 24px;
-  font-weight: 800;
-  margin-bottom: 28px;
-  letter-spacing: -0.3px;
-}
-
-.audience-card ul {
-  list-style: none;
-  margin-bottom: 32px;
-}
-
-.audience-card li {
-  font-size: 15px;
-  color: #D1D5DB;
-  padding: 10px 0;
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  line-height: 1.5;
-}
-
-.audience-card li::before {
-  content: '';
-  display: block;
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  border-radius: 50%;
-  background: rgba(16, 185, 129, 0.1);
-  margin-top: 2px;
-  position: relative;
-}
-
-.audience-check {
-  width: 20px;
-  height: 20px;
-  min-width: 20px;
-  margin-top: 2px;
-  color: #10B981;
-}
-
-.audience-card li {
-  padding-left: 0;
-}
-
-.audience-card li::before {
-  display: none;
-}
-
-.audience-cta {
-  font-size: 15px;
-  font-weight: 600;
-  color: #10B981;
-  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  transition: gap 0.2s;
-}
-
-.audience-cta:hover {
-  gap: 12px;
-}
-
-@media (max-width: 768px) {
-  .audiences-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ========================================
-   COMPLIANCE
-   ======================================== */
-.compliance {
-  padding: 100px 0;
-  background: linear-gradient(180deg, #1C1C1E 0%, #1A1A1C 50%, #1C1C1E 100%);
-}
-
-.compliance-inner {
-  text-align: center;
-}
-
-.compliance-badges {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 48px;
-}
-
-.compliance-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
-  background: #2A2A2E;
-  border: 1px solid #3A3A3E;
-  border-radius: 100px;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.3s;
-}
-
-.compliance-badge:hover {
-  border-color: rgba(16, 185, 129, 0.4);
-  transform: translateY(-2px);
-}
-
-.compliance-badge svg {
-  width: 18px;
-  height: 18px;
-  color: #10B981;
-}
-
-/* ========================================
-   CTA / CONTACT
-   ======================================== */
-.cta-section {
-  padding: 120px 0;
-}
-
-.cta-inner {
-  text-align: center;
-  margin-bottom: 48px;
-}
-
-.cta-form-card {
-  max-width: 640px;
-  margin: 0 auto;
-  background: #2A2A2E;
-  border: 1px solid #3A3A3E;
-  border-radius: 20px;
-  padding: 48px 44px;
-}
-
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-  margin-bottom: 18px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
   gap: 6px;
 }
 
-.form-group.full-width {
-  grid-column: 1 / -1;
+.driver-cards-row {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.driver-card {
+  flex: 1;
+  padding: 18px 20px;
+  border-right: 1px solid var(--border);
+}
+
+.driver-card:last-child {
+  border-right: none;
+}
+
+.driver-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.driver-card-stops {
+  font-size: 12px;
+  color: var(--gray-500);
+  margin-bottom: 10px;
+}
+
+.driver-progress-bar {
+  height: 6px;
+  background: var(--gray-700);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.driver-progress-fill {
+  height: 100%;
+  background: var(--emerald);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.driver-card-pct {
+  font-size: 11px;
+  color: var(--emerald);
+  font-weight: 600;
+}
+
+.dispatch-bottom {
+  display: flex;
+  border-top: 1px solid var(--border);
+}
+
+.dispatch-payroll {
+  flex: 1;
+  padding: 20px 24px;
+  border-right: 1px solid var(--border);
+}
+
+.dispatch-chart {
+  flex: 1;
+  padding: 20px 24px;
+}
+
+.dispatch-subtitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-500);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.payroll-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(58, 58, 62, 0.3);
+}
+
+.payroll-name {
+  color: var(--gray-300);
+}
+
+.payroll-amount {
+  color: var(--emerald);
+  font-weight: 600;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 100px;
+  padding-top: 10px;
+}
+
+.chart-bar-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  height: 100%;
+  justify-content: flex-end;
+}
+
+.chart-bar {
+  width: 100%;
+  background: var(--emerald);
+  border-radius: 4px 4px 0 0;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+.chart-bar:hover {
+  opacity: 1;
+}
+
+.chart-bar-label {
+  font-size: 10px;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.dispatch-text {
+  font-size: 32px;
+  font-weight: 600;
+  text-align: center;
+  max-width: 600px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.dispatch-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dispatch-text em {
+  color: var(--teal);
+  font-style: normal;
+}
+
+/* ========================================
+   SECTION 7 — PROOF
+   ======================================== */
+#proof-section {
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  background: var(--bg);
+}
+
+.proof-stats {
+  display: flex;
+  gap: 60px;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.proof-stat {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.proof-stat.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.proof-stat-value {
+  font-size: 56px;
+  font-weight: 800;
+  color: var(--emerald);
+  letter-spacing: -2px;
+  line-height: 1;
+}
+
+.proof-stat-label {
+  font-size: 14px;
+  color: var(--gray-500);
+  margin-top: 8px;
+  font-weight: 500;
+}
+
+.proof-quote {
+  font-size: 22px;
+  font-weight: 400;
+  text-align: center;
+  color: var(--gray-100);
+  max-width: 650px;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.proof-attribution {
+  font-size: 14px;
+  color: var(--gray-500);
+}
+
+/* ========================================
+   SECTION 8 — TWO DOORS
+   ======================================== */
+#doors-section {
+  min-height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 40px;
+  background: var(--bg);
+}
+
+.doors-grid {
+  display: flex;
+  gap: 24px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.door-card {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px 30px;
+  opacity: 0;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.door-card.left {
+  transform: translateX(-40px);
+  border-top: 3px solid var(--emerald);
+}
+
+.door-card.right {
+  transform: translateX(40px);
+  border-top: 3px solid var(--teal);
+}
+
+.door-card.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.door-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.door-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.door-list li {
+  font-size: 14px;
+  color: var(--gray-300);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+.door-list li::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.door-card.left .door-list li::before {
+  background: var(--emerald);
+}
+
+.door-card.right .door-list li::before {
+  background: var(--teal);
+}
+
+.door-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  color: #000;
+}
+
+.door-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.door-btn.emerald {
+  background: var(--emerald);
+}
+
+.door-btn.teal {
+  background: var(--teal);
+}
+
+/* ========================================
+   SECTION 9 — CONTACT
+   ======================================== */
+#contact {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 40px 60px;
+  background: var(--bg);
+}
+
+.contact-headline {
+  font-size: 40px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 12px;
+  letter-spacing: -1px;
+}
+
+.contact-subhead {
+  font-size: 18px;
+  color: var(--gray-500);
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.contact-form-card {
+  width: 100%;
+  max-width: 560px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 36px;
+}
+
+.form-group {
+  margin-bottom: 18px;
 }
 
 .form-group label {
+  display: block;
   font-size: 13px;
-  font-weight: 600;
-  color: #9CA3AF;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
+  font-weight: 500;
+  color: var(--gray-300);
+  margin-bottom: 6px;
 }
 
 .form-group input,
 .form-group textarea {
-  background: #1C1C1E;
-  border: 1px solid #3A3A3E;
-  border-radius: 10px;
-  padding: 14px 16px;
-  font-size: 15px;
-  color: #FFFFFF;
-  font-family: 'Inter', sans-serif;
-  transition: border-color 0.2s;
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: var(--font);
+  font-size: 14px;
   outline: none;
+  transition: border-color 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  border-color: #10B981;
+  border-color: var(--emerald);
 }
 
 .form-group input::placeholder,
 .form-group textarea::placeholder {
-  color: #4B5563;
+  color: var(--gray-700);
 }
 
 .form-group textarea {
+  height: 100px;
   resize: vertical;
-  min-height: 120px;
+}
+
+.form-row {
+  display: flex;
+  gap: 16px;
+}
+
+.form-row .form-group {
+  flex: 1;
 }
 
 .form-submit {
+  width: 100%;
+  padding: 14px;
+  background: var(--emerald);
+  border: none;
+  border-radius: 10px;
+  color: #000;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
   margin-top: 8px;
 }
 
-.form-submit .btn {
-  width: 100%;
-  padding: 16px;
-  font-size: 16px;
+.form-submit:hover {
+  background: var(--emerald-dark);
+  transform: translateY(-1px);
 }
 
-@media (max-width: 480px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  .cta-form-card {
-    padding: 32px 24px;
-  }
-}
-
-/* ========================================
-   FOOTER
-   ======================================== */
 .footer {
-  padding: 60px 0 40px;
-  border-top: 1px solid #2A2A2E;
-}
-
-.footer-inner {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 40px;
-  margin-bottom: 48px;
-}
-
-.footer-brand {
-  max-width: 280px;
+  margin-top: 80px;
+  text-align: center;
 }
 
 .footer-logo {
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 800;
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 2px;
+  margin-bottom: 4px;
 }
 
 .footer-logo .dot {
-  width: 7px;
-  height: 7px;
-  background: #10B981;
-  border-radius: 50%;
-  display: inline-block;
+  color: var(--emerald);
 }
 
 .footer-tagline {
   font-size: 14px;
-  color: #6B7280;
+  color: var(--gray-500);
+  margin-bottom: 16px;
 }
 
-.footer-links {
-  display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
+.footer-copy {
+  font-size: 12px;
+  color: var(--gray-700);
 }
 
-.footer-links a {
-  font-size: 14px;
-  color: #6B7280;
-  transition: color 0.2s;
-}
-
-.footer-links a:hover {
-  color: #FFFFFF;
-}
-
-.footer-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding-top: 32px;
-  border-top: 1px solid #2A2A2E;
-}
-
-.footer-bottom p {
-  font-size: 13px;
-  color: #4B5563;
+.footer-built {
+  font-size: 12px;
+  color: var(--gray-700);
+  margin-top: 4px;
 }
 
 /* ========================================
-   RESPONSIVE
+   MOBILE RESPONSIVE
    ======================================== */
 @media (max-width: 768px) {
-  .hero h1 {
-    font-size: 40px;
-    letter-spacing: -1px;
+  .floating-nav {
+    padding: 12px 20px;
   }
 
-  .hero-sub {
-    font-size: 16px;
+  .arrival-logo {
+    font-size: 48px;
   }
 
-  .section-headline {
-    font-size: 32px;
-  }
-
-  .quote-text {
+  .arrival-tagline {
     font-size: 20px;
+    gap: 10px;
   }
 
-  .audience-card {
-    padding: 36px 28px;
+  .problem-line-1 {
+    font-size: 26px;
   }
 
-  .footer-inner {
+  .problem-line-2 {
+    font-size: 22px;
+  }
+
+  .problem-line-3 {
+    font-size: 24px;
+  }
+
+  .map-hud {
+    left: 16px;
+    right: 16px;
+    bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12px;
+    padding: 14px 18px;
+  }
+
+  #delivery-section .sticky-panel {
+    flex-direction: column;
+    padding: 20px;
+    gap: 16px;
+  }
+
+  .delivery-left {
+    flex: 0 0 40%;
+    width: 100%;
+  }
+
+  .delivery-right {
+    flex: 1;
+    width: 100%;
+  }
+
+  .pod-overlay {
+    width: 100%;
+    right: 0;
+    padding: 20px;
+  }
+
+  #pharmacy-section .sticky-panel,
+  #dispatch-section .sticky-panel {
+    padding: 30px 20px;
+  }
+
+  .portal-text,
+  .dispatch-text {
+    font-size: 24px;
+  }
+
+  .portal-stats {
+    flex-wrap: wrap;
+  }
+
+  .portal-stat {
+    flex: 0 0 50%;
+  }
+
+  .driver-cards-row {
+    flex-wrap: wrap;
+  }
+
+  .driver-card {
+    flex: 0 0 50%;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .dispatch-bottom {
     flex-direction: column;
   }
 
-  .footer-bottom {
+  .dispatch-payroll {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .proof-stats {
+    gap: 32px;
+  }
+
+  .proof-stat-value {
+    font-size: 40px;
+  }
+
+  .proof-quote {
+    font-size: 18px;
+  }
+
+  .doors-grid {
     flex-direction: column;
-    text-align: center;
+  }
+
+  .door-card.left,
+  .door-card.right {
+    transform: translateY(30px);
+  }
+
+  .contact-headline {
+    font-size: 28px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .delivery-table td,
+  .delivery-table th {
+    padding: 8px 10px;
+    font-size: 11px;
+  }
+
+  .portal-table td,
+  .portal-table th {
+    padding: 8px 10px;
+    font-size: 11px;
   }
 }
 
 @media (max-width: 480px) {
-  .hero h1 {
-    font-size: 34px;
+  .arrival-logo {
+    font-size: 40px;
   }
 
-  .hero-ctas {
+  .arrival-tagline {
     flex-direction: column;
+    gap: 6px;
+    font-size: 20px;
   }
 
-  .hero-ctas .btn {
-    width: 100%;
-  }
-
-  .section-headline {
-    font-size: 28px;
+  .contact-form-card {
+    padding: 24px;
   }
 }
 </style>
 </head>
 <body>
 
-<!-- ============ NAV ============ -->
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="#" class="nav-logo">LYN<span class="dot"></span></a>
-    <div class="nav-links">
-      <a href="#product">Product</a>
-      <a href="#audiences">Solutions</a>
-      <a href="#compliance">Compliance</a>
-      <a href="#contact">Request Demo</a>
-    </div>
-    <div class="nav-cta">
-      <a href="#contact" class="btn btn-primary btn-sm">Request Demo</a>
-    </div>
-    <button class="hamburger" id="hamburger" aria-label="Open menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
-  </div>
+<!-- =========================================
+     FLOATING NAV
+     ========================================= -->
+<nav class="floating-nav" id="floating-nav">
+  <a href="#" class="nav-logo">LYN<span class="dot">.</span></a>
+  <a href="#contact" class="nav-cta">Let's Talk</a>
 </nav>
 
-<!-- Mobile menu -->
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#product" class="mobile-link">Product</a>
-  <a href="#audiences" class="mobile-link">Solutions</a>
-  <a href="#compliance" class="mobile-link">Compliance</a>
-  <a href="#contact" class="mobile-link">Request Demo</a>
-  <a href="#contact" class="btn btn-primary" style="margin-top: 16px;">Request Demo</a>
+<!-- =========================================
+     SECTION 1 — ARRIVAL
+     ========================================= -->
+<div class="scroll-section" id="arrival">
+  <div class="sticky-panel">
+    <div class="particle-field" id="particle-field"></div>
+    <div class="arrival-content">
+      <div class="arrival-logo" id="arrival-logo">LYN<span class="dot">.</span></div>
+      <div class="arrival-tagline">
+        <span id="word-1">Every</span>
+        <span id="word-2">delivery.</span>
+        <span id="word-3">Proven.</span>
+      </div>
+      <div class="arrival-hint" id="arrival-hint">Scroll to see it happen.</div>
+    </div>
+  </div>
 </div>
 
-<!-- ============ HERO ============ -->
-<section class="hero" id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-glow"></div>
-  <div class="hero-shimmer"></div>
-  <div class="hero-content">
-    <h1 class="reveal">Every delivery. Proven.</h1>
-    <p class="hero-sub reveal reveal-delay-1">LYN gives pharmacies real-time proof of every delivery — photo, signature, GPS — and gives courier companies the dispatch infrastructure to run at scale.</p>
-    <div class="hero-ctas reveal reveal-delay-2">
-      <a href="#product" class="btn btn-primary">
-        See the Platform
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-      </a>
-      <a href="#demo" class="btn btn-ghost">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8" fill="currentColor" stroke="none"/></svg>
-        Watch Demo
-      </a>
-    </div>
+<!-- =========================================
+     SECTION 2 — THE PROBLEM
+     ========================================= -->
+<div class="scroll-section" id="problem">
+  <div class="sticky-panel">
+    <div class="problem-line problem-line-1" id="problem-1">A patient didn't get their medication today.</div>
+    <div class="problem-line problem-line-2" id="problem-2">Nobody knows.</div>
+    <div class="problem-line problem-line-3" id="problem-3">That's the problem LYN solves.</div>
   </div>
-</section>
+</div>
 
-<!-- ============ TRUST BAR ============ -->
-<section class="trust-bar">
-  <div class="container">
-    <p class="trust-label reveal">Built by operators. Trusted by pharmacies.</p>
-    <div class="trust-stats">
-      <div class="trust-stat reveal reveal-delay-1">
-        <div class="trust-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-        </div>
-        <span class="trust-stat-text">300+ Daily Deliveries</span>
+<!-- =========================================
+     SECTION 3 — THE MAP
+     ========================================= -->
+<div class="scroll-section" id="map-section">
+  <div class="sticky-panel">
+    <div class="map-container">
+      <div id="lyn-map"></div>
+    </div>
+    <div class="map-hud" id="map-hud">
+      <div class="hud-item">
+        <div class="hud-dot emerald"></div>
+        <span class="hud-label">Drivers Active:</span>
+        <span class="hud-value">5</span>
       </div>
-      <div class="trust-stat reveal reveal-delay-2">
-        <div class="trust-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-        </div>
-        <span class="trust-stat-text">17 Years Operational Knowledge</span>
+      <div class="hud-item">
+        <div class="hud-dot amber"></div>
+        <span class="hud-label">Stops Remaining:</span>
+        <span class="hud-value">47</span>
       </div>
-      <div class="trust-stat reveal reveal-delay-3">
-        <div class="trust-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        </div>
-        <span class="trust-stat-text">HIPAA-Ready</span>
-      </div>
-      <div class="trust-stat reveal reveal-delay-4">
-        <div class="trust-stat-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-        </div>
-        <span class="trust-stat-text">Real-Time POD</span>
+      <div class="hud-item">
+        <div class="hud-dot teal"></div>
+        <span class="hud-label">Delivered:</span>
+        <span class="hud-value">311</span>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ============ PROBLEM SECTION ============ -->
-<section class="problem" id="problem">
-  <div class="container">
-    <div class="problem-header">
-      <p class="eyebrow reveal">The Problem</p>
-      <h2 class="section-headline reveal reveal-delay-1">Pharma delivery is broken.</h2>
-    </div>
-    <div class="problem-cards">
-      <div class="problem-card reveal reveal-delay-1">
-        <div class="problem-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+<!-- =========================================
+     SECTION 4 — A DELIVERY HAPPENS
+     ========================================= -->
+<div class="scroll-section" id="delivery-section">
+  <div class="sticky-panel">
+    <div class="delivery-left" id="delivery-left">
+      <div class="mini-map-card">
+        <div class="mini-map-inner">
+          <div id="mini-map"></div>
         </div>
-        <h3>No proof a patient received their medication</h3>
-        <p>Pharmacies have zero visibility into whether a delivery actually happened. No photo. No signature. No GPS. Just trust.</p>
-      </div>
-      <div class="problem-card reveal reveal-delay-2">
-        <div class="problem-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-        </div>
-        <h3>Couriers running on spreadsheets and phone calls</h3>
-        <p>Routes planned on paper. Payroll done by hand. No analytics. No accountability. No way to scale.</p>
-      </div>
-      <div class="problem-card reveal reveal-delay-3">
-        <div class="problem-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        </div>
-        <h3>Pharmacies calling dispatch for every update</h3>
-        <p>Where's my delivery? Did the driver leave it? Was it signed for? Every question requires a phone call.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ============ LIVE DEMO ============ -->
-<section class="demo" id="demo">
-  <div class="container">
-    <div class="demo-header">
-      <p class="eyebrow reveal">Live Demo</p>
-      <h2 class="section-headline reveal reveal-delay-1">See LYN running live.</h2>
-      <p class="section-sub reveal reveal-delay-2">This is a real demo. Real data. Real workflow.</p>
-    </div>
-    <div class="demo-tabs reveal reveal-delay-2">
-      <button class="demo-tab demo-tab--active" data-tab="map">Live Map</button>
-      <button class="demo-tab" data-tab="deliveries">Deliveries</button>
-      <button class="demo-tab" data-tab="dispatch">Dispatch</button>
-    </div>
-    <div class="demo-panel-wrap reveal reveal-delay-3">
-      <!-- TAB 1: LIVE MAP -->
-      <div class="demo-panel demo-panel--active" id="demo-map">
-        <div id="mapbox-map" style="width:100%;height:520px;border-radius:16px;overflow:hidden;"></div>
-        <div class="demo-map-stats">
-          <div class="demo-map-stat"><span class="demo-map-stat-val" id="demo-drivers-active">5</span><span class="demo-map-stat-label">Drivers Active</span></div>
-          <div class="demo-map-stat"><span class="demo-map-stat-val" id="demo-stops-remaining">47</span><span class="demo-map-stat-label">Stops Remaining</span></div>
-          <div class="demo-map-stat"><span class="demo-map-stat-val" id="demo-delivered-today">312</span><span class="demo-map-stat-label">Delivered Today</span></div>
-        </div>
+    <div class="delivery-right" id="delivery-right">
+      <div class="delivery-counter">Deliveries Today: <span id="delivery-count">311</span></div>
+      <div class="delivery-table-wrap">
+        <table class="delivery-table">
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Address</th>
+              <th>Driver</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="delivery-tbody"></tbody>
+        </table>
       </div>
-      <!-- TAB 2: DELIVERIES -->
-      <div class="demo-panel" id="demo-deliveries">
-        <div class="demo-del-stats">
-          <div class="demo-del-stat"><span class="demo-del-stat-num">387</span><span class="demo-del-stat-label">Total Today</span></div>
-          <div class="demo-del-stat demo-del-stat--emerald"><span class="demo-del-stat-num" id="demo-del-delivered">312</span><span class="demo-del-stat-label">Delivered</span></div>
-          <div class="demo-del-stat demo-del-stat--amber"><span class="demo-del-stat-num" id="demo-del-pending">68</span><span class="demo-del-stat-label">Pending</span></div>
-          <div class="demo-del-stat demo-del-stat--red"><span class="demo-del-stat-num">7</span><span class="demo-del-stat-label">Failed</span></div>
+    </div>
+    <div class="pod-overlay" id="pod-overlay">
+      <div class="pod-card">
+        <div class="pod-header">
+          <div class="pod-title">Proof of Delivery</div>
+          <div class="pod-verified">&#10003; Verified</div>
         </div>
-        <div class="demo-del-table-wrap">
-          <table class="demo-del-table">
-            <thead><tr><th>Patient</th><th>Address</th><th>City</th><th>Driver</th><th>Status</th><th>Time</th><th>POD</th></tr></thead>
-            <tbody id="demo-del-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-      <!-- TAB 3: DISPATCH -->
-      <div class="demo-panel" id="demo-dispatch">
-        <div class="demo-disp-banner">Routes optimized · Saved 47 minutes today</div>
-        <div class="demo-disp-drivers" id="demo-disp-drivers"></div>
-        <div class="demo-disp-bottom">
-          <div class="demo-disp-payroll">
-            <h4>Weekly Payroll</h4>
-            <div class="demo-disp-payroll-row"><span>Marcus Rivera</span><span>$847.50</span></div>
-            <div class="demo-disp-payroll-row"><span>Angela Foster</span><span>$792.00</span></div>
-            <div class="demo-disp-payroll-row"><span>Derek Simmons</span><span>$715.50</span></div>
-            <div class="demo-disp-payroll-row"><span>Rachel Kim</span><span>$684.00</span></div>
-            <div class="demo-disp-payroll-row"><span>Brian O'Neill</span><span>$621.00</span></div>
-            <div class="demo-disp-payroll-total"><span>Total</span><span>$3,660.00</span></div>
+        <div class="pod-grid">
+          <div class="pod-photo">
+            &#128230;
+            <div class="pod-photo-label">Package Photo</div>
           </div>
-          <div class="demo-disp-chart">
-            <h4>This Week</h4>
-            <div class="demo-disp-bars">
-              <div class="demo-disp-bar-col"><div class="demo-disp-bar" style="height:65%"></div><span>Mon</span></div>
-              <div class="demo-disp-bar-col"><div class="demo-disp-bar" style="height:80%"></div><span>Tue</span></div>
-              <div class="demo-disp-bar-col"><div class="demo-disp-bar" style="height:72%"></div><span>Wed</span></div>
-              <div class="demo-disp-bar-col"><div class="demo-disp-bar" style="height:90%"></div><span>Thu</span></div>
-              <div class="demo-disp-bar-col demo-disp-bar-col--today"><div class="demo-disp-bar" style="height:55%"></div><span>Fri</span></div>
+          <div class="pod-photo">
+            &#127968;
+            <div class="pod-photo-label">Delivery Location</div>
+          </div>
+        </div>
+        <div class="pod-signature-section">
+          <div class="pod-signature-label">Patient Signature</div>
+          <canvas class="pod-signature-canvas" id="pod-signature-canvas" width="480" height="80"></canvas>
+        </div>
+        <div class="pod-details">
+          <div class="pod-detail-row">
+            <span class="pod-detail-label">GPS Coordinates</span>
+            <span class="pod-detail-value">41.0891&deg;N, 81.5123&deg;W</span>
+          </div>
+          <div class="pod-detail-row">
+            <span class="pod-detail-label">Geofence</span>
+            <span class="pod-detail-value emerald">&#10003; Verified &mdash; 42 ft</span>
+          </div>
+          <div class="pod-detail-row">
+            <span class="pod-detail-label">Timestamp</span>
+            <span class="pod-detail-value">Today 10:47 AM</span>
+          </div>
+          <div class="pod-detail-row">
+            <span class="pod-detail-label">Driver</span>
+            <span class="pod-detail-value">Marcus T.</span>
+          </div>
+        </div>
+        <div class="pod-note">"Left at front door per patient request"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 5 — PHARMACY PORTAL
+     ========================================= -->
+<div class="scroll-section" id="pharmacy-section">
+  <div class="sticky-panel">
+    <div class="portal-mockup" id="pharmacy-mockup">
+      <div class="portal-topbar">
+        <div class="portal-topbar-left">
+          <div class="portal-topbar-name">Giant Eagle Pharmacy</div>
+          <div class="portal-topbar-badge">Active</div>
+        </div>
+        <div class="portal-avatar">GE</div>
+      </div>
+      <div class="portal-stats">
+        <div class="portal-stat">
+          <div class="portal-stat-value">387</div>
+          <div class="portal-stat-label">Total</div>
+        </div>
+        <div class="portal-stat">
+          <div class="portal-stat-value emerald">312</div>
+          <div class="portal-stat-label">Delivered</div>
+        </div>
+        <div class="portal-stat">
+          <div class="portal-stat-value amber">68</div>
+          <div class="portal-stat-label">Pending</div>
+        </div>
+        <div class="portal-stat">
+          <div class="portal-stat-value red">7</div>
+          <div class="portal-stat-label">Failed</div>
+        </div>
+      </div>
+      <div class="portal-table-wrap">
+        <table class="portal-table">
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Address</th>
+              <th>Driver</th>
+              <th>Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Margaret Thompson</td>
+              <td>142 Oak St, Fairlawn</td>
+              <td>Marcus T.</td>
+              <td>10:47 AM</td>
+              <td><span class="status-badge delivered">Delivered</span></td>
+            </tr>
+            <tr>
+              <td>Robert Williams</td>
+              <td>891 Maple Ave, Akron</td>
+              <td>Marcus T.</td>
+              <td>11:02 AM</td>
+              <td><span class="status-badge delivered">Delivered</span></td>
+            </tr>
+            <tr>
+              <td>Dorothy Evans</td>
+              <td>2200 State Rd, Cuyahoga Falls</td>
+              <td>Darnell W.</td>
+              <td>11:15 AM</td>
+              <td><span class="status-badge delivered">Delivered</span></td>
+            </tr>
+            <tr>
+              <td>James Anderson</td>
+              <td>567 Highland Ave, Akron</td>
+              <td>Darnell W.</td>
+              <td>—</td>
+              <td><span class="status-badge pending">Pending</span></td>
+            </tr>
+            <tr>
+              <td>William Davis</td>
+              <td>330 W Market St, Akron</td>
+              <td>Steve M.</td>
+              <td>—</td>
+              <td><span class="status-badge pending">Pending</span></td>
+            </tr>
+            <tr>
+              <td>Barbara Taylor</td>
+              <td>45 Merriman Rd, Akron</td>
+              <td>Steve M.</td>
+              <td>10:58 AM</td>
+              <td><span class="status-badge delivered">Delivered</span></td>
+            </tr>
+            <tr>
+              <td>Richard Brown</td>
+              <td>780 E Tallmadge Ave, Akron</td>
+              <td>Kim L.</td>
+              <td>—</td>
+              <td><span class="status-badge pending">Pending</span></td>
+            </tr>
+            <tr>
+              <td>Susan Harris</td>
+              <td>920 N Main St, North Canton</td>
+              <td>Ray D.</td>
+              <td>11:22 AM</td>
+              <td><span class="status-badge failed">Failed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="portal-text" id="pharmacy-text">Your patients. Your proof. <em>On demand.</em></div>
+  </div>
+</div>
+
+<!-- =========================================
+     SECTION 6 — DISPATCH PORTAL
+     ========================================= -->
+<div class="scroll-section" id="dispatch-section">
+  <div class="sticky-panel">
+    <div class="dispatch-mockup" id="dispatch-mockup">
+      <div class="dispatch-header">
+        <div class="dispatch-header-title">Dispatch Overview</div>
+        <div class="dispatch-banner">&#9889; Routes optimized &middot; 47 minutes saved today</div>
+      </div>
+      <div class="driver-cards-row">
+        <div class="driver-card">
+          <div class="driver-card-name">Marcus T.</div>
+          <div class="driver-card-stops">22 / 28 stops</div>
+          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 79%;"></div></div>
+          <div class="driver-card-pct">79%</div>
+        </div>
+        <div class="driver-card">
+          <div class="driver-card-name">Darnell W.</div>
+          <div class="driver-card-stops">18 / 24 stops</div>
+          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 75%;"></div></div>
+          <div class="driver-card-pct">75%</div>
+        </div>
+        <div class="driver-card">
+          <div class="driver-card-name">Steve M.</div>
+          <div class="driver-card-stops">15 / 22 stops</div>
+          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 68%;"></div></div>
+          <div class="driver-card-pct">68%</div>
+        </div>
+        <div class="driver-card">
+          <div class="driver-card-name">Kim L.</div>
+          <div class="driver-card-stops">20 / 26 stops</div>
+          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 77%;"></div></div>
+          <div class="driver-card-pct">77%</div>
+        </div>
+        <div class="driver-card">
+          <div class="driver-card-name">Ray D.</div>
+          <div class="driver-card-stops">14 / 20 stops</div>
+          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 70%;"></div></div>
+          <div class="driver-card-pct">70%</div>
+        </div>
+      </div>
+      <div class="dispatch-bottom">
+        <div class="dispatch-payroll">
+          <div class="dispatch-subtitle">Weekly Payroll</div>
+          <div class="payroll-row"><span class="payroll-name">Marcus T.</span><span class="payroll-amount">$1,247.50</span></div>
+          <div class="payroll-row"><span class="payroll-name">Darnell W.</span><span class="payroll-amount">$1,102.00</span></div>
+          <div class="payroll-row"><span class="payroll-name">Steve M.</span><span class="payroll-amount">$978.25</span></div>
+          <div class="payroll-row"><span class="payroll-name">Kim L.</span><span class="payroll-amount">$1,156.75</span></div>
+          <div class="payroll-row"><span class="payroll-name">Ray D.</span><span class="payroll-amount">$892.00</span></div>
+        </div>
+        <div class="dispatch-chart">
+          <div class="dispatch-subtitle">Deliveries This Week</div>
+          <div class="chart-bars">
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 72%;"></div>
+              <div class="chart-bar-label">Mon</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 85%;"></div>
+              <div class="chart-bar-label">Tue</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 64%;"></div>
+              <div class="chart-bar-label">Wed</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 92%;"></div>
+              <div class="chart-bar-label">Thu</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 78%;"></div>
+              <div class="chart-bar-label">Fri</div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- POD MODAL -->
-<div class="demo-pod-modal" id="demo-pod-modal">
-  <div class="demo-pod-modal-card">
-    <div class="demo-pod-header"><h3>Proof of Delivery</h3><button class="demo-pod-close" onclick="closePodModal()">&times;</button></div>
-    <div class="demo-pod-body">
-      <div class="demo-pod-row"><div class="demo-pod-field"><span class="demo-pod-label">Patient</span><span class="demo-pod-value" id="pod-patient"></span></div><div class="demo-pod-field"><span class="demo-pod-label">Driver</span><span class="demo-pod-value" id="pod-driver"></span></div></div>
-      <div class="demo-pod-row"><div class="demo-pod-field"><span class="demo-pod-label">Address</span><span class="demo-pod-value" id="pod-address"></span></div><div class="demo-pod-field"><span class="demo-pod-label">Time</span><span class="demo-pod-value" id="pod-time"></span></div></div>
-      <div class="demo-pod-photos"><div class="demo-pod-photo-box"><span class="demo-pod-photo-icon">📦</span><span class="demo-pod-photo-label">Package Photo</span></div><div class="demo-pod-photo-box"><span class="demo-pod-photo-icon">🏠</span><span class="demo-pod-photo-label">Delivery Location</span></div></div>
-      <div class="demo-pod-sig-box"><canvas id="pod-sig-canvas" width="400" height="100"></canvas><span class="demo-pod-photo-label">Digital Signature</span></div>
-      <div class="demo-pod-row"><div class="demo-pod-field"><span class="demo-pod-label">GPS</span><span class="demo-pod-value demo-pod-gps" id="pod-gps"></span></div><div class="demo-pod-field"><span class="demo-pod-label">Geofence</span><span class="demo-pod-value demo-pod-verified" id="pod-geofence">✓ Within 42 ft — Verified</span></div></div>
-      <div class="demo-pod-field" style="margin-top:8px"><span class="demo-pod-label">Delivery Note</span><span class="demo-pod-value" id="pod-note"></span></div>
-    </div>
-    <div class="demo-pod-footer"><button class="demo-pod-close-btn" onclick="closePodModal()">Close</button></div>
+    <div class="dispatch-text" id="dispatch-text">Built by dispatchers. <em>For dispatchers.</em></div>
   </div>
 </div>
 
-<!-- ============ PRODUCT SECTION ============ -->
-<section class="product" id="product">
-  <div class="container">
-    <div class="product-header">
-      <p class="eyebrow reveal">The Platform</p>
-      <h2 class="section-headline reveal reveal-delay-1">Everything a delivery operation needs.</h2>
+<!-- =========================================
+     SECTION 7 — PROOF
+     ========================================= -->
+<div id="proof-section">
+  <div class="proof-stats">
+    <div class="proof-stat" data-target="300" data-suffix="+">
+      <div class="proof-stat-value">0</div>
+      <div class="proof-stat-label">daily deliveries</div>
     </div>
-    <div class="product-grid">
-      <div class="product-card reveal reveal-delay-1">
-        <div class="product-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-        </div>
-        <h3>Proof of Delivery</h3>
-        <p>Every delivery captured with timestamped photos, digital signatures, GPS coordinates, and geofence verification. Instant access for pharmacy staff.</p>
-      </div>
-      <div class="product-card reveal reveal-delay-2">
-        <div class="product-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-        </div>
-        <h3>Dispatch Portal</h3>
-        <p>Route building, driver management, payroll automation, and real-time analytics. Built by dispatchers, for dispatchers.</p>
-      </div>
-      <div class="product-card reveal reveal-delay-3">
-        <div class="product-card-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-        </div>
-        <h3>Pharmacy Portal</h3>
-        <p>Live delivery tracking, on-demand POD records, compliance reporting. White-labeled per client. Accessible from any device.</p>
-      </div>
+    <div class="proof-stat" data-target="100" data-suffix="%">
+      <div class="proof-stat-value">0</div>
+      <div class="proof-stat-label">POD capture rate</div>
+    </div>
+    <div class="proof-stat" data-target="17" data-suffix="">
+      <div class="proof-stat-value">0</div>
+      <div class="proof-stat-label">years operational knowledge</div>
+    </div>
+    <div class="proof-stat" data-target="0" data-suffix="">
+      <div class="proof-stat-value">0</div>
+      <div class="proof-stat-label">spreadsheets</div>
     </div>
   </div>
-</section>
+  <div class="proof-quote">We built this for our own operation. Now it's yours.</div>
+  <div class="proof-attribution">&mdash; CNC Delivery, Northeast Ohio</div>
+</div>
 
-
-<!-- ============ SOCIAL PROOF ============ -->
-<section class="social-proof" id="social-proof">
-  <div class="container">
-    <div class="quote-block reveal">
-      <div class="quote-mark">"</div>
-      <div class="quote-accent"></div>
-      <p class="quote-text">We built this for our own operation. 300–600 deliveries a day, five days a week. Every single one — proven.</p>
-      <p class="quote-attribution">— CNC Delivery, Northeast Ohio</p>
+<!-- =========================================
+     SECTION 8 — TWO DOORS
+     ========================================= -->
+<div id="doors-section">
+  <div class="doors-grid">
+    <div class="door-card left" id="door-left">
+      <div class="door-title">For Pharmacies</div>
+      <ul class="door-list">
+        <li>Real-time delivery visibility</li>
+        <li>Photo + signature proof on demand</li>
+        <li>HIPAA-ready audit trail</li>
+        <li>No more calling dispatch</li>
+        <li>White-labeled with your brand</li>
+      </ul>
+      <a href="#contact" class="door-btn emerald">Get Your Portal</a>
+    </div>
+    <div class="door-card right" id="door-right">
+      <div class="door-title">For Courier Companies</div>
+      <ul class="door-list">
+        <li>Dispatch portal built by operators</li>
+        <li>Route optimization + driver management</li>
+        <li>Automated payroll from delivery data</li>
+        <li>Analytics that show what's happening</li>
+        <li>Scale without adding dispatch staff</li>
+      </ul>
+      <a href="#contact" class="door-btn teal">Run Your Operation</a>
     </div>
   </div>
-</section>
+</div>
 
-<!-- ============ TWO AUDIENCES ============ -->
-<section class="audiences" id="audiences">
-  <div class="container">
-    <div class="audiences-header">
-      <p class="eyebrow reveal">Solutions</p>
-      <h2 class="section-headline reveal reveal-delay-1">Built for both sides of the delivery.</h2>
-    </div>
-    <div class="audiences-grid">
-      <div class="audience-card reveal reveal-delay-1">
-        <h3>For Pharmacies</h3>
-        <ul>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            See every delivery happen in real time
-          </li>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Access POD records — photo, signature, GPS
-          </li>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Compliance-ready audit trail
-          </li>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            No more calling dispatch for updates
-          </li>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            White-labeled portal with your branding
-          </li>
-        </ul>
-        <a href="#contact" class="audience-cta">See the Pharmacy Portal <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+<!-- =========================================
+     SECTION 9 — CONTACT
+     ========================================= -->
+<div id="contact">
+  <div class="contact-headline">Ready to run this in your operation?</div>
+  <div class="contact-subhead">You've seen it work. Let's make it yours.</div>
+  <div class="contact-form-card">
+    <form id="contact-form" onsubmit="return false;">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" placeholder="Your name" required>
+        </div>
+        <div class="form-group">
+          <label for="company">Company</label>
+          <input type="text" id="company" name="company" placeholder="Company name">
+        </div>
       </div>
-      <div class="audience-card reveal reveal-delay-2">
-        <h3>For Courier Companies</h3>
-        <ul>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Dispatch portal built by operators
-          </li>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Route optimization and driver management
-          </li>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Automated payroll from delivery data
-          </li>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Analytics that show what's actually happening
-          </li>
-          <li>
-            <svg class="audience-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            Scale without adding dispatch staff
-          </li>
-        </ul>
-        <a href="#contact" class="audience-cta">See the Dispatch Platform <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="you@company.com" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555">
+        </div>
       </div>
-    </div>
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us about your operation..."></textarea>
+      </div>
+      <button type="submit" class="form-submit">Let's Talk</button>
+    </form>
   </div>
-</section>
-
-<!-- ============ COMPLIANCE ============ -->
-<section class="compliance" id="compliance">
-  <div class="container">
-    <div class="compliance-inner">
-      <p class="eyebrow reveal">Compliance</p>
-      <h2 class="section-headline reveal reveal-delay-1">Built for healthcare accountability.</h2>
-      <div class="compliance-badges">
-        <div class="compliance-badge reveal reveal-delay-1">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          HIPAA-Ready
-        </div>
-        <div class="compliance-badge reveal reveal-delay-2">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          GPS Timestamped
-        </div>
-        <div class="compliance-badge reveal reveal-delay-3">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Photo + Signature POD
-        </div>
-        <div class="compliance-badge reveal reveal-delay-4">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Geofence Verified
-        </div>
-        <div class="compliance-badge reveal reveal-delay-5">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          Full Audit Trail
-        </div>
-      </div>
-    </div>
+  <div class="footer">
+    <div class="footer-logo">LYN<span class="dot">.</span></div>
+    <div class="footer-tagline">Every delivery. Proven.</div>
+    <div class="footer-copy">&copy; 2026 LYN Software. All rights reserved.</div>
+    <div class="footer-built">Built in Northeast Ohio</div>
   </div>
-</section>
+</div>
 
-<!-- ============ CTA / CONTACT ============ -->
-<section class="cta-section" id="contact">
-  <div class="container">
-    <div class="cta-inner">
-      <p class="eyebrow reveal">Get Started</p>
-      <h2 class="section-headline reveal reveal-delay-1">Ready to see LYN in action?</h2>
-      <p class="section-subhead reveal reveal-delay-2" style="margin: 0 auto;">Request a demo and we'll show you how LYN can transform your delivery operation.</p>
-    </div>
-    <div class="cta-form-card reveal reveal-delay-2">
-      <form id="contactForm" onsubmit="handleSubmit(event)">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <label for="company">Company</label>
-            <input type="text" id="company" name="company" placeholder="Company name" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" placeholder="you@company.com" required>
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000">
-          </div>
-          <div class="form-group full-width">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" placeholder="Tell us about your delivery operation..."></textarea>
-          </div>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="btn btn-primary">Request Demo</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FOOTER ============ -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-logo">LYN<span class="dot"></span></div>
-        <p class="footer-tagline">Every delivery. Proven.</p>
-      </div>
-      <div class="footer-links">
-        <a href="#product">Product</a>
-        <a href="#audiences">Solutions</a>
-        <a href="#compliance">Compliance</a>
-        <a href="#contact">Request Demo</a>
-        <a href="#">Privacy</a>
-        <a href="#">Terms</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 LYN Software. All rights reserved.</p>
-      <p>Built in Northeast Ohio</p>
-    </div>
-  </div>
-</footer>
-
+<!-- =========================================
+     JAVASCRIPT
+     ========================================= -->
 <script>
-/* ========================================
-   NAV SCROLL EFFECT
-   ======================================== */
-const nav = document.getElementById('nav');
-let lastScroll = 0;
+(function() {
+  'use strict';
 
-window.addEventListener('scroll', () => {
-  const currentScroll = window.scrollY;
-  if (currentScroll > 60) {
-    nav.classList.add('scrolled');
-  } else {
-    nav.classList.remove('scrolled');
+  // ==========================================
+  // DELIVERY DATA
+  // ==========================================
+  const DELIVERIES = [
+    { patient: 'Margaret Thompson', address: '142 Oak St, Fairlawn', driver: 'Marcus T.', status: 'pending' },
+    { patient: 'Robert Williams', address: '891 Maple Ave, Akron', driver: 'Marcus T.', status: 'pending' },
+    { patient: 'Dorothy Evans', address: '2200 State Rd, Cuyahoga Falls', driver: 'Darnell W.', status: 'pending' },
+    { patient: 'James Anderson', address: '567 Highland Ave, Akron', driver: 'Darnell W.', status: 'pending' },
+    { patient: 'William Davis', address: '330 W Market St, Akron', driver: 'Steve M.', status: 'pending' },
+    { patient: 'Barbara Taylor', address: '45 Merriman Rd, Akron', driver: 'Steve M.', status: 'pending' },
+    { patient: 'Richard Brown', address: '780 E Tallmadge Ave, Akron', driver: 'Kim L.', status: 'pending' },
+    { patient: 'Mary Jackson', address: '1550 Sand Run Rd, Akron', driver: 'Kim L.', status: 'pending' },
+    { patient: 'Susan Harris', address: '920 N Main St, North Canton', driver: 'Ray D.', status: 'pending' },
+    { patient: 'Joseph Clark', address: '1445 Whipple Ave, Canton', driver: 'Ray D.', status: 'pending' },
+    { patient: 'Nancy Lewis', address: '603 12th St NW, Canton', driver: 'Ray D.', status: 'pending' },
+    { patient: 'Thomas Robinson', address: '2800 Tuscarawas St, Canton', driver: 'Marcus T.', status: 'pending' },
+  ];
+
+  // ==========================================
+  // PARTICLES (CSS-only drift)
+  // ==========================================
+  function createParticles() {
+    const field = document.getElementById('particle-field');
+    if (!field) return;
+    for (let i = 0; i < 40; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.left = Math.random() * 100 + '%';
+      p.style.top = (40 + Math.random() * 60) + '%';
+      p.style.animationDuration = (15 + Math.random() * 25) + 's';
+      p.style.animationDelay = -(Math.random() * 30) + 's';
+      p.style.width = (1.5 + Math.random() * 2) + 'px';
+      p.style.height = p.style.width;
+      p.style.opacity = 0.05 + Math.random() * 0.15;
+      field.appendChild(p);
+    }
   }
-  lastScroll = currentScroll;
-}, { passive: true });
+  createParticles();
 
-/* ========================================
-   MOBILE MENU
-   ======================================== */
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobileMenu');
+  // ==========================================
+  // DELIVERY TABLE INIT
+  // ==========================================
+  const tbody = document.getElementById('delivery-tbody');
+  let deliveryStatuses = DELIVERIES.map(d => d.status);
 
-hamburger.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-  mobileMenu.classList.toggle('open');
-  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
-});
-
-// Close mobile menu on link click
-document.querySelectorAll('.mobile-link').forEach(link => {
-  link.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
-  });
-});
-
-/* ========================================
-   INTERSECTION OBSERVER — SCROLL ANIMATIONS
-   ======================================== */
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -40px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, observerOptions);
-
-document.querySelectorAll('.reveal').forEach(el => {
-  observer.observe(el);
-});
-
-/* ========================================
-   SMOOTH SCROLL FOR ANCHOR LINKS
-   ======================================== */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const targetId = this.getAttribute('href');
-    if (targetId === '#') return;
-    const target = document.querySelector(targetId);
-    if (target) {
-      e.preventDefault();
-      const navHeight = nav.offsetHeight;
-      const targetPosition = target.getBoundingClientRect().top + window.scrollY - navHeight - 20;
-      window.scrollTo({
-        top: targetPosition,
-        behavior: 'smooth'
-      });
-    }
-  });
-});
-
-/* ========================================
-   FORM HANDLER
-   ======================================== */
-function handleSubmit(e) {
-  e.preventDefault();
-  const btn = e.target.querySelector('button[type="submit"]');
-  const originalText = btn.textContent;
-  btn.textContent = 'Sending...';
-  btn.disabled = true;
-
-  // Simulate submission (replace with real endpoint)
-  setTimeout(() => {
-    btn.textContent = 'Demo Requested!';
-    btn.style.background = '#059669';
-    setTimeout(() => {
-      btn.textContent = originalText;
-      btn.disabled = false;
-      btn.style.background = '';
-      e.target.reset();
-    }, 3000);
-  }, 1000);
-}
-
-// ========== LIVE DEMO ==========
-const DEMO_DELIVERIES = [
-  { id:1, patient:'Margaret Thompson', address:'142 Oak St', city:'Fairlawn', zip:'44333', driver:'Marcus Rivera', status:'delivered', time:'1:12 PM', lat:41.1278, lng:-81.6190, note:'Front door' },
-  { id:2, patient:'Robert Williams', address:'891 Maple Ave', city:'Akron', zip:'44301', driver:'Marcus Rivera', status:'delivered', time:'1:34 PM', lat:41.0856, lng:-81.5115, note:'Left with patient' },
-  { id:3, patient:'Dorothy Evans', address:'2200 State Rd', city:'Cuyahoga Falls', zip:'44223', driver:'Marcus Rivera', status:'delivered', time:'1:58 PM', lat:41.1339, lng:-81.4845, note:'Back door' },
-  { id:4, patient:'James Anderson', address:'567 Highland Ave', city:'Akron', zip:'44302', driver:'Marcus Rivera', status:'pending', time:'—', lat:41.0780, lng:-81.5200, note:'' },
-  { id:5, patient:'Patricia Moore', address:'1100 Portage Trail', city:'Akron', zip:'44313', driver:'Marcus Rivera', status:'pending', time:'—', lat:41.1020, lng:-81.5450, note:'' },
-  { id:6, patient:'William Davis', address:'330 W Market St', city:'Akron', zip:'44303', driver:'Angela Foster', status:'delivered', time:'1:08 PM', lat:41.0814, lng:-81.5280, note:'Front door' },
-  { id:7, patient:'Barbara Taylor', address:'45 Merriman Rd', city:'Akron', zip:'44303', driver:'Angela Foster', status:'delivered', time:'1:29 PM', lat:41.0790, lng:-81.5310, note:'Mailbox' },
-  { id:8, patient:'Richard Brown', address:'780 E Tallmadge Ave', city:'Akron', zip:'44310', driver:'Angela Foster', status:'delivered', time:'1:52 PM', lat:41.0910, lng:-81.4980, note:'Left with patient' },
-  { id:9, patient:'Mary Jackson', address:'1550 Sand Run Rd', city:'Akron', zip:'44313', driver:'Angela Foster', status:'pending', time:'—', lat:41.1050, lng:-81.5520, note:'' },
-  { id:10, patient:'Charles White', address:'210 Ghent Rd', city:'Fairlawn', zip:'44333', driver:'Angela Foster', status:'pending', time:'—', lat:41.1300, lng:-81.6100, note:'' },
-  { id:11, patient:'Susan Harris', address:'920 N Main St', city:'North Canton', zip:'44720', driver:'Derek Simmons', status:'delivered', time:'1:15 PM', lat:40.8760, lng:-81.3910, note:'Front door' },
-  { id:12, patient:'Joseph Clark', address:'1445 Whipple Ave NW', city:'Canton', zip:'44708', driver:'Derek Simmons', status:'delivered', time:'1:42 PM', lat:40.8340, lng:-81.4250, note:'Left with patient' },
-  { id:13, patient:'Nancy Lewis', address:'603 12th St NW', city:'Canton', zip:'44703', driver:'Derek Simmons', status:'delivered', time:'2:05 PM', lat:40.8080, lng:-81.3920, note:'Front door' },
-  { id:14, patient:'Thomas Robinson', address:'2800 Tuscarawas St W', city:'Canton', zip:'44708', driver:'Derek Simmons', status:'pending', time:'—', lat:40.7950, lng:-81.4350, note:'' },
-  { id:15, patient:'Ruth Nelson', address:'415 Grant St', city:'Akron', zip:'44311', driver:'Brian O\'Neill', status:'failed', time:'2:45 PM', lat:41.0680, lng:-81.4830, note:'Patient not home' },
-];
-
-const DEMO_DRIVERS = [
-  { name:'Marcus Rivera', stops:28, done:22, color:'#10B981' },
-  { name:'Angela Foster', stops:26, done:19, color:'#2DD4BF' },
-  { name:'Derek Simmons', stops:24, done:21, color:'#6366F1' },
-  { name:'Rachel Kim', stops:22, done:18, color:'#F59E0B' },
-  { name:'Brian O\'Neill', stops:20, done:14, color:'#EF4444' },
-];
-
-const PHARMACY_PINS = [
-  { name:'Sterling Health', lat:41.0534, lng:-81.5185 },
-  { name:'Aultman Pharmacy', lat:40.7989, lng:-81.3784 },
-  { name:'Giant Eagle Rx', lat:41.1100, lng:-81.5600 },
-];
-
-// Tab switching
-document.querySelectorAll('.demo-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('demo-tab--active'));
-    document.querySelectorAll('.demo-panel').forEach(p => { p.classList.remove('demo-panel--active'); });
-    tab.classList.add('demo-tab--active');
-    const panel = document.getElementById('demo-' + tab.dataset.tab);
-    if (panel) { panel.classList.add('demo-panel--active'); }
-    if (tab.dataset.tab === 'map' && !window._demoMapInit) initDemoMap();
-  });
-});
-
-// Delivery table
-function renderDeliveryTable() {
-  const tbody = document.getElementById('demo-del-tbody');
-  if (!tbody) return;
-  tbody.innerHTML = DEMO_DELIVERIES.map(d => `
-    <tr onclick="${d.status === 'delivered' || d.status === 'failed' ? `openPodModal(${d.id})` : ''}" style="${d.status !== 'delivered' && d.status !== 'failed' ? 'cursor:default' : ''}">
-      <td>${d.patient}</td>
-      <td>${d.address}, ${d.city}</td>
-      <td>${d.city}</td>
-      <td>${d.driver}</td>
-      <td><span class="demo-badge demo-badge--${d.status}"><span class="demo-badge-dot"></span>${d.status.charAt(0).toUpperCase() + d.status.slice(1)}</span></td>
-      <td>${d.time}</td>
-      <td>${d.status === 'delivered' || d.status === 'failed' ? '<button class="demo-pod-btn" onclick="event.stopPropagation();openPodModal(' + d.id + ')">View</button>' : '—'}</td>
-    </tr>
-  `).join('');
-}
-renderDeliveryTable();
-
-// Auto-flip pending to delivered every 4 seconds
-let demoDeliveredCount = 312;
-let demoPendingCount = 68;
-setInterval(() => {
-  const pending = DEMO_DELIVERIES.filter(d => d.status === 'pending');
-  if (pending.length === 0) return;
-  const flip = pending[Math.floor(Math.random() * pending.length)];
-  flip.status = 'delivered';
-  const h = new Date().getHours();
-  const m = new Date().getMinutes();
-  flip.time = `${h > 12 ? h - 12 : h}:${String(m).padStart(2, '0')} PM`;
-  flip.note = ['Front door', 'Back door', 'Left with patient', 'Mailbox', 'With neighbor', 'Side door'][Math.floor(Math.random() * 6)];
-  demoDeliveredCount++;
-  demoPendingCount--;
+  function renderDeliveryTable() {
+    tbody.innerHTML = '';
+    DELIVERIES.forEach(function(d, i) {
+      const tr = document.createElement('tr');
+      const st = deliveryStatuses[i];
+      tr.innerHTML =
+        '<td>' + d.patient + '</td>' +
+        '<td>' + d.address + '</td>' +
+        '<td>' + d.driver + '</td>' +
+        '<td><span class="status-badge ' + st + '">' + (st.charAt(0).toUpperCase() + st.slice(1)) + '</span></td>';
+      tbody.appendChild(tr);
+    });
+  }
   renderDeliveryTable();
-  const delEl = document.getElementById('demo-del-delivered');
-  const penEl = document.getElementById('demo-del-pending');
-  const mapDelEl = document.getElementById('demo-delivered-today');
-  const mapRemEl = document.getElementById('demo-stops-remaining');
-  if (delEl) delEl.textContent = demoDeliveredCount;
-  if (penEl) penEl.textContent = Math.max(0, demoPendingCount);
-  if (mapDelEl) mapDelEl.textContent = demoDeliveredCount;
-  if (mapRemEl) mapRemEl.textContent = Math.max(0, parseInt(mapRemEl.textContent) - 1);
-}, 4000);
 
-// Dispatch driver cards
-function renderDispatchDrivers() {
-  const container = document.getElementById('demo-disp-drivers');
-  if (!container) return;
-  container.innerHTML = DEMO_DRIVERS.map(d => {
-    const pct = Math.round((d.done / d.stops) * 100);
-    return `<div class="demo-disp-driver">
-      <div class="demo-disp-driver-name">${d.name}</div>
-      <div class="demo-disp-driver-sub">${d.done}/${d.stops} stops</div>
-      <div class="demo-disp-progress"><div class="demo-disp-progress-fill" style="width:${pct}%"></div></div>
-      <div class="demo-disp-driver-pct">${pct}%</div>
-    </div>`;
-  }).join('');
-}
-renderDispatchDrivers();
-
-// POD Modal
-function openPodModal(id) {
-  const d = DEMO_DELIVERIES.find(x => x.id === id);
-  if (!d) return;
-  document.getElementById('pod-patient').textContent = d.patient;
-  document.getElementById('pod-driver').textContent = d.driver;
-  document.getElementById('pod-address').textContent = d.address + ', ' + d.city + ' ' + d.zip;
-  document.getElementById('pod-time').textContent = d.time;
-  document.getElementById('pod-gps').textContent = d.lat.toFixed(4) + ', ' + d.lng.toFixed(4);
-  document.getElementById('pod-note').textContent = d.note || 'Front door';
-  const dist = Math.floor(Math.random() * 120) + 10;
-  document.getElementById('pod-geofence').textContent = '\u2713 Within ' + dist + ' ft \u2014 Verified';
-  document.getElementById('pod-geofence').style.color = dist <= 150 ? '#10B981' : '#EF4444';
-  // Draw signature
-  const canvas = document.getElementById('pod-sig-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, 400, 100);
-    ctx.strokeStyle = '#9CA3AF';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    let x = 20;
-    ctx.moveTo(x, 50 + Math.random() * 20);
-    for (let i = 0; i < 12; i++) {
-      x += 30 + Math.random() * 10;
-      ctx.quadraticCurveTo(x - 15, 20 + Math.random() * 60, x, 40 + Math.random() * 30);
-    }
-    ctx.stroke();
+  // ==========================================
+  // SCROLL PROGRESS UTILITY
+  // ==========================================
+  function getScrollProgress(element) {
+    var rect = element.getBoundingClientRect();
+    var height = element.offsetHeight - window.innerHeight;
+    if (height <= 0) return rect.top <= 0 ? 1 : 0;
+    var progress = -rect.top / height;
+    return Math.max(0, Math.min(1, progress));
   }
-  document.getElementById('demo-pod-modal').classList.add('demo-pod-modal--open');
-}
-function closePodModal() {
-  document.getElementById('demo-pod-modal').classList.remove('demo-pod-modal--open');
-}
 
-// Mapbox
-window._demoMapInit = false;
-function initDemoMap() {
-  if (window._demoMapInit) return;
-  window._demoMapInit = true;
-  if (!window.mapboxgl) return;
-  mapboxgl.accessToken = 'pk.eyJ1IjoiY3V0cnVmZWxsbzIxIiwiYSI6ImNtODljeHgxNjBheTYybHB3bm14a3V5dnoifQ.pCGbVeMn6MHSfKaDSJWCuQ';
-  const map = new mapboxgl.Map({
-    container: 'mapbox-map',
-    style: 'mapbox://styles/mapbox/dark-v11',
-    center: [-81.48, 41.00],
-    zoom: 10.2,
-    interactive: true,
-    attributionControl: false
-  });
-  map.addControl(new mapboxgl.NavigationControl(), 'top-right');
-  map.on('load', () => {
-    // Pharmacy pins
-    PHARMACY_PINS.forEach(p => {
-      const el = document.createElement('div');
-      el.style.cssText = 'width:28px;height:28px;background:#EF4444;border-radius:50%;border:3px solid #fff;display:flex;align-items:center;justify-content:center;font-size:14px;color:#fff;font-weight:700;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.4);';
-      el.textContent = '+';
-      new mapboxgl.Marker(el).setLngLat([p.lng, p.lat]).setPopup(new mapboxgl.Popup({offset:20}).setHTML('<strong>' + p.name + '</strong>')).addTo(map);
+  // ==========================================
+  // ELEMENT REFS
+  // ==========================================
+  var floatingNav = document.getElementById('floating-nav');
+  var arrivalLogo = document.getElementById('arrival-logo');
+  var word1 = document.getElementById('word-1');
+  var word2 = document.getElementById('word-2');
+  var word3 = document.getElementById('word-3');
+  var arrivalHint = document.getElementById('arrival-hint');
+  var problemEl = document.getElementById('problem');
+  var problem1 = document.getElementById('problem-1');
+  var problem2 = document.getElementById('problem-2');
+  var problem3 = document.getElementById('problem-3');
+  var mapSection = document.getElementById('map-section');
+  var mapHud = document.getElementById('map-hud');
+  var deliverySection = document.getElementById('delivery-section');
+  var deliveryLeft = document.getElementById('delivery-left');
+  var deliveryRight = document.getElementById('delivery-right');
+  var deliveryCount = document.getElementById('delivery-count');
+  var podOverlay = document.getElementById('pod-overlay');
+  var pharmacySection = document.getElementById('pharmacy-section');
+  var pharmacyMockup = document.getElementById('pharmacy-mockup');
+  var pharmacyText = document.getElementById('pharmacy-text');
+  var dispatchSection = document.getElementById('dispatch-section');
+  var dispatchMockup = document.getElementById('dispatch-mockup');
+  var dispatchText = document.getElementById('dispatch-text');
+
+  // ==========================================
+  // MAP STATE
+  // ==========================================
+  var mainMap = null;
+  var miniMap = null;
+  var mapInitialized = false;
+  var miniMapInitialized = false;
+  var mapMarkers = [];
+  var mapMarkersState = {
+    pharmacy1: false,
+    pharmacy2: false,
+    drivers: [false, false, false, false, false],
+    routes: false,
+    hud: false
+  };
+
+  var MAPBOX_TOKEN = 'pk.eyJ1IjoiY3V0cnVmZWxsbzIxIiwiYSI6ImNtODljeHgxNjBheTYybHB3bm14a3V5dnoifQ.pCGbVeMn6MHSfKaDSJWCuQ';
+
+  var pharmacies = [
+    { name: 'Sterling Health', lng: -81.5185, lat: 41.0534 },
+    { name: 'Aultman Pharmacy', lng: -81.3784, lat: 40.7989 }
+  ];
+
+  var drivers = [
+    { name: 'Marcus', lng: -81.52, lat: 41.09, initial: 'M' },
+    { name: 'Darnell', lng: -81.60, lat: 41.12, initial: 'D' },
+    { name: 'Steve', lng: -81.39, lat: 40.88, initial: 'S' },
+    { name: 'Kim', lng: -81.47, lat: 41.04, initial: 'K' },
+    { name: 'Ray', lng: -81.50, lat: 41.07, initial: 'R' }
+  ];
+
+  // Route lines from pharmacies to area stops
+  var routeLines = [
+    { from: [-81.5185, 41.0534], to: [-81.52, 41.09] },
+    { from: [-81.5185, 41.0534], to: [-81.60, 41.12] },
+    { from: [-81.5185, 41.0534], to: [-81.47, 41.04] },
+    { from: [-81.5185, 41.0534], to: [-81.50, 41.07] },
+    { from: [-81.3784, 40.7989], to: [-81.39, 40.88] },
+    { from: [-81.3784, 40.7989], to: [-81.35, 40.85] },
+    { from: [-81.5185, 41.0534], to: [-81.55, 41.06] },
+    { from: [-81.3784, 40.7989], to: [-81.42, 40.82] },
+  ];
+
+  function initMainMap() {
+    if (mapInitialized) return;
+    mapInitialized = true;
+
+    mapboxgl.accessToken = MAPBOX_TOKEN;
+    mainMap = new mapboxgl.Map({
+      container: 'lyn-map',
+      style: 'mapbox://styles/mapbox/dark-v11',
+      center: [-81.48, 41.00],
+      zoom: 10.5,
+      attributionControl: false
     });
-    // Driver pins with animation
-    const driverMarkers = DEMO_DRIVERS.map((d, i) => {
-      const stops = DEMO_DELIVERIES.filter(s => s.driver === d.name);
-      const firstStop = stops[0];
-      if (!firstStop) return null;
-      const el = document.createElement('div');
-      el.style.cssText = 'display:flex;flex-direction:column;align-items:center;pointer-events:auto;cursor:pointer;';
-      el.innerHTML = '<div style="background:' + d.color + ';color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.3);">' + d.name.split(' ')[0] + ' \u00b7 ' + d.stops + '</div><div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-top:6px solid ' + d.color + ';"></div>';
-      const marker = new mapboxgl.Marker(el).setLngLat([firstStop.lng, firstStop.lat]).addTo(map);
-      return { marker, stops, idx: 0 };
-    }).filter(Boolean);
-    // Animate drivers
-    setInterval(() => {
-      driverMarkers.forEach(dm => {
-        dm.idx = (dm.idx + 1) % dm.stops.length;
-        const s = dm.stops[dm.idx];
-        const cur = dm.marker.getLngLat();
-        const newLng = cur.lng + (s.lng - cur.lng) * 0.3 + (Math.random() - 0.5) * 0.002;
-        const newLat = cur.lat + (s.lat - cur.lat) * 0.3 + (Math.random() - 0.5) * 0.002;
-        dm.marker.setLngLat([newLng, newLat]);
+
+    mainMap.addControl(new mapboxgl.NavigationControl(), 'top-right');
+
+    mainMap.on('load', function() {
+      // Add route source (empty initially)
+      mainMap.addSource('routes', {
+        type: 'geojson',
+        data: { type: 'FeatureCollection', features: [] }
       });
-    }, 3000);
-    // Route lines
-    const routeCoords = DEMO_DELIVERIES.filter(d => d.lat && d.lng).map(d => [d.lng, d.lat]);
-    map.addSource('demo-route', { type: 'geojson', data: { type: 'Feature', geometry: { type: 'LineString', coordinates: routeCoords } } });
-    map.addLayer({ id: 'demo-route-line', type: 'line', source: 'demo-route', paint: { 'line-color': '#2DD4BF', 'line-width': 2, 'line-opacity': 0.4, 'line-dasharray': [2, 4] } });
-    // Stop dots
-    DEMO_DELIVERIES.forEach(d => {
-      if (!d.lat) return;
-      const el = document.createElement('div');
-      const clr = d.status === 'delivered' ? '#10B981' : d.status === 'failed' ? '#EF4444' : '#F59E0B';
-      el.style.cssText = 'width:10px;height:10px;background:' + clr + ';border-radius:50%;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,0.3);';
-      new mapboxgl.Marker(el).setLngLat([d.lng, d.lat]).addTo(map);
+      mainMap.addLayer({
+        id: 'route-lines',
+        type: 'line',
+        source: 'routes',
+        paint: {
+          'line-color': '#2DD4BF',
+          'line-width': 2,
+          'line-opacity': 0.6,
+          'line-dasharray': [3, 3]
+        }
+      });
     });
+  }
+
+  function addPharmacyMarker(map, pharmacy) {
+    var el = document.createElement('div');
+    el.className = 'pharmacy-marker';
+
+    var marker = new mapboxgl.Marker(el)
+      .setLngLat([pharmacy.lng, pharmacy.lat])
+      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<strong>' + pharmacy.name + '</strong>'))
+      .addTo(map);
+
+    mapMarkers.push(marker);
+    return marker;
+  }
+
+  function addDriverMarker(map, driver) {
+    var el = document.createElement('div');
+    el.className = 'driver-marker';
+    el.textContent = driver.initial;
+
+    var marker = new mapboxgl.Marker(el)
+      .setLngLat([driver.lng, driver.lat])
+      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<strong>' + driver.name + '</strong>'))
+      .addTo(map);
+
+    mapMarkers.push(marker);
+    return marker;
+  }
+
+  function showRouteLines() {
+    if (!mainMap || !mainMap.getSource('routes')) return;
+
+    var features = routeLines.map(function(r) {
+      return {
+        type: 'Feature',
+        geometry: {
+          type: 'LineString',
+          coordinates: [r.from, r.to]
+        }
+      };
+    });
+
+    mainMap.getSource('routes').setData({
+      type: 'FeatureCollection',
+      features: features
+    });
+  }
+
+  // ==========================================
+  // MINI MAP INIT
+  // ==========================================
+  function initMiniMap() {
+    if (miniMapInitialized) return;
+    miniMapInitialized = true;
+
+    mapboxgl.accessToken = MAPBOX_TOKEN;
+    miniMap = new mapboxgl.Map({
+      container: 'mini-map',
+      style: 'mapbox://styles/mapbox/dark-v11',
+      center: [-81.50, 41.02],
+      zoom: 10,
+      attributionControl: false,
+      interactive: true
+    });
+
+    miniMap.on('load', function() {
+      // Add pharmacy markers
+      pharmacies.forEach(function(p) {
+        var el = document.createElement('div');
+        el.className = 'pharmacy-marker';
+        el.style.width = '20px';
+        el.style.height = '20px';
+        new mapboxgl.Marker(el).setLngLat([p.lng, p.lat]).addTo(miniMap);
+      });
+      // Add driver markers
+      drivers.forEach(function(d) {
+        var el = document.createElement('div');
+        el.className = 'driver-marker';
+        el.style.width = '18px';
+        el.style.height = '18px';
+        el.style.fontSize = '8px';
+        el.textContent = d.initial;
+        new mapboxgl.Marker(el).setLngLat([d.lng, d.lat]).addTo(miniMap);
+      });
+    });
+  }
+
+  // ==========================================
+  // POD SIGNATURE DRAWING
+  // ==========================================
+  var signatureDrawn = false;
+  function drawSignature() {
+    if (signatureDrawn) return;
+    signatureDrawn = true;
+
+    var canvas = document.getElementById('pod-signature-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var w = canvas.width;
+    var h = canvas.height;
+
+    ctx.clearRect(0, 0, w, h);
+    ctx.strokeStyle = '#FFFFFF';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    // Signature path points
+    var points = [
+      [30, 55], [40, 35], [55, 50], [65, 30], [80, 55],
+      [100, 25], [115, 50], [130, 35], [150, 50],
+      [170, 30], [185, 55], [200, 40], [220, 50],
+      [240, 25], [260, 45], [275, 35], [295, 50],
+      [310, 30], [330, 55], [345, 40], [360, 50],
+      [380, 30], [400, 55], [415, 40], [430, 48]
+    ];
+
+    var totalPoints = points.length;
+    var drawn = 0;
+    var speed = 40;
+
+    function drawStep() {
+      if (drawn >= totalPoints - 1) return;
+      ctx.beginPath();
+      if (drawn === 0) {
+        ctx.moveTo(points[0][0], points[0][1]);
+      } else {
+        ctx.moveTo(points[drawn][0], points[drawn][1]);
+      }
+      ctx.lineTo(points[drawn + 1][0], points[drawn + 1][1]);
+      ctx.stroke();
+      drawn++;
+      if (drawn < totalPoints - 1) {
+        setTimeout(drawStep, speed);
+      }
+    }
+
+    drawStep();
+  }
+
+  // ==========================================
+  // COUNTER ANIMATION (Section 7)
+  // ==========================================
+  var countersAnimated = false;
+
+  function animateCounters() {
+    if (countersAnimated) return;
+    countersAnimated = true;
+
+    var stats = document.querySelectorAll('#proof-section .proof-stat');
+    stats.forEach(function(stat, index) {
+      var target = parseInt(stat.getAttribute('data-target'), 10);
+      var suffix = stat.getAttribute('data-suffix') || '';
+      var valueEl = stat.querySelector('.proof-stat-value');
+
+      stat.classList.add('visible');
+      stat.style.transitionDelay = (index * 0.15) + 's';
+
+      if (target === 0) {
+        valueEl.textContent = '0';
+        return;
+      }
+
+      var start = 0;
+      var duration = 2000;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var elapsed = timestamp - startTime;
+        var progress = Math.min(elapsed / duration, 1);
+        // Ease out
+        var eased = 1 - Math.pow(1 - progress, 3);
+        var current = Math.round(start + (target - start) * eased);
+        valueEl.textContent = current + suffix;
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      }
+
+      requestAnimationFrame(step);
+    });
+  }
+
+  // Intersection Observer for counters
+  var proofSection = document.getElementById('proof-section');
+  var counterObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateCounters();
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+  counterObserver.observe(proofSection);
+
+  // ==========================================
+  // INTERSECTION OBSERVER FOR MAPS
+  // ==========================================
+  var mapObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        initMainMap();
+        mapObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  mapObserver.observe(mapSection);
+
+  var miniMapObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        initMiniMap();
+        miniMapObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  miniMapObserver.observe(deliverySection);
+
+  // ==========================================
+  // INTERSECTION OBSERVER FOR DOORS
+  // ==========================================
+  var doorLeft = document.getElementById('door-left');
+  var doorRight = document.getElementById('door-right');
+  var doorsObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        doorLeft.classList.add('visible');
+        doorRight.classList.add('visible');
+        doorsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2 });
+  doorsObserver.observe(document.getElementById('doors-section'));
+
+  // ==========================================
+  // ARRIVAL ANIMATION — immediate on load
+  // ==========================================
+  setTimeout(function() {
+    arrivalLogo.classList.add('visible');
+  }, 300);
+
+  // ==========================================
+  // MAIN SCROLL HANDLER
+  // ==========================================
+  var currentDeliveryCount = 311;
+  var deliveriesCompleted = 0;
+
+  function onScroll() {
+    var scrollY = window.scrollY || window.pageYOffset;
+
+    // -- NAV visibility --
+    if (scrollY > window.innerHeight * 0.2) {
+      floatingNav.classList.add('visible');
+    } else {
+      floatingNav.classList.remove('visible');
+    }
+
+    // -- SECTION 1: ARRIVAL --
+    // Words appear based on scroll position in the first 80vh
+    var arrivalProgress = Math.min(1, scrollY / (window.innerHeight * 0.6));
+    if (arrivalProgress > 0.1) word1.classList.add('visible');
+    if (arrivalProgress > 0.3) word2.classList.add('visible');
+    if (arrivalProgress > 0.5) word3.classList.add('visible');
+    if (arrivalProgress > 0.7) arrivalHint.classList.add('visible');
+
+    // -- SECTION 2: THE PROBLEM --
+    var problemProgress = getScrollProgress(problemEl);
+    if (problemProgress > 0.0) problem1.classList.add('visible');
+    else problem1.classList.remove('visible');
+    if (problemProgress > 0.33) problem2.classList.add('visible');
+    else problem2.classList.remove('visible');
+    if (problemProgress > 0.66) problem3.classList.add('visible');
+    else problem3.classList.remove('visible');
+
+    // -- SECTION 3: THE MAP --
+    var mapProgress = getScrollProgress(mapSection);
+
+    if (mainMap && mainMap.loaded()) {
+      // Pharmacy 1
+      if (mapProgress > 0.15 && !mapMarkersState.pharmacy1) {
+        mapMarkersState.pharmacy1 = true;
+        addPharmacyMarker(mainMap, pharmacies[0]);
+      }
+      // Pharmacy 2
+      if (mapProgress > 0.25 && !mapMarkersState.pharmacy2) {
+        mapMarkersState.pharmacy2 = true;
+        addPharmacyMarker(mainMap, pharmacies[1]);
+      }
+      // Drivers
+      drivers.forEach(function(d, i) {
+        var threshold = 0.35 + (i * 0.04);
+        if (mapProgress > threshold && !mapMarkersState.drivers[i]) {
+          mapMarkersState.drivers[i] = true;
+          addDriverMarker(mainMap, d);
+        }
+      });
+      // Routes
+      if (mapProgress > 0.55 && !mapMarkersState.routes) {
+        mapMarkersState.routes = true;
+        showRouteLines();
+      }
+    }
+
+    // HUD
+    if (mapProgress > 0.80) {
+      mapHud.classList.add('visible');
+    } else {
+      mapHud.classList.remove('visible');
+    }
+
+    // -- SECTION 4: A DELIVERY HAPPENS --
+    var delProgress = getScrollProgress(deliverySection);
+
+    if (delProgress > 0.05) {
+      deliveryLeft.classList.add('visible');
+      deliveryRight.classList.add('visible');
+    }
+
+    // First delivery completes
+    if (delProgress > 0.20 && deliveriesCompleted < 1) {
+      deliveriesCompleted = 1;
+      deliveryStatuses[0] = 'delivered';
+      currentDeliveryCount = 312;
+      deliveryCount.textContent = currentDeliveryCount;
+      renderDeliveryTable();
+    }
+
+    // POD card appears
+    if (delProgress > 0.35 && delProgress < 0.75) {
+      podOverlay.classList.add('visible');
+      drawSignature();
+    } else {
+      podOverlay.classList.remove('visible');
+    }
+
+    // Second delivery completes
+    if (delProgress > 0.55 && deliveriesCompleted < 2) {
+      deliveriesCompleted = 2;
+      deliveryStatuses[1] = 'delivered';
+      currentDeliveryCount = 313;
+      deliveryCount.textContent = currentDeliveryCount;
+      renderDeliveryTable();
+    }
+
+    // Three more complete rapidly
+    if (delProgress > 0.75 && deliveriesCompleted < 5) {
+      deliveriesCompleted = 5;
+      deliveryStatuses[2] = 'delivered';
+      deliveryStatuses[3] = 'delivered';
+      deliveryStatuses[4] = 'delivered';
+      currentDeliveryCount = 316;
+      deliveryCount.textContent = currentDeliveryCount;
+      renderDeliveryTable();
+    }
+
+    // -- SECTION 5: PHARMACY PORTAL --
+    var pharmProgress = getScrollProgress(pharmacySection);
+    if (pharmProgress > 0.1) {
+      pharmacyMockup.classList.add('visible');
+    }
+    if (pharmProgress > 0.4) {
+      pharmacyText.classList.add('visible');
+    }
+
+    // -- SECTION 6: DISPATCH PORTAL --
+    var dispProgress = getScrollProgress(dispatchSection);
+    if (dispProgress > 0.1) {
+      dispatchMockup.classList.add('visible');
+    }
+    if (dispProgress > 0.4) {
+      dispatchText.classList.add('visible');
+    }
+  }
+
+  // Throttle with rAF
+  var ticking = false;
+  window.addEventListener('scroll', function() {
+    if (!ticking) {
+      requestAnimationFrame(function() {
+        onScroll();
+        ticking = false;
+      });
+      ticking = true;
+    }
   });
-}
-// Init map when tab is visible or on first load if map tab is active
-setTimeout(() => { if (document.querySelector('.demo-tab--active')?.dataset.tab === 'map') initDemoMap(); }, 1000);
+
+  // Initial call
+  onScroll();
+
+})();
 </script>
 </body>
 </html>
