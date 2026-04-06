@@ -21,7 +21,7 @@ export default function ProtectedRoute({ children }) {
     return (
       <div className="portal__no-access">
         <h2>No Access</h2>
-        <p>Your account is not linked to a pharmacy tenant. Please contact CNC Delivery support.</p>
+        <p>Your account is not linked to a pharmacy tenant. Please contact your administrator.</p>
       </div>
     )
   }

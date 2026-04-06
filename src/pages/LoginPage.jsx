@@ -36,7 +36,7 @@ export default function LoginPage() {
     <div className="portal__login-bg">
       <div className="portal__login-card">
         <h1 className="portal__login-title">Pharmacy Portal</h1>
-        <p className="portal__login-subtitle">CNC Delivery</p>
+        <p className="portal__login-subtitle">LYN Software</p>
 
         <form onSubmit={handleSubmit} className="portal__login-form">
           <label className="portal__label">
