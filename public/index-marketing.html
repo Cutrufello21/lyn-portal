@@ -14,20 +14,30 @@
    CSS VARIABLES
    ======================================== */
 :root {
-  --bg: #1C1C1E;
+  --bg: #0A0A0C;
+  --bg-deep: #0A0A0C;
   --bg-card: #2A2A2E;
+  --bg-input: #1C1C1E;
   --border: #3A3A3E;
+  --border-subtle: rgba(255,255,255,0.06);
   --white: #FFFFFF;
-  --gray-100: #F5F5F7;
-  --gray-300: #A1A1AA;
+  --gray-300: #D4D4D8;
+  --gray-400: #A1A1AA;
   --gray-500: #71717A;
+  --gray-600: #52525B;
   --gray-700: #3F3F46;
+  --gray-800: #27272A;
   --emerald: #34D399;
-  --emerald-dark: #059669;
+  --emerald-dim: rgba(52,211,153,0.12);
   --teal: #2DD4BF;
+  --teal-dim: rgba(45,212,191,0.12);
   --amber: #FBBF24;
-  --red: #F87171;
-  --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --amber-dim: rgba(251,191,36,0.12);
+  --red: #EF4444;
+  --red-dim: rgba(239,68,68,0.12);
+  --indigo: #818CF8;
+  --rose: #F87171;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ========================================
@@ -40,92 +50,98 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: auto;
 }
 
 body {
-  font-family: var(--font);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
   color: var(--white);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  line-height: 1.5;
   overflow-x: hidden;
-}
-
-/* ========================================
-   FLOATING NAV
-   ======================================== */
-.floating-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  padding: 16px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  background: rgba(28, 28, 30, 0.8);
-  border-bottom: 1px solid rgba(58, 58, 62, 0.5);
-  opacity: 0;
-  transform: translateY(-100%);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: none;
-}
-
-.floating-nav.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
-}
-
-.nav-logo {
-  font-size: 22px;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--white);
-  text-decoration: none;
-}
-
-.nav-logo .dot {
-  color: var(--emerald);
-}
-
-.nav-cta {
-  display: inline-block;
-  padding: 10px 24px;
-  background: var(--emerald);
-  color: #000;
-  font-size: 14px;
-  font-weight: 600;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: background 0.3s ease, transform 0.2s ease;
-}
-
-.nav-cta:hover {
-  background: var(--emerald-dark);
-  transform: translateY(-1px);
+  line-height: 1.6;
 }
 
 /* ========================================
    SCROLL SECTIONS
    ======================================== */
-.scroll-section {
+.s {
   position: relative;
 }
 
-.sticky-panel {
+.s-inner {
   position: sticky;
   top: 0;
   height: 100vh;
-  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+/* ========================================
+   FLOATING NAV
+   ======================================== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: rgba(10,10,12,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease);
+}
+
+.nav.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-logo {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-logo .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--emerald);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.nav-cta {
+  background: var(--emerald);
+  color: var(--bg);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.nav-cta:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 20px rgba(52,211,153,0.3);
 }
 
 /* ========================================
@@ -133,497 +149,379 @@ body {
    ======================================== */
 #arrival {
   height: 80vh;
-}
-
-#arrival .sticky-panel {
-  height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-deep);
   position: relative;
-  flex-direction: column;
-  gap: 0;
-  background: var(--bg);
   overflow: hidden;
 }
 
-.particle-field {
+#arrival .bg-pulse {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  background: radial-gradient(ellipse at center, rgba(45,212,191,0.03) 0%, transparent 70%);
+  animation: breathe 6s ease-in-out infinite;
 }
 
-.particle {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background: var(--teal);
-  border-radius: 50%;
-  opacity: 0.15;
-  animation: drift linear infinite;
-}
-
-@keyframes drift {
-  0% { transform: translateY(0) translateX(0); }
-  25% { transform: translateY(-15vh) translateX(10px); }
-  50% { transform: translateY(-30vh) translateX(-5px); }
-  75% { transform: translateY(-45vh) translateX(8px); }
-  100% { transform: translateY(-60vh) translateX(0); }
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
 }
 
 .arrival-content {
-  position: relative;
-  z-index: 2;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
+  position: relative;
+  z-index: 1;
 }
 
-.arrival-logo {
-  font-size: 72px;
-  font-weight: 900;
-  letter-spacing: -2px;
+.arrival-brand {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  animation: fadeInUp 0.8s var(--ease) 0.8s forwards;
 }
 
-.arrival-logo.visible {
-  opacity: 1;
-  transform: translateY(0);
+.arrival-brand .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--emerald);
+  border-radius: 50%;
+  display: inline-block;
 }
 
-.arrival-logo .dot {
+@keyframes fadeInUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.arrival-words {
+  display: flex;
+  gap: clamp(12px, 2vw, 24px);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.arrival-words span {
+  font-size: clamp(36px, 7vw, 72px);
+  font-weight: 800;
+  line-height: 1.1;
+  will-change: transform, opacity;
+}
+
+.arrival-words .word-proven {
   color: var(--emerald);
 }
 
-.arrival-tagline {
-  display: flex;
-  gap: 16px;
-  font-size: 28px;
-  font-weight: 300;
-  letter-spacing: -0.5px;
-}
-
-.arrival-tagline span {
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.arrival-tagline span.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 .arrival-hint {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--gray-500);
-  opacity: 0;
-  transition: opacity 0.8s ease;
-  margin-top: 16px;
-}
-
-.arrival-hint.visible {
-  opacity: 1;
+  will-change: opacity;
 }
 
 /* ========================================
    SECTION 2 — THE PROBLEM
    ======================================== */
-#problem {
-  height: 150vh;
-}
-
-#problem .sticky-panel {
-  flex-direction: column;
-  gap: 20px;
+#problem .s-inner {
+  position: relative;
   background: var(--bg);
 }
 
-.problem-line {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+.problem-statement {
+  position: absolute;
   text-align: center;
   max-width: 700px;
   padding: 0 24px;
+  will-change: transform, opacity;
 }
 
-.problem-line.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.problem-line-1 {
-  font-size: 36px;
+.problem-s1 {
+  font-size: clamp(24px, 4vw, 42px);
   font-weight: 600;
-  line-height: 1.3;
   color: var(--white);
+  line-height: 1.3;
 }
 
-.problem-line-2 {
-  font-size: 28px;
-  font-weight: 400;
-  color: var(--gray-300);
+.problem-s2 {
+  font-size: clamp(22px, 3.5vw, 36px);
+  font-weight: 500;
+  color: var(--gray-400);
+  line-height: 1.3;
 }
 
-.problem-line-3 {
-  font-size: 32px;
+.problem-s3 {
+  font-size: clamp(24px, 4vw, 42px);
   font-weight: 700;
   color: var(--emerald);
+  line-height: 1.3;
 }
 
 /* ========================================
    SECTION 3 — THE MAP
    ======================================== */
-#map-section {
-  height: 180vh;
-}
-
-#map-section .sticky-panel {
+#map-section .s-inner {
   padding: 0;
+  position: relative;
 }
 
-.map-container {
-  width: 100%;
-  height: 100%;
+#map-container {
+  position: absolute;
+  inset: 0;
+  will-change: opacity;
 }
 
-#lyn-map {
-  width: 100%;
-  height: 100%;
+.mapboxgl-canvas {
+  outline: none;
 }
 
 .map-hud {
   position: absolute;
-  bottom: 40px;
-  left: 40px;
-  background: rgba(42, 42, 46, 0.9);
+  bottom: 28px;
+  left: 28px;
+  background: rgba(10,10,12,0.85);
   backdrop-filter: blur(12px);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px 28px;
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 16px 24px;
   display: flex;
-  gap: 32px;
-  font-size: 14px;
-  font-weight: 500;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  gap: 28px;
+  will-change: opacity;
   z-index: 10;
 }
 
-.map-hud.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.hud-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.hud-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-}
-
-.hud-dot.emerald { background: var(--emerald); }
-.hud-dot.amber { background: var(--amber); }
-.hud-dot.teal { background: var(--teal); }
-
-.hud-value {
-  color: var(--white);
+.map-hud-stat {
+  font-size: 13px;
   font-weight: 600;
 }
 
-.hud-label {
+.map-hud-stat .label {
   color: var(--gray-500);
 }
 
-/* Map marker styles */
-.pharmacy-marker {
-  width: 32px;
-  height: 32px;
-  background: var(--emerald);
-  border: 3px solid var(--white);
-  border-radius: 50%;
-  cursor: pointer;
-  position: relative;
+.map-hud-stat .val {
+  color: var(--white);
+  margin-left: 6px;
 }
 
-.pharmacy-marker::after {
-  content: '';
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px solid var(--emerald);
-  animation: pulse-ring 2s ease-out infinite;
-}
-
+/* Marker pulse ring */
 @keyframes pulse-ring {
   0% { transform: scale(1); opacity: 0.6; }
-  100% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(2.5); opacity: 0; }
 }
 
-.driver-marker {
-  width: 28px;
-  height: 28px;
-  background: var(--teal);
-  border: 2px solid var(--white);
+.marker-pulse {
+  position: absolute;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  font-weight: 700;
-  color: #000;
-}
-
-.mapboxgl-popup-content {
-  background: var(--bg-card) !important;
-  color: var(--white) !important;
-  border: 1px solid var(--border) !important;
-  border-radius: 8px !important;
-  padding: 8px 14px !important;
-  font-family: var(--font) !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4) !important;
-}
-
-.mapboxgl-popup-tip {
-  border-top-color: var(--bg-card) !important;
-}
-
-.mapboxgl-popup-close-button {
-  color: var(--gray-500) !important;
-  font-size: 16px !important;
+  background: rgba(239,68,68,0.3);
+  animation: pulse-ring 2s ease-out infinite;
+  top: 0;
+  left: 0;
 }
 
 /* ========================================
-   SECTION 4 — A DELIVERY HAPPENS
+   SECTION 4 — DELIVERY HAPPENS
    ======================================== */
-#delivery-section {
-  height: 150vh;
-}
-
-#delivery-section .sticky-panel {
+#delivery .s-inner {
   display: flex;
   align-items: stretch;
-  justify-content: center;
   padding: 40px;
-  gap: 24px;
-  background: var(--bg);
+  gap: 28px;
 }
 
 .delivery-left {
-  flex: 0 0 55%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transform: translateX(-30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.delivery-left.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.mini-map-card {
-  width: 100%;
-  height: 80%;
-  background: #0D0D0F;
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mini-map-inner {
-  width: 100%;
-  height: 100%;
-}
-
-#mini-map {
-  width: 100%;
-  height: 100%;
+  flex: 0 0 50%;
+  will-change: transform, opacity;
 }
 
 .delivery-right {
-  flex: 0 0 42%;
+  flex: 1;
+  overflow-y: auto;
+  will-change: transform, opacity;
+}
+
+.mini-map-card {
+  background: #1A1A1C;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  overflow: hidden;
-  position: relative;
-  opacity: 0;
-  transform: translateX(30px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  justify-content: center;
+  align-items: center;
+  padding: 32px;
 }
 
-.delivery-right.visible {
-  opacity: 1;
-  transform: translateX(0);
+.mini-map-label {
+  font-size: 13px;
+  color: var(--gray-500);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.delivery-counter {
-  font-size: 14px;
-  color: var(--gray-300);
-  font-weight: 500;
-  padding: 8px 0;
-}
-
-.delivery-counter span {
-  color: var(--emerald);
-  font-weight: 700;
+.mini-map-driver {
   font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  margin-bottom: 24px;
 }
 
-.delivery-table-wrap {
-  flex: 1;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--bg-card);
+.route-dots {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
 }
 
+.route-dot-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.route-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #3A3A3E;
+  transition: background 0.5s var(--ease);
+}
+
+.route-dot.done {
+  background: var(--emerald);
+  box-shadow: 0 0 8px rgba(52,211,153,0.4);
+}
+
+.route-line {
+  width: 2px;
+  height: 18px;
+  background: #3A3A3E;
+}
+
+/* Delivery table */
 .delivery-table {
   width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
 }
 
-.delivery-table thead {
-  background: rgba(58, 58, 62, 0.4);
-}
-
-.delivery-table th {
-  padding: 10px 14px;
-  text-align: left;
-  font-weight: 600;
+.delivery-table-header {
+  display: grid;
+  grid-template-columns: 2fr 2.5fr 1.2fr 1fr;
+  padding: 10px 16px;
   font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--gray-500);
   border-bottom: 1px solid var(--border);
 }
 
-.delivery-table td {
-  padding: 10px 14px;
-  border-bottom: 1px solid rgba(58, 58, 62, 0.3);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 140px;
+.delivery-row {
+  display: grid;
+  grid-template-columns: 2fr 2.5fr 1.2fr 1fr;
+  padding: 10px 16px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(58,58,62,0.4);
+  align-items: center;
+  will-change: transform, opacity;
+  transition: background 0.4s var(--ease);
 }
 
-.delivery-table tr {
-  transition: background 0.3s ease;
+.delivery-row .patient {
+  color: var(--white);
+  font-weight: 500;
 }
 
-.status-badge {
+.delivery-row .address {
+  color: var(--gray-400);
+  font-size: 12px;
+}
+
+.delivery-row .driver {
+  color: var(--gray-400);
+  font-size: 12px;
+}
+
+.badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 6px;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
   font-size: 11px;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
+  transition: all 0.5s var(--ease);
 }
 
-.status-badge.pending {
-  background: rgba(251, 191, 36, 0.15);
+.badge-pending {
+  background: var(--amber-dim);
   color: var(--amber);
 }
 
-.status-badge.delivered {
-  background: rgba(52, 211, 153, 0.15);
+.badge-delivered {
+  background: var(--emerald-dim);
   color: var(--emerald);
 }
 
-.status-badge.failed {
-  background: rgba(248, 113, 113, 0.15);
-  color: var(--red);
-}
-
-.status-badge::before {
-  content: '';
-  width: 6px;
-  height: 6px;
+.badge-dot {
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
   background: currentColor;
+}
+
+.delivery-counter {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-400);
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.delivery-counter .count-val {
+  color: var(--emerald);
+  font-variant-numeric: tabular-nums;
 }
 
 /* POD Card */
 .pod-overlay {
   position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 42%;
-  height: 100%;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 40px 0;
+  right: 40px;
+  bottom: 40px;
+  width: 420px;
+  max-width: calc(100% - 80px);
   z-index: 20;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-}
-
-.pod-overlay.visible {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: all;
+  will-change: transform, opacity;
 }
 
 .pod-card {
-  width: 92%;
-  max-height: 85vh;
-  background: var(--bg-card);
+  background: rgba(26,26,28,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 24px;
-  overflow-y: auto;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
 }
 
-.pod-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-}
-
-.pod-title {
-  font-size: 16px;
+.pod-card h4 {
+  font-size: 15px;
   font-weight: 700;
+  margin-bottom: 16px;
+  color: var(--white);
 }
 
-.pod-verified {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--emerald);
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.pod-grid {
+.pod-photos {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
@@ -631,115 +529,114 @@ body {
 }
 
 .pod-photo {
-  background: #1C1C1E;
-  border: 1px solid var(--border);
+  background: var(--bg-input);
+  border: 1px dashed var(--border);
   border-radius: 10px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  position: relative;
+  padding: 28px;
+  text-align: center;
 }
 
-.pod-photo-label {
-  position: absolute;
-  bottom: 8px;
-  left: 10px;
-  font-size: 10px;
-  color: var(--gray-500);
-  font-weight: 500;
+.pod-photo .icon {
+  font-size: 24px;
+  opacity: 0.3;
 }
 
-.pod-signature-section {
-  margin-bottom: 16px;
-}
-
-.pod-signature-label {
+.pod-photo .label {
   font-size: 11px;
   color: var(--gray-500);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
-  margin-bottom: 8px;
+  margin-top: 6px;
 }
 
-.pod-signature-canvas {
-  width: 100%;
-  height: 80px;
-  background: #1C1C1E;
-  border: 1px solid var(--border);
+.pod-sig {
+  background: var(--bg-input);
+  border: 1px dashed var(--border);
   border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
-.pod-details {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+.pod-sig canvas {
+  width: 100%;
+  height: 60px;
+  display: block;
 }
 
-.pod-detail-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 13px;
-}
-
-.pod-detail-label {
+.pod-sig .label {
+  font-size: 11px;
   color: var(--gray-500);
-  font-weight: 500;
+  margin-top: 4px;
 }
 
-.pod-detail-value {
-  color: var(--white);
-  font-weight: 500;
-  text-align: right;
+.pod-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  font-size: 13px;
+  margin-bottom: 12px;
 }
 
-.pod-detail-value.emerald {
-  color: var(--emerald);
+.pod-field-label {
+  color: var(--gray-500);
+  font-size: 11px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
 }
 
 .pod-note {
-  margin-top: 12px;
-  padding: 12px;
-  background: #1C1C1E;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  font-size: 13px;
-  color: var(--gray-300);
-  font-style: italic;
+  margin-bottom: 12px;
+}
+
+/* Green flash on delivery row */
+@keyframes row-flash {
+  0% { background: rgba(52,211,153,0.15); }
+  100% { background: transparent; }
+}
+
+.delivery-row.flash {
+  animation: row-flash 0.8s var(--ease);
 }
 
 /* ========================================
    SECTION 5 — PHARMACY PORTAL
    ======================================== */
-#pharmacy-section {
-  height: 120vh;
+#pharmacy .s-inner {
+  position: relative;
+  padding: 40px;
 }
 
-#pharmacy-section .sticky-panel {
-  padding: 60px 40px;
-  flex-direction: column;
-  gap: 32px;
-  background: var(--bg);
+.pharmacy-wrap {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  width: 90%;
+  max-width: 1200px;
 }
 
-.portal-mockup {
-  width: 100%;
-  max-width: 1100px;
-  background: var(--bg-card);
+.pharmacy-text {
+  flex: 0 0 280px;
+}
+
+.pharmacy-text p {
+  font-size: clamp(26px, 3vw, 32px);
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  will-change: transform, opacity;
+}
+
+.pharmacy-text .accent {
+  color: var(--emerald);
+}
+
+.portal-mock {
+  flex: 1;
+  background: #1A1A1C;
   border: 1px solid var(--border);
   border-radius: 16px;
   overflow: hidden;
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.portal-mockup.visible {
-  opacity: 1;
-  transform: scale(1);
+  will-change: transform, opacity;
 }
 
 .portal-topbar {
@@ -748,251 +645,194 @@ body {
   justify-content: space-between;
   padding: 16px 24px;
   border-bottom: 1px solid var(--border);
-  background: rgba(58, 58, 62, 0.2);
 }
 
-.portal-topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.portal-topbar-name {
+.portal-topbar .name {
+  font-weight: 700;
   font-size: 15px;
-  font-weight: 600;
 }
 
-.portal-topbar-badge {
-  font-size: 11px;
-  padding: 3px 8px;
-  background: rgba(52, 211, 153, 0.15);
-  color: var(--emerald);
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.portal-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  background: var(--emerald-dark);
+.portal-topbar .avatar {
+  width: 32px;
+  height: 32px;
+  background: var(--emerald);
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  color: var(--white);
+  color: var(--bg);
 }
 
 .portal-stats {
-  display: flex;
-  gap: 0;
-  padding: 0 24px;
-  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: var(--border);
 }
 
 .portal-stat {
-  flex: 1;
-  padding: 18px 0;
+  background: #1A1A1C;
+  padding: 20px 24px;
   text-align: center;
-  border-right: 1px solid var(--border);
 }
 
-.portal-stat:last-child {
-  border-right: none;
+.portal-stat-num {
+  font-size: 28px;
+  font-weight: 800;
+  display: block;
+  font-variant-numeric: tabular-nums;
 }
-
-.portal-stat-value {
-  font-size: 26px;
-  font-weight: 700;
-}
-
-.portal-stat-value.emerald { color: var(--emerald); }
-.portal-stat-value.amber { color: var(--amber); }
-.portal-stat-value.red { color: var(--red); }
 
 .portal-stat-label {
   font-size: 12px;
   color: var(--gray-500);
-  margin-top: 2px;
-  font-weight: 500;
-}
-
-.portal-table-wrap {
-  padding: 16px 24px 24px;
+  margin-top: 4px;
+  display: block;
 }
 
 .portal-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
+  padding: 0;
 }
 
-.portal-table th {
-  padding: 10px 12px;
-  text-align: left;
-  font-weight: 600;
+.portal-table-header {
+  display: grid;
+  grid-template-columns: 2fr 2.5fr 1fr 1.2fr;
+  padding: 12px 24px;
   font-size: 11px;
+  font-weight: 600;
+  color: var(--gray-500);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--gray-500);
   border-bottom: 1px solid var(--border);
 }
 
-.portal-table td {
-  padding: 12px 12px;
-  border-bottom: 1px solid rgba(58, 58, 62, 0.3);
+.portal-row {
+  display: grid;
+  grid-template-columns: 2fr 2.5fr 1fr 1.2fr;
+  padding: 12px 24px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(58,58,62,0.4);
+  align-items: center;
 }
 
-.portal-table tr:hover {
-  background: rgba(58, 58, 62, 0.15);
-}
-
-.portal-text {
-  font-size: 32px;
-  font-weight: 600;
-  text-align: center;
-  max-width: 600px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.portal-text.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.portal-text em {
-  color: var(--emerald);
-  font-style: normal;
-}
+.portal-row .name { color: var(--white); font-weight: 500; }
+.portal-row .addr { color: var(--gray-400); font-size: 12px; }
+.portal-row .time { color: var(--gray-500); font-size: 12px; }
 
 /* ========================================
    SECTION 6 — DISPATCH PORTAL
    ======================================== */
-#dispatch-section {
-  height: 120vh;
+#dispatch .s-inner {
+  position: relative;
+  padding: 40px;
 }
 
-#dispatch-section .sticky-panel {
-  padding: 60px 40px;
-  flex-direction: column;
-  gap: 32px;
-  background: var(--bg);
-}
-
-.dispatch-mockup {
-  width: 100%;
-  max-width: 1100px;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  overflow: hidden;
-  opacity: 0;
-  transform: scale(0.96);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.dispatch-mockup.visible {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.dispatch-header {
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--border);
+.dispatch-wrap {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 48px;
+  width: 90%;
+  max-width: 1200px;
 }
 
-.dispatch-header-title {
-  font-size: 16px;
+.dispatch-text {
+  flex: 0 0 280px;
+}
+
+.dispatch-text p {
+  font-size: clamp(26px, 3vw, 32px);
   font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 8px;
+  will-change: transform, opacity;
 }
 
-.dispatch-banner {
-  font-size: 13px;
-  color: var(--emerald);
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+.dispatch-mock {
+  flex: 1;
+  will-change: transform, opacity;
 }
 
-.driver-cards-row {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid var(--border);
+.driver-cards {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
 .driver-card {
-  flex: 1;
-  padding: 18px 20px;
-  border-right: 1px solid var(--border);
+  background: #1A1A1C;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
 }
 
-.driver-card:last-child {
-  border-right: none;
-}
-
-.driver-card-name {
+.driver-card .dc-name {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 4px;
 }
 
-.driver-card-stops {
+.driver-card .dc-stops {
   font-size: 12px;
-  color: var(--gray-500);
+  color: var(--gray-400);
   margin-bottom: 10px;
 }
 
-.driver-progress-bar {
+.driver-card .dc-bar-track {
   height: 6px;
-  background: var(--gray-700);
+  background: var(--border);
   border-radius: 3px;
   overflow: hidden;
   margin-bottom: 6px;
 }
 
-.driver-progress-fill {
+.driver-card .dc-bar-fill {
   height: 100%;
-  background: var(--emerald);
+  background: linear-gradient(90deg, var(--emerald), var(--teal));
   border-radius: 3px;
-  transition: width 0.3s ease;
+  transition: width 0.5s var(--ease);
 }
 
-.driver-card-pct {
-  font-size: 11px;
+.driver-card .dc-pct {
+  font-size: 13px;
+  font-weight: 700;
   color: var(--emerald);
+}
+
+.dispatch-banner {
+  background: rgba(52,211,153,0.06);
+  border: 1px solid rgba(52,211,153,0.2);
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 14px;
   font-weight: 600;
+  color: var(--emerald);
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .dispatch-bottom {
-  display: flex;
-  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
-.dispatch-payroll {
-  flex: 1;
-  padding: 20px 24px;
-  border-right: 1px solid var(--border);
+.payroll-card {
+  background: #1A1A1C;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
 }
 
-.dispatch-chart {
-  flex: 1;
-  padding: 20px 24px;
-}
-
-.dispatch-subtitle {
-  font-size: 12px;
+.payroll-card h5 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-400);
+  margin-bottom: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: var(--gray-500);
-  font-weight: 600;
-  margin-bottom: 14px;
 }
 
 .payroll-row {
@@ -1000,219 +840,192 @@ body {
   justify-content: space-between;
   padding: 6px 0;
   font-size: 13px;
-  border-bottom: 1px solid rgba(58, 58, 62, 0.3);
+  border-bottom: 1px solid rgba(58,58,62,0.3);
 }
 
-.payroll-name {
-  color: var(--gray-300);
+.payroll-row .pr-name { color: var(--gray-300); }
+.payroll-row .pr-val { color: var(--white); font-weight: 600; font-variant-numeric: tabular-nums; }
+.payroll-row.total { border-top: 1px solid var(--border); border-bottom: none; padding-top: 10px; margin-top: 4px; }
+.payroll-row.total .pr-name { color: var(--white); font-weight: 700; }
+.payroll-row.total .pr-val { color: var(--emerald); font-weight: 800; }
+
+.chart-card {
+  background: #1A1A1C;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
 }
 
-.payroll-amount {
-  color: var(--emerald);
-  font-weight: 600;
+.chart-card h5 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--gray-400);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .chart-bars {
   display: flex;
   align-items: flex-end;
-  gap: 12px;
-  height: 100px;
-  padding-top: 10px;
+  gap: 16px;
+  height: 120px;
 }
 
-.chart-bar-col {
+.chart-bar-wrap {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
   height: 100%;
   justify-content: flex-end;
 }
 
 .chart-bar {
   width: 100%;
-  background: var(--emerald);
+  background: linear-gradient(180deg, var(--emerald), var(--teal));
   border-radius: 4px 4px 0 0;
-  opacity: 0.7;
-  transition: opacity 0.2s ease;
-}
-
-.chart-bar:hover {
-  opacity: 1;
+  min-height: 8px;
+  transition: height 0.5s var(--ease);
 }
 
 .chart-bar-label {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--gray-500);
-  font-weight: 500;
-}
-
-.dispatch-text {
-  font-size: 32px;
-  font-weight: 600;
-  text-align: center;
-  max-width: 600px;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.dispatch-text.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.dispatch-text em {
-  color: var(--teal);
-  font-style: normal;
+  margin-top: 8px;
 }
 
 /* ========================================
-   SECTION 7 — PROOF
+   SECTION 7 — PROOF STATS
    ======================================== */
-#proof-section {
+#stats {
   min-height: 60vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 40px;
-  background: var(--bg);
+  padding: 80px 24px;
 }
 
-.proof-stats {
-  display: flex;
-  gap: 60px;
-  margin-bottom: 60px;
-  flex-wrap: wrap;
-  justify-content: center;
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  max-width: 900px;
+  width: 100%;
+  margin-bottom: 56px;
 }
 
-.proof-stat {
+.stat-item {
   text-align: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
-.proof-stat.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.proof-stat-value {
-  font-size: 56px;
-  font-weight: 800;
-  color: var(--emerald);
-  letter-spacing: -2px;
+.stat-num {
+  font-size: clamp(40px, 6vw, 64px);
+  font-weight: 900;
+  color: var(--white);
+  font-variant-numeric: tabular-nums;
   line-height: 1;
+  margin-bottom: 8px;
 }
 
-.proof-stat-label {
+.stat-label {
   font-size: 14px;
   color: var(--gray-500);
-  margin-top: 8px;
   font-weight: 500;
 }
 
-.proof-quote {
-  font-size: 22px;
-  font-weight: 400;
+.stats-quote {
   text-align: center;
-  color: var(--gray-100);
-  max-width: 650px;
-  line-height: 1.5;
-  margin-bottom: 12px;
+  max-width: 600px;
 }
 
-.proof-attribution {
-  font-size: 14px;
+.stats-quote p {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 8px;
+}
+
+.stats-quote .attribution {
+  font-size: 15px;
   color: var(--gray-500);
 }
 
 /* ========================================
    SECTION 8 — TWO DOORS
    ======================================== */
-#doors-section {
+#doors {
   min-height: 50vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 40px;
-  background: var(--bg);
+  padding: 80px 24px;
 }
 
 .doors-grid {
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
   max-width: 900px;
   width: 100%;
 }
 
 .door-card {
-  flex: 1;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 16px;
-  padding: 36px 30px;
-  opacity: 0;
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  padding: 36px;
+  will-change: transform, opacity;
 }
 
-.door-card.left {
-  transform: translateX(-40px);
+.door-card-pharmacy {
   border-top: 3px solid var(--emerald);
 }
 
-.door-card.right {
-  transform: translateX(40px);
+.door-card-courier {
   border-top: 3px solid var(--teal);
 }
 
-.door-card.visible {
-  opacity: 1;
-  transform: translateX(0);
-}
-
-.door-title {
+.door-card h3 {
   font-size: 22px;
-  font-weight: 700;
+  font-weight: 800;
   margin-bottom: 20px;
 }
 
 .door-list {
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
   margin-bottom: 28px;
 }
 
 .door-list li {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--gray-300);
+  padding: 6px 0;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 10px;
-  line-height: 1.4;
 }
 
-.door-list li::before {
-  content: '';
-  width: 6px;
-  height: 6px;
+.door-check {
+  width: 18px;
+  height: 18px;
   border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
   flex-shrink: 0;
-  margin-top: 6px;
 }
 
-.door-card.left .door-list li::before {
-  background: var(--emerald);
+.door-check-emerald {
+  background: var(--emerald-dim);
+  color: var(--emerald);
 }
 
-.door-card.right .door-list li::before {
-  background: var(--teal);
+.door-check-teal {
+  background: var(--teal-dim);
+  color: var(--teal);
 }
 
 .door-btn {
@@ -1221,27 +1034,35 @@ body {
   padding: 14px;
   border: none;
   border-radius: 10px;
-  font-family: var(--font);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--bg);
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  color: #000;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
 .door-btn:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+  transform: scale(1.02);
 }
 
-.door-btn.emerald {
+.door-btn-emerald {
   background: var(--emerald);
+  box-shadow: 0 4px 20px rgba(52,211,153,0.2);
 }
 
-.door-btn.teal {
+.door-btn-emerald:hover {
+  box-shadow: 0 6px 28px rgba(52,211,153,0.35);
+}
+
+.door-btn-teal {
   background: var(--teal);
+  box-shadow: 0 4px 20px rgba(45,212,191,0.2);
+}
+
+.door-btn-teal:hover {
+  box-shadow: 0 6px 28px rgba(45,212,191,0.35);
 }
 
 /* ========================================
@@ -1253,1290 +1074,1146 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 100px 40px 60px;
-  background: var(--bg);
+  padding: 80px 24px;
 }
 
 .contact-headline {
-  font-size: 40px;
+  font-size: clamp(28px, 4vw, 40px);
   font-weight: 700;
   text-align: center;
   margin-bottom: 12px;
-  letter-spacing: -1px;
 }
 
-.contact-subhead {
-  font-size: 18px;
-  color: var(--gray-500);
+.contact-sub {
+  font-size: 17px;
+  color: var(--gray-400);
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 .contact-form-card {
-  width: 100%;
-  max-width: 560px;
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 16px;
   padding: 36px;
+  width: 100%;
+  max-width: 540px;
 }
 
 .form-group {
-  margin-bottom: 18px;
-}
-
-.form-group label {
-  display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: var(--gray-300);
-  margin-bottom: 6px;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 12px 14px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  color: var(--white);
-  font-family: var(--font);
-  font-size: 14px;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.form-group input:focus,
-.form-group textarea:focus {
-  border-color: var(--emerald);
-}
-
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: var(--gray-700);
-}
-
-.form-group textarea {
-  height: 100px;
-  resize: vertical;
+  margin-bottom: 16px;
 }
 
 .form-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 16px;
 }
 
-.form-row .form-group {
-  flex: 1;
+.form-input, .form-textarea {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  color: var(--white);
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s var(--ease);
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--emerald);
+}
+
+.form-input::placeholder, .form-textarea::placeholder {
+  color: var(--gray-600);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
 .form-submit {
   width: 100%;
   padding: 14px;
   background: var(--emerald);
+  color: var(--bg);
   border: none;
   border-radius: 10px;
-  color: #000;
-  font-family: var(--font);
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 700;
+  font-family: 'Inter', sans-serif;
   cursor: pointer;
-  transition: background 0.3s ease, transform 0.2s ease;
-  margin-top: 8px;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
 
 .form-submit:hover {
-  background: var(--emerald-dark);
-  transform: translateY(-1px);
+  transform: scale(1.02);
+  box-shadow: 0 6px 28px rgba(52,211,153,0.3);
 }
 
+/* Footer */
 .footer {
-  margin-top: 80px;
   text-align: center;
+  padding: 48px 24px;
+  border-top: 1px solid var(--border);
 }
 
-.footer-logo {
-  font-size: 28px;
+.footer-brand {
+  font-size: 20px;
   font-weight: 800;
-  margin-bottom: 4px;
+  letter-spacing: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
 }
 
-.footer-logo .dot {
-  color: var(--emerald);
+.footer-brand .dot {
+  width: 6px;
+  height: 6px;
+  background: var(--emerald);
+  border-radius: 50%;
 }
 
 .footer-tagline {
-  font-size: 14px;
-  color: var(--gray-500);
-  margin-bottom: 16px;
+  font-size: 15px;
+  color: var(--gray-400);
+  margin-bottom: 12px;
 }
 
 .footer-copy {
-  font-size: 12px;
-  color: var(--gray-700);
+  font-size: 13px;
+  color: var(--gray-600);
 }
 
-.footer-built {
-  font-size: 12px;
-  color: var(--gray-700);
+.footer-location {
+  font-size: 13px;
+  color: var(--gray-600);
   margin-top: 4px;
 }
 
 /* ========================================
-   MOBILE RESPONSIVE
+   MOBILE
    ======================================== */
 @media (max-width: 768px) {
-  .floating-nav {
-    padding: 12px 20px;
-  }
-
-  .arrival-logo {
-    font-size: 48px;
-  }
-
-  .arrival-tagline {
-    font-size: 20px;
-    gap: 10px;
-  }
-
-  .problem-line-1 {
-    font-size: 26px;
-  }
-
-  .problem-line-2 {
-    font-size: 22px;
-  }
-
-  .problem-line-3 {
-    font-size: 24px;
-  }
-
-  .map-hud {
-    left: 16px;
-    right: 16px;
-    bottom: 24px;
-    gap: 16px;
-    flex-wrap: wrap;
-    font-size: 12px;
-    padding: 14px 18px;
-  }
-
-  #delivery-section .sticky-panel {
+  #delivery .s-inner {
     flex-direction: column;
     padding: 20px;
     gap: 16px;
   }
-
-  .delivery-left {
-    flex: 0 0 40%;
-    width: 100%;
+  .delivery-left { flex: 0 0 auto; width: 100%; max-height: 30vh; }
+  .delivery-right { flex: 1; width: 100%; }
+  .delivery-table-header, .delivery-row {
+    grid-template-columns: 1.5fr 1fr 1fr;
   }
-
-  .delivery-right {
-    flex: 1;
-    width: 100%;
-  }
+  .delivery-row .address { display: none; }
+  .delivery-table-header .addr-col { display: none; }
 
   .pod-overlay {
-    width: 100%;
-    right: 0;
-    padding: 20px;
+    right: 20px;
+    bottom: 20px;
+    width: calc(100% - 40px);
   }
 
-  #pharmacy-section .sticky-panel,
-  #dispatch-section .sticky-panel {
-    padding: 30px 20px;
+  .pharmacy-wrap, .dispatch-wrap {
+    flex-direction: column;
+    gap: 24px;
+  }
+  .pharmacy-text, .dispatch-text {
+    flex: 0 0 auto;
+    text-align: center;
   }
 
-  .portal-text,
-  .dispatch-text {
-    font-size: 24px;
-  }
-
-  .portal-stats {
-    flex-wrap: wrap;
-  }
-
-  .portal-stat {
-    flex: 0 0 50%;
-  }
-
-  .driver-cards-row {
-    flex-wrap: wrap;
-  }
-
-  .driver-card {
-    flex: 0 0 50%;
-    border-bottom: 1px solid var(--border);
+  .driver-cards {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .dispatch-bottom {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
-  .dispatch-payroll {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .proof-stats {
-    gap: 32px;
-  }
-
-  .proof-stat-value {
-    font-size: 40px;
-  }
-
-  .proof-quote {
-    font-size: 18px;
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
   }
 
   .doors-grid {
-    flex-direction: column;
-  }
-
-  .door-card.left,
-  .door-card.right {
-    transform: translateY(30px);
-  }
-
-  .contact-headline {
-    font-size: 28px;
+    grid-template-columns: 1fr;
   }
 
   .form-row {
-    flex-direction: column;
-    gap: 0;
+    grid-template-columns: 1fr;
   }
 
-  .delivery-table td,
-  .delivery-table th {
-    padding: 8px 10px;
-    font-size: 11px;
+  .portal-stats {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .portal-table td,
-  .portal-table th {
-    padding: 8px 10px;
-    font-size: 11px;
+  .portal-table-header, .portal-row {
+    grid-template-columns: 1.5fr 1fr 1fr;
+  }
+  .portal-row .addr { display: none; }
+
+  .map-hud {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
-  .arrival-logo {
-    font-size: 40px;
-  }
-
-  .arrival-tagline {
-    flex-direction: column;
-    gap: 6px;
-    font-size: 20px;
-  }
-
-  .contact-form-card {
-    padding: 24px;
+  .driver-cards {
+    grid-template-columns: 1fr;
   }
 }
 </style>
 </head>
 <body>
 
-<!-- =========================================
+<!-- ========================================
      FLOATING NAV
-     ========================================= -->
-<nav class="floating-nav" id="floating-nav">
-  <a href="#" class="nav-logo">LYN<span class="dot">.</span></a>
+     ======================================== -->
+<nav class="nav" id="nav">
+  <div class="nav-logo">LYN<span class="dot"></span></div>
   <a href="#contact" class="nav-cta">Let's Talk</a>
 </nav>
 
-<!-- =========================================
+<!-- ========================================
      SECTION 1 — ARRIVAL
-     ========================================= -->
-<div class="scroll-section" id="arrival">
-  <div class="sticky-panel">
-    <div class="particle-field" id="particle-field"></div>
-    <div class="arrival-content">
-      <div class="arrival-logo" id="arrival-logo">LYN<span class="dot">.</span></div>
-      <div class="arrival-tagline">
-        <span id="word-1">Every</span>
-        <span id="word-2">delivery.</span>
-        <span id="word-3">Proven.</span>
-      </div>
-      <div class="arrival-hint" id="arrival-hint">Scroll to see it happen.</div>
+     ======================================== -->
+<div id="arrival">
+  <div class="bg-pulse"></div>
+  <div class="arrival-content">
+    <div class="arrival-brand">LYN<span class="dot"></span></div>
+    <div class="arrival-words">
+      <span id="word-every">Every</span>
+      <span id="word-delivery">delivery.</span>
+      <span id="word-proven" class="word-proven">Proven.</span>
     </div>
+    <div class="arrival-hint" id="arrival-hint">Scroll to see it happen.</div>
   </div>
 </div>
 
-<!-- =========================================
+<!-- ========================================
      SECTION 2 — THE PROBLEM
-     ========================================= -->
-<div class="scroll-section" id="problem">
-  <div class="sticky-panel">
-    <div class="problem-line problem-line-1" id="problem-1">A patient didn't get their medication today.</div>
-    <div class="problem-line problem-line-2" id="problem-2">Nobody knows.</div>
-    <div class="problem-line problem-line-3" id="problem-3">That's the problem LYN solves.</div>
+     ======================================== -->
+<div class="s" id="problem" style="height:250vh">
+  <div class="s-inner">
+    <p class="problem-statement problem-s1" id="ps1">A patient didn't get their medication today.</p>
+    <p class="problem-statement problem-s2" id="ps2">Nobody knows.</p>
+    <p class="problem-statement problem-s3" id="ps3">That's the problem LYN solves.</p>
   </div>
 </div>
 
-<!-- =========================================
+<!-- ========================================
      SECTION 3 — THE MAP
-     ========================================= -->
-<div class="scroll-section" id="map-section">
-  <div class="sticky-panel">
-    <div class="map-container">
-      <div id="lyn-map"></div>
-    </div>
-    <div class="map-hud" id="map-hud">
-      <div class="hud-item">
-        <div class="hud-dot emerald"></div>
-        <span class="hud-label">Drivers Active:</span>
-        <span class="hud-value">5</span>
-      </div>
-      <div class="hud-item">
-        <div class="hud-dot amber"></div>
-        <span class="hud-label">Stops Remaining:</span>
-        <span class="hud-value">47</span>
-      </div>
-      <div class="hud-item">
-        <div class="hud-dot teal"></div>
-        <span class="hud-label">Delivered:</span>
-        <span class="hud-value">311</span>
-      </div>
+     ======================================== -->
+<div class="s" id="map-section" style="height:220vh">
+  <div class="s-inner">
+    <div id="map-container"></div>
+    <div class="map-hud" id="map-hud" style="opacity:0;">
+      <div class="map-hud-stat"><span class="label">Drivers Active</span><span class="val">5</span></div>
+      <div class="map-hud-stat"><span class="label">Stops Remaining</span><span class="val">47</span></div>
+      <div class="map-hud-stat"><span class="label">Delivered</span><span class="val">311</span></div>
     </div>
   </div>
 </div>
 
-<!-- =========================================
-     SECTION 4 — A DELIVERY HAPPENS
-     ========================================= -->
-<div class="scroll-section" id="delivery-section">
-  <div class="sticky-panel">
-    <div class="delivery-left" id="delivery-left">
+<!-- ========================================
+     SECTION 4 — DELIVERY HAPPENS
+     ======================================== -->
+<div class="s" id="delivery" style="height:200vh">
+  <div class="s-inner">
+    <div class="delivery-left" id="del-left">
       <div class="mini-map-card">
-        <div class="mini-map-inner">
-          <div id="mini-map"></div>
+        <div class="mini-map-label">Live Route</div>
+        <div class="mini-map-driver">Marcus T.</div>
+        <div class="route-dots" id="route-dots"></div>
+      </div>
+    </div>
+    <div class="delivery-right" id="del-right">
+      <div class="delivery-counter">
+        <span>Route Progress</span>
+        <span>Delivered: <span class="count-val" id="del-counter">311</span></span>
+      </div>
+      <div class="delivery-table">
+        <div class="delivery-table-header">
+          <span>Patient</span>
+          <span class="addr-col">Address</span>
+          <span>Driver</span>
+          <span>Status</span>
         </div>
+        <div id="delivery-rows"></div>
       </div>
     </div>
-    <div class="delivery-right" id="delivery-right">
-      <div class="delivery-counter">Deliveries Today: <span id="delivery-count">311</span></div>
-      <div class="delivery-table-wrap">
-        <table class="delivery-table">
-          <thead>
-            <tr>
-              <th>Patient</th>
-              <th>Address</th>
-              <th>Driver</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody id="delivery-tbody"></tbody>
-        </table>
-      </div>
-    </div>
+
+    <!-- POD overlay -->
     <div class="pod-overlay" id="pod-overlay">
       <div class="pod-card">
-        <div class="pod-header">
-          <div class="pod-title">Proof of Delivery</div>
-          <div class="pod-verified">&#10003; Verified</div>
+        <h4>Proof of Delivery</h4>
+        <div class="pod-photos" id="pod-photos" style="opacity:0;">
+          <div class="pod-photo">
+            <div class="icon">📦</div>
+            <div class="label">Package Photo</div>
+          </div>
+          <div class="pod-photo">
+            <div class="icon">🏠</div>
+            <div class="label">Delivery Location</div>
+          </div>
+        </div>
+        <div class="pod-sig" id="pod-sig" style="opacity:0;">
+          <canvas id="sig-canvas" width="360" height="60"></canvas>
+          <div class="label">Digital Signature</div>
         </div>
         <div class="pod-grid">
-          <div class="pod-photo">
-            &#128230;
-            <div class="pod-photo-label">Package Photo</div>
+          <div>
+            <span class="pod-field-label">GPS</span>
+            <span id="gps-text" style="font-family:monospace;color:var(--gray-400);font-size:13px;"></span>
           </div>
-          <div class="pod-photo">
-            &#127968;
-            <div class="pod-photo-label">Delivery Location</div>
-          </div>
-        </div>
-        <div class="pod-signature-section">
-          <div class="pod-signature-label">Patient Signature</div>
-          <canvas class="pod-signature-canvas" id="pod-signature-canvas" width="480" height="80"></canvas>
-        </div>
-        <div class="pod-details">
-          <div class="pod-detail-row">
-            <span class="pod-detail-label">GPS Coordinates</span>
-            <span class="pod-detail-value">41.0891&deg;N, 81.5123&deg;W</span>
-          </div>
-          <div class="pod-detail-row">
-            <span class="pod-detail-label">Geofence</span>
-            <span class="pod-detail-value emerald">&#10003; Verified &mdash; 42 ft</span>
-          </div>
-          <div class="pod-detail-row">
-            <span class="pod-detail-label">Timestamp</span>
-            <span class="pod-detail-value">Today 10:47 AM</span>
-          </div>
-          <div class="pod-detail-row">
-            <span class="pod-detail-label">Driver</span>
-            <span class="pod-detail-value">Marcus T.</span>
+          <div>
+            <span class="pod-field-label">Geofence</span>
+            <span id="geo-status" style="color:var(--emerald);font-weight:600;font-size:13px;"></span>
           </div>
         </div>
-        <div class="pod-note">"Left at front door per patient request"</div>
+        <div class="pod-note">
+          <span class="pod-field-label">Delivery Note</span>
+          <span id="note-text" style="color:var(--white);font-size:14px;font-style:italic;"></span>
+        </div>
+        <div class="pod-grid">
+          <div>
+            <span class="pod-field-label">Time</span>
+            <span id="time-text" style="color:var(--white);font-size:13px;"></span>
+          </div>
+          <div>
+            <span class="pod-field-label">Driver</span>
+            <span id="driver-text" style="color:var(--white);font-size:13px;"></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- =========================================
+<!-- ========================================
      SECTION 5 — PHARMACY PORTAL
-     ========================================= -->
-<div class="scroll-section" id="pharmacy-section">
-  <div class="sticky-panel">
-    <div class="portal-mockup" id="pharmacy-mockup">
-      <div class="portal-topbar">
-        <div class="portal-topbar-left">
-          <div class="portal-topbar-name">Giant Eagle Pharmacy</div>
-          <div class="portal-topbar-badge">Active</div>
-        </div>
-        <div class="portal-avatar">GE</div>
+     ======================================== -->
+<div class="s" id="pharmacy" style="height:160vh">
+  <div class="s-inner">
+    <div class="pharmacy-wrap">
+      <div class="pharmacy-text">
+        <p id="pharm-t1">Your patients.</p>
+        <p id="pharm-t2">Your proof.</p>
+        <p id="pharm-t3" class="accent">On demand.</p>
       </div>
-      <div class="portal-stats">
-        <div class="portal-stat">
-          <div class="portal-stat-value">387</div>
-          <div class="portal-stat-label">Total</div>
+      <div class="portal-mock" id="portal-mock">
+        <div class="portal-topbar">
+          <span class="name">Giant Eagle Pharmacy</span>
+          <div class="avatar">GE</div>
         </div>
-        <div class="portal-stat">
-          <div class="portal-stat-value emerald">312</div>
-          <div class="portal-stat-label">Delivered</div>
+        <div class="portal-stats">
+          <div class="portal-stat"><span class="portal-stat-num">387</span><span class="portal-stat-label">Total</span></div>
+          <div class="portal-stat"><span class="portal-stat-num" style="color:var(--emerald);">312</span><span class="portal-stat-label">Delivered</span></div>
+          <div class="portal-stat"><span class="portal-stat-num" style="color:var(--amber);">68</span><span class="portal-stat-label">Pending</span></div>
+          <div class="portal-stat"><span class="portal-stat-num" style="color:var(--rose);">7</span><span class="portal-stat-label">Failed</span></div>
         </div>
-        <div class="portal-stat">
-          <div class="portal-stat-value amber">68</div>
-          <div class="portal-stat-label">Pending</div>
+        <div class="portal-table">
+          <div class="portal-table-header">
+            <span>Patient</span>
+            <span>Address</span>
+            <span>Time</span>
+            <span>Status</span>
+          </div>
+          <div class="portal-row"><span class="name">Margaret Thompson</span><span class="addr">142 Oak St, Fairlawn</span><span class="time">10:47 AM</span><span><span class="badge badge-delivered"><span class="badge-dot"></span>Delivered</span></span></div>
+          <div class="portal-row"><span class="name">Robert Williams</span><span class="addr">891 Maple Ave, Akron</span><span class="time">10:52 AM</span><span><span class="badge badge-delivered"><span class="badge-dot"></span>Delivered</span></span></div>
+          <div class="portal-row"><span class="name">Dorothy Evans</span><span class="addr">2200 State Rd, Cuyahoga Falls</span><span class="time">11:03 AM</span><span><span class="badge badge-delivered"><span class="badge-dot"></span>Delivered</span></span></div>
+          <div class="portal-row"><span class="name">James Anderson</span><span class="addr">567 Highland Ave, Akron</span><span class="time">—</span><span><span class="badge badge-pending"><span class="badge-dot"></span>Pending</span></span></div>
+          <div class="portal-row"><span class="name">William Davis</span><span class="addr">330 W Market St, Akron</span><span class="time">—</span><span><span class="badge badge-pending"><span class="badge-dot"></span>Pending</span></span></div>
+          <div class="portal-row"><span class="name">Barbara Taylor</span><span class="addr">45 Merriman Rd, Akron</span><span class="time">11:18 AM</span><span><span class="badge badge-delivered"><span class="badge-dot"></span>Delivered</span></span></div>
         </div>
-        <div class="portal-stat">
-          <div class="portal-stat-value red">7</div>
-          <div class="portal-stat-label">Failed</div>
-        </div>
-      </div>
-      <div class="portal-table-wrap">
-        <table class="portal-table">
-          <thead>
-            <tr>
-              <th>Patient</th>
-              <th>Address</th>
-              <th>Driver</th>
-              <th>Time</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Margaret Thompson</td>
-              <td>142 Oak St, Fairlawn</td>
-              <td>Marcus T.</td>
-              <td>10:47 AM</td>
-              <td><span class="status-badge delivered">Delivered</span></td>
-            </tr>
-            <tr>
-              <td>Robert Williams</td>
-              <td>891 Maple Ave, Akron</td>
-              <td>Marcus T.</td>
-              <td>11:02 AM</td>
-              <td><span class="status-badge delivered">Delivered</span></td>
-            </tr>
-            <tr>
-              <td>Dorothy Evans</td>
-              <td>2200 State Rd, Cuyahoga Falls</td>
-              <td>Darnell W.</td>
-              <td>11:15 AM</td>
-              <td><span class="status-badge delivered">Delivered</span></td>
-            </tr>
-            <tr>
-              <td>James Anderson</td>
-              <td>567 Highland Ave, Akron</td>
-              <td>Darnell W.</td>
-              <td>—</td>
-              <td><span class="status-badge pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>William Davis</td>
-              <td>330 W Market St, Akron</td>
-              <td>Steve M.</td>
-              <td>—</td>
-              <td><span class="status-badge pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>Barbara Taylor</td>
-              <td>45 Merriman Rd, Akron</td>
-              <td>Steve M.</td>
-              <td>10:58 AM</td>
-              <td><span class="status-badge delivered">Delivered</span></td>
-            </tr>
-            <tr>
-              <td>Richard Brown</td>
-              <td>780 E Tallmadge Ave, Akron</td>
-              <td>Kim L.</td>
-              <td>—</td>
-              <td><span class="status-badge pending">Pending</span></td>
-            </tr>
-            <tr>
-              <td>Susan Harris</td>
-              <td>920 N Main St, North Canton</td>
-              <td>Ray D.</td>
-              <td>11:22 AM</td>
-              <td><span class="status-badge failed">Failed</span></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </div>
-    <div class="portal-text" id="pharmacy-text">Your patients. Your proof. <em>On demand.</em></div>
   </div>
 </div>
 
-<!-- =========================================
+<!-- ========================================
      SECTION 6 — DISPATCH PORTAL
-     ========================================= -->
-<div class="scroll-section" id="dispatch-section">
-  <div class="sticky-panel">
-    <div class="dispatch-mockup" id="dispatch-mockup">
-      <div class="dispatch-header">
-        <div class="dispatch-header-title">Dispatch Overview</div>
-        <div class="dispatch-banner">&#9889; Routes optimized &middot; 47 minutes saved today</div>
+     ======================================== -->
+<div class="s" id="dispatch" style="height:160vh">
+  <div class="s-inner">
+    <div class="dispatch-wrap">
+      <div class="dispatch-text">
+        <p id="disp-t1">Built by dispatchers.</p>
+        <p id="disp-t2">For dispatchers.</p>
       </div>
-      <div class="driver-cards-row">
-        <div class="driver-card">
-          <div class="driver-card-name">Marcus T.</div>
-          <div class="driver-card-stops">22 / 28 stops</div>
-          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 79%;"></div></div>
-          <div class="driver-card-pct">79%</div>
+      <div class="dispatch-mock" id="dispatch-mock">
+        <div class="driver-cards">
+          <div class="driver-card">
+            <div class="dc-name">Marcus T.</div>
+            <div class="dc-stops">22 / 28 stops</div>
+            <div class="dc-bar-track"><div class="dc-bar-fill" style="width:79%"></div></div>
+            <div class="dc-pct">79%</div>
+          </div>
+          <div class="driver-card">
+            <div class="dc-name">Darnell W.</div>
+            <div class="dc-stops">19 / 24 stops</div>
+            <div class="dc-bar-track"><div class="dc-bar-fill" style="width:79%"></div></div>
+            <div class="dc-pct">79%</div>
+          </div>
+          <div class="driver-card">
+            <div class="dc-name">Steve M.</div>
+            <div class="dc-stops">18 / 22 stops</div>
+            <div class="dc-bar-track"><div class="dc-bar-fill" style="width:82%"></div></div>
+            <div class="dc-pct">82%</div>
+          </div>
+          <div class="driver-card">
+            <div class="dc-name">Kim L.</div>
+            <div class="dc-stops">21 / 26 stops</div>
+            <div class="dc-bar-track"><div class="dc-bar-fill" style="width:81%"></div></div>
+            <div class="dc-pct">81%</div>
+          </div>
+          <div class="driver-card">
+            <div class="dc-name">Ray D.</div>
+            <div class="dc-stops">14 / 20 stops</div>
+            <div class="dc-bar-track"><div class="dc-bar-fill" style="width:70%"></div></div>
+            <div class="dc-pct">70%</div>
+          </div>
         </div>
-        <div class="driver-card">
-          <div class="driver-card-name">Darnell W.</div>
-          <div class="driver-card-stops">18 / 24 stops</div>
-          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 75%;"></div></div>
-          <div class="driver-card-pct">75%</div>
-        </div>
-        <div class="driver-card">
-          <div class="driver-card-name">Steve M.</div>
-          <div class="driver-card-stops">15 / 22 stops</div>
-          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 68%;"></div></div>
-          <div class="driver-card-pct">68%</div>
-        </div>
-        <div class="driver-card">
-          <div class="driver-card-name">Kim L.</div>
-          <div class="driver-card-stops">20 / 26 stops</div>
-          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 77%;"></div></div>
-          <div class="driver-card-pct">77%</div>
-        </div>
-        <div class="driver-card">
-          <div class="driver-card-name">Ray D.</div>
-          <div class="driver-card-stops">14 / 20 stops</div>
-          <div class="driver-progress-bar"><div class="driver-progress-fill" style="width: 70%;"></div></div>
-          <div class="driver-card-pct">70%</div>
-        </div>
-      </div>
-      <div class="dispatch-bottom">
-        <div class="dispatch-payroll">
-          <div class="dispatch-subtitle">Weekly Payroll</div>
-          <div class="payroll-row"><span class="payroll-name">Marcus T.</span><span class="payroll-amount">$1,247.50</span></div>
-          <div class="payroll-row"><span class="payroll-name">Darnell W.</span><span class="payroll-amount">$1,102.00</span></div>
-          <div class="payroll-row"><span class="payroll-name">Steve M.</span><span class="payroll-amount">$978.25</span></div>
-          <div class="payroll-row"><span class="payroll-name">Kim L.</span><span class="payroll-amount">$1,156.75</span></div>
-          <div class="payroll-row"><span class="payroll-name">Ray D.</span><span class="payroll-amount">$892.00</span></div>
-        </div>
-        <div class="dispatch-chart">
-          <div class="dispatch-subtitle">Deliveries This Week</div>
-          <div class="chart-bars">
-            <div class="chart-bar-col">
-              <div class="chart-bar" style="height: 72%;"></div>
-              <div class="chart-bar-label">Mon</div>
-            </div>
-            <div class="chart-bar-col">
-              <div class="chart-bar" style="height: 85%;"></div>
-              <div class="chart-bar-label">Tue</div>
-            </div>
-            <div class="chart-bar-col">
-              <div class="chart-bar" style="height: 64%;"></div>
-              <div class="chart-bar-label">Wed</div>
-            </div>
-            <div class="chart-bar-col">
-              <div class="chart-bar" style="height: 92%;"></div>
-              <div class="chart-bar-label">Thu</div>
-            </div>
-            <div class="chart-bar-col">
-              <div class="chart-bar" style="height: 78%;"></div>
-              <div class="chart-bar-label">Fri</div>
+        <div class="dispatch-banner">Routes optimized · 47 minutes saved today</div>
+        <div class="dispatch-bottom">
+          <div class="payroll-card">
+            <h5>Payroll Summary</h5>
+            <div class="payroll-row"><span class="pr-name">Marcus T.</span><span class="pr-val">$284.00</span></div>
+            <div class="payroll-row"><span class="pr-name">Darnell W.</span><span class="pr-val">$248.00</span></div>
+            <div class="payroll-row"><span class="pr-name">Steve M.</span><span class="pr-val">$231.00</span></div>
+            <div class="payroll-row"><span class="pr-name">Kim L.</span><span class="pr-val">$262.00</span></div>
+            <div class="payroll-row"><span class="pr-name">Ray D.</span><span class="pr-val">$196.00</span></div>
+            <div class="payroll-row total"><span class="pr-name">Total</span><span class="pr-val">$1,221.00</span></div>
+          </div>
+          <div class="chart-card">
+            <h5>Weekly Deliveries</h5>
+            <div class="chart-bars">
+              <div class="chart-bar-wrap"><div class="chart-bar" style="height:65%"></div><div class="chart-bar-label">Mon</div></div>
+              <div class="chart-bar-wrap"><div class="chart-bar" style="height:82%"></div><div class="chart-bar-label">Tue</div></div>
+              <div class="chart-bar-wrap"><div class="chart-bar" style="height:74%"></div><div class="chart-bar-label">Wed</div></div>
+              <div class="chart-bar-wrap"><div class="chart-bar" style="height:91%"></div><div class="chart-bar-label">Thu</div></div>
+              <div class="chart-bar-wrap"><div class="chart-bar" style="height:58%"></div><div class="chart-bar-label">Fri</div></div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="dispatch-text" id="dispatch-text">Built by dispatchers. <em>For dispatchers.</em></div>
   </div>
 </div>
 
-<!-- =========================================
-     SECTION 7 — PROOF
-     ========================================= -->
-<div id="proof-section">
-  <div class="proof-stats">
-    <div class="proof-stat" data-target="300" data-suffix="+">
-      <div class="proof-stat-value">0</div>
-      <div class="proof-stat-label">daily deliveries</div>
+<!-- ========================================
+     SECTION 7 — PROOF STATS
+     ======================================== -->
+<div id="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <div class="stat-num" id="stat-300">0</div>
+      <div class="stat-label">daily deliveries</div>
     </div>
-    <div class="proof-stat" data-target="100" data-suffix="%">
-      <div class="proof-stat-value">0</div>
-      <div class="proof-stat-label">POD capture rate</div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-100">0%</div>
+      <div class="stat-label">POD capture rate</div>
     </div>
-    <div class="proof-stat" data-target="17" data-suffix="">
-      <div class="proof-stat-value">0</div>
-      <div class="proof-stat-label">years operational knowledge</div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-17">0</div>
+      <div class="stat-label">years operational knowledge</div>
     </div>
-    <div class="proof-stat" data-target="0" data-suffix="">
-      <div class="proof-stat-value">0</div>
-      <div class="proof-stat-label">spreadsheets</div>
+    <div class="stat-item">
+      <div class="stat-num" id="stat-0">0</div>
+      <div class="stat-label">spreadsheets</div>
     </div>
   </div>
-  <div class="proof-quote">We built this for our own operation. Now it's yours.</div>
-  <div class="proof-attribution">&mdash; CNC Delivery, Northeast Ohio</div>
+  <div class="stats-quote">
+    <p>We built this for our own operation. Now it's yours.</p>
+    <div class="attribution">— CNC Delivery, Northeast Ohio</div>
+  </div>
 </div>
 
-<!-- =========================================
+<!-- ========================================
      SECTION 8 — TWO DOORS
-     ========================================= -->
-<div id="doors-section">
+     ======================================== -->
+<div id="doors">
   <div class="doors-grid">
-    <div class="door-card left" id="door-left">
-      <div class="door-title">For Pharmacies</div>
+    <div class="door-card door-card-pharmacy" id="door-left">
+      <h3>For Pharmacies</h3>
       <ul class="door-list">
-        <li>Real-time delivery visibility</li>
-        <li>Photo + signature proof on demand</li>
-        <li>HIPAA-ready audit trail</li>
-        <li>No more calling dispatch</li>
-        <li>White-labeled with your brand</li>
+        <li><span class="door-check door-check-emerald">✓</span>Real-time delivery tracking for every patient</li>
+        <li><span class="door-check door-check-emerald">✓</span>Photo + signature proof on every stop</li>
+        <li><span class="door-check door-check-emerald">✓</span>HIPAA-compliant chain of custody</li>
+        <li><span class="door-check door-check-emerald">✓</span>Branded patient notification portal</li>
+        <li><span class="door-check door-check-emerald">✓</span>Zero IT setup — live in 24 hours</li>
       </ul>
-      <a href="#contact" class="door-btn emerald">Get Your Portal</a>
+      <a href="#contact" class="door-btn door-btn-emerald">Get Your Portal</a>
     </div>
-    <div class="door-card right" id="door-right">
-      <div class="door-title">For Courier Companies</div>
+    <div class="door-card door-card-courier" id="door-right">
+      <h3>For Courier Companies</h3>
       <ul class="door-list">
-        <li>Dispatch portal built by operators</li>
-        <li>Route optimization + driver management</li>
-        <li>Automated payroll from delivery data</li>
-        <li>Analytics that show what's happening</li>
-        <li>Scale without adding dispatch staff</li>
+        <li><span class="door-check door-check-teal">✓</span>Dispatch board built for daily routes</li>
+        <li><span class="door-check door-check-teal">✓</span>Driver app with route optimization</li>
+        <li><span class="door-check door-check-teal">✓</span>Automated payroll & stop tracking</li>
+        <li><span class="door-check door-check-teal">✓</span>Pharmacy portal white-labeled to your brand</li>
+        <li><span class="door-check door-check-teal">✓</span>Built by operators who run 300+ stops/day</li>
       </ul>
-      <a href="#contact" class="door-btn teal">Run Your Operation</a>
+      <a href="#contact" class="door-btn door-btn-teal">Run Your Operation</a>
     </div>
   </div>
 </div>
 
-<!-- =========================================
+<!-- ========================================
      SECTION 9 — CONTACT
-     ========================================= -->
+     ======================================== -->
 <div id="contact">
-  <div class="contact-headline">Ready to run this in your operation?</div>
-  <div class="contact-subhead">You've seen it work. Let's make it yours.</div>
+  <h2 class="contact-headline">Ready to run this in your operation?</h2>
+  <p class="contact-sub">You've seen it work. Let's make it yours.</p>
   <div class="contact-form-card">
     <form id="contact-form" onsubmit="return false;">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" placeholder="Your name" required>
-        </div>
-        <div class="form-group">
-          <label for="company">Company</label>
-          <input type="text" id="company" name="company" placeholder="Company name">
-        </div>
+      <div class="form-row form-group">
+        <input type="text" class="form-input" placeholder="Name" required>
+        <input type="text" class="form-input" placeholder="Company" required>
       </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" placeholder="you@company.com" required>
-        </div>
-        <div class="form-group">
-          <label for="phone">Phone</label>
-          <input type="tel" id="phone" name="phone" placeholder="(555) 555-5555">
-        </div>
+      <div class="form-row form-group">
+        <input type="email" class="form-input" placeholder="Email" required>
+        <input type="tel" class="form-input" placeholder="Phone">
       </div>
       <div class="form-group">
-        <label for="message">Message</label>
-        <textarea id="message" name="message" placeholder="Tell us about your operation..."></textarea>
+        <textarea class="form-textarea" placeholder="Tell us about your operation..." rows="4"></textarea>
       </div>
       <button type="submit" class="form-submit">Let's Talk</button>
     </form>
   </div>
-  <div class="footer">
-    <div class="footer-logo">LYN<span class="dot">.</span></div>
-    <div class="footer-tagline">Every delivery. Proven.</div>
-    <div class="footer-copy">&copy; 2026 LYN Software. All rights reserved.</div>
-    <div class="footer-built">Built in Northeast Ohio</div>
-  </div>
 </div>
 
-<!-- =========================================
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-brand">LYN<span class="dot"></span></div>
+  <div class="footer-tagline">Every delivery. Proven.</div>
+  <div class="footer-copy">© 2026 LYN Software</div>
+  <div class="footer-location">Built in Northeast Ohio</div>
+</footer>
+
+<!-- ========================================
      JAVASCRIPT
-     ========================================= -->
+     ======================================== -->
 <script>
 (function() {
   'use strict';
 
-  // ==========================================
-  // DELIVERY DATA
-  // ==========================================
-  const DELIVERIES = [
-    { patient: 'Margaret Thompson', address: '142 Oak St, Fairlawn', driver: 'Marcus T.', status: 'pending' },
-    { patient: 'Robert Williams', address: '891 Maple Ave, Akron', driver: 'Marcus T.', status: 'pending' },
-    { patient: 'Dorothy Evans', address: '2200 State Rd, Cuyahoga Falls', driver: 'Darnell W.', status: 'pending' },
-    { patient: 'James Anderson', address: '567 Highland Ave, Akron', driver: 'Darnell W.', status: 'pending' },
-    { patient: 'William Davis', address: '330 W Market St, Akron', driver: 'Steve M.', status: 'pending' },
-    { patient: 'Barbara Taylor', address: '45 Merriman Rd, Akron', driver: 'Steve M.', status: 'pending' },
-    { patient: 'Richard Brown', address: '780 E Tallmadge Ave, Akron', driver: 'Kim L.', status: 'pending' },
-    { patient: 'Mary Jackson', address: '1550 Sand Run Rd, Akron', driver: 'Kim L.', status: 'pending' },
-    { patient: 'Susan Harris', address: '920 N Main St, North Canton', driver: 'Ray D.', status: 'pending' },
-    { patient: 'Joseph Clark', address: '1445 Whipple Ave, Canton', driver: 'Ray D.', status: 'pending' },
-    { patient: 'Nancy Lewis', address: '603 12th St NW, Canton', driver: 'Ray D.', status: 'pending' },
-    { patient: 'Thomas Robinson', address: '2800 Tuscarawas St, Canton', driver: 'Marcus T.', status: 'pending' },
-  ];
-
-  // ==========================================
-  // PARTICLES (CSS-only drift)
-  // ==========================================
-  function createParticles() {
-    const field = document.getElementById('particle-field');
-    if (!field) return;
-    for (let i = 0; i < 40; i++) {
-      const p = document.createElement('div');
-      p.className = 'particle';
-      p.style.left = Math.random() * 100 + '%';
-      p.style.top = (40 + Math.random() * 60) + '%';
-      p.style.animationDuration = (15 + Math.random() * 25) + 's';
-      p.style.animationDelay = -(Math.random() * 30) + 's';
-      p.style.width = (1.5 + Math.random() * 2) + 'px';
-      p.style.height = p.style.width;
-      p.style.opacity = 0.05 + Math.random() * 0.15;
-      field.appendChild(p);
-    }
-  }
-  createParticles();
-
-  // ==========================================
-  // DELIVERY TABLE INIT
-  // ==========================================
-  const tbody = document.getElementById('delivery-tbody');
-  let deliveryStatuses = DELIVERIES.map(d => d.status);
-
-  function renderDeliveryTable() {
-    tbody.innerHTML = '';
-    DELIVERIES.forEach(function(d, i) {
-      const tr = document.createElement('tr');
-      const st = deliveryStatuses[i];
-      tr.innerHTML =
-        '<td>' + d.patient + '</td>' +
-        '<td>' + d.address + '</td>' +
-        '<td>' + d.driver + '</td>' +
-        '<td><span class="status-badge ' + st + '">' + (st.charAt(0).toUpperCase() + st.slice(1)) + '</span></td>';
-      tbody.appendChild(tr);
-    });
-  }
-  renderDeliveryTable();
-
-  // ==========================================
-  // SCROLL PROGRESS UTILITY
-  // ==========================================
-  function getScrollProgress(element) {
-    var rect = element.getBoundingClientRect();
-    var height = element.offsetHeight - window.innerHeight;
-    if (height <= 0) return rect.top <= 0 ? 1 : 0;
-    var progress = -rect.top / height;
-    return Math.max(0, Math.min(1, progress));
+  // ============================================
+  // SCROLL ENGINE UTILITIES
+  // ============================================
+  function scrollProgress(el) {
+    var rect = el.getBoundingClientRect();
+    var scrollHeight = el.offsetHeight - window.innerHeight;
+    if (scrollHeight <= 0) return rect.top <= 0 ? 1 : 0;
+    return Math.max(0, Math.min(1, -rect.top / scrollHeight));
   }
 
-  // ==========================================
-  // ELEMENT REFS
-  // ==========================================
-  var floatingNav = document.getElementById('floating-nav');
-  var arrivalLogo = document.getElementById('arrival-logo');
-  var word1 = document.getElementById('word-1');
-  var word2 = document.getElementById('word-2');
-  var word3 = document.getElementById('word-3');
+  function lerp(progress, start, end) {
+    var t = Math.max(0, Math.min(1, progress));
+    var eased = t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    return start + (end - start) * eased;
+  }
+
+  function subProgress(progress, startAt, endAt) {
+    if (progress <= startAt) return 0;
+    if (progress >= endAt) return 1;
+    return (progress - startAt) / (endAt - startAt);
+  }
+
+  // ============================================
+  // ELEMENT REFERENCES
+  // ============================================
+  var nav = document.getElementById('nav');
+  var wordEvery = document.getElementById('word-every');
+  var wordDelivery = document.getElementById('word-delivery');
+  var wordProven = document.getElementById('word-proven');
   var arrivalHint = document.getElementById('arrival-hint');
-  var problemEl = document.getElementById('problem');
-  var problem1 = document.getElementById('problem-1');
-  var problem2 = document.getElementById('problem-2');
-  var problem3 = document.getElementById('problem-3');
+
+  var problemSection = document.getElementById('problem');
+  var ps1 = document.getElementById('ps1');
+  var ps2 = document.getElementById('ps2');
+  var ps3 = document.getElementById('ps3');
+
   var mapSection = document.getElementById('map-section');
+  var mapContainer = document.getElementById('map-container');
   var mapHud = document.getElementById('map-hud');
-  var deliverySection = document.getElementById('delivery-section');
-  var deliveryLeft = document.getElementById('delivery-left');
-  var deliveryRight = document.getElementById('delivery-right');
-  var deliveryCount = document.getElementById('delivery-count');
+
+  var deliverySection = document.getElementById('delivery');
+  var delLeft = document.getElementById('del-left');
+  var delRight = document.getElementById('del-right');
+  var delCounter = document.getElementById('del-counter');
   var podOverlay = document.getElementById('pod-overlay');
-  var pharmacySection = document.getElementById('pharmacy-section');
-  var pharmacyMockup = document.getElementById('pharmacy-mockup');
-  var pharmacyText = document.getElementById('pharmacy-text');
-  var dispatchSection = document.getElementById('dispatch-section');
-  var dispatchMockup = document.getElementById('dispatch-mockup');
-  var dispatchText = document.getElementById('dispatch-text');
+  var podPhotos = document.getElementById('pod-photos');
+  var podSig = document.getElementById('pod-sig');
+  var sigCanvas = document.getElementById('sig-canvas');
+  var gpsText = document.getElementById('gps-text');
+  var geoStatus = document.getElementById('geo-status');
+  var noteText = document.getElementById('note-text');
+  var timeText = document.getElementById('time-text');
+  var driverText = document.getElementById('driver-text');
 
-  // ==========================================
-  // MAP STATE
-  // ==========================================
-  var mainMap = null;
-  var miniMap = null;
+  var pharmacySection = document.getElementById('pharmacy');
+  var portalMock = document.getElementById('portal-mock');
+  var pharmT1 = document.getElementById('pharm-t1');
+  var pharmT2 = document.getElementById('pharm-t2');
+  var pharmT3 = document.getElementById('pharm-t3');
+
+  var dispatchSection = document.getElementById('dispatch');
+  var dispatchMock = document.getElementById('dispatch-mock');
+  var dispT1 = document.getElementById('disp-t1');
+  var dispT2 = document.getElementById('disp-t2');
+
+  var doorLeft = document.getElementById('door-left');
+  var doorRight = document.getElementById('door-right');
+
+  // ============================================
+  // DELIVERY TABLE SETUP
+  // ============================================
+  var deliveries = [
+    { patient: 'Margaret Thompson', address: '142 Oak St, Fairlawn', driver: 'Marcus T.' },
+    { patient: 'Robert Williams', address: '891 Maple Ave, Akron', driver: 'Marcus T.' },
+    { patient: 'Dorothy Evans', address: '2200 State Rd, Cuyahoga Falls', driver: 'Darnell W.' },
+    { patient: 'James Anderson', address: '567 Highland Ave, Akron', driver: 'Darnell W.' },
+    { patient: 'William Davis', address: '330 W Market St, Akron', driver: 'Steve M.' },
+    { patient: 'Barbara Taylor', address: '45 Merriman Rd, Akron', driver: 'Steve M.' },
+    { patient: 'Richard Brown', address: '780 E Tallmadge Ave, Akron', driver: 'Kim L.' },
+    { patient: 'Mary Jackson', address: '1550 Sand Run Rd, Akron', driver: 'Kim L.' },
+    { patient: 'Susan Harris', address: '920 N Main St, North Canton', driver: 'Ray D.' },
+    { patient: 'Joseph Clark', address: '1445 Whipple Ave, Canton', driver: 'Ray D.' },
+    { patient: 'Nancy Lewis', address: '603 12th St NW, Canton', driver: 'Ray D.' },
+    { patient: 'Thomas Robinson', address: '2800 Tuscarawas St, Canton', driver: 'Marcus T.' },
+  ];
+
+  var deliveryRowsContainer = document.getElementById('delivery-rows');
+  var deliveryRowEls = [];
+  var deliveryBadges = [];
+
+  deliveries.forEach(function(d) {
+    var row = document.createElement('div');
+    row.className = 'delivery-row';
+    row.innerHTML = '<span class="patient">' + d.patient + '</span>' +
+      '<span class="address">' + d.address + '</span>' +
+      '<span class="driver">' + d.driver + '</span>' +
+      '<span><span class="badge badge-pending"><span class="badge-dot"></span>Pending</span></span>';
+    deliveryRowsContainer.appendChild(row);
+    deliveryRowEls.push(row);
+    deliveryBadges.push(row.querySelector('.badge'));
+  });
+
+  // Route dots
+  var routeDotsContainer = document.getElementById('route-dots');
+  var routeDotEls = [];
+  for (var i = 0; i < 12; i++) {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'route-dot-wrapper';
+    var dot = document.createElement('div');
+    dot.className = 'route-dot';
+    wrapper.appendChild(dot);
+    routeDotEls.push(dot);
+    if (i < 11) {
+      var line = document.createElement('div');
+      line.className = 'route-line';
+      wrapper.appendChild(line);
+    }
+    routeDotsContainer.appendChild(wrapper);
+  }
+
+  // ============================================
+  // SIGNATURE CURVE DATA
+  // ============================================
+  var sigPoints = [];
+  (function() {
+    for (var x = 0; x < 360; x += 2) {
+      var t = x / 360;
+      var y = 30 + Math.sin(t * Math.PI * 3.5) * 15 + Math.sin(t * Math.PI * 7) * 5 + Math.cos(t * Math.PI * 2) * 8;
+      sigPoints.push({ x: x, y: y });
+    }
+  })();
+
+  var sigCtx = sigCanvas.getContext('2d');
+
+  function drawSignature(progress) {
+    sigCtx.clearRect(0, 0, 360, 60);
+    if (progress <= 0) return;
+    var count = Math.floor(progress * sigPoints.length);
+    if (count < 2) return;
+    sigCtx.beginPath();
+    sigCtx.moveTo(sigPoints[0].x, sigPoints[0].y);
+    for (var i = 1; i < count; i++) {
+      sigCtx.lineTo(sigPoints[i].x, sigPoints[i].y);
+    }
+    sigCtx.strokeStyle = '#A1A1AA';
+    sigCtx.lineWidth = 2;
+    sigCtx.lineCap = 'round';
+    sigCtx.lineJoin = 'round';
+    sigCtx.stroke();
+  }
+
+  // ============================================
+  // MAPBOX SETUP
+  // ============================================
+  var map = null;
   var mapInitialized = false;
-  var miniMapInitialized = false;
   var mapMarkers = [];
-  var mapMarkersState = {
-    pharmacy1: false,
-    pharmacy2: false,
-    drivers: [false, false, false, false, false],
-    routes: false,
-    hud: false
-  };
+  var driverMarkers = [];
+  var mapDriftAngle = 0;
+  var mapUserInteracted = false;
+  var routeLayerAdded = false;
 
-  var MAPBOX_TOKEN = 'pk.eyJ1IjoiY3V0cnVmZWxsbzIxIiwiYSI6ImNtODljeHgxNjBheTYybHB3bm14a3V5dnoifQ.pCGbVeMn6MHSfKaDSJWCuQ';
-
-  var pharmacies = [
-    { name: 'Sterling Health', lng: -81.5185, lat: 41.0534 },
-    { name: 'Aultman Pharmacy', lng: -81.3784, lat: 40.7989 }
+  var pharmacyPins = [
+    { name: 'Sterling Health', coords: [-81.5185, 41.0534] },
+    { name: 'Aultman', coords: [-81.3784, 40.7989] }
   ];
 
-  var drivers = [
-    { name: 'Marcus', lng: -81.52, lat: 41.09, initial: 'M' },
-    { name: 'Darnell', lng: -81.60, lat: 41.12, initial: 'D' },
-    { name: 'Steve', lng: -81.39, lat: 40.88, initial: 'S' },
-    { name: 'Kim', lng: -81.47, lat: 41.04, initial: 'K' },
-    { name: 'Ray', lng: -81.50, lat: 41.07, initial: 'R' }
+  var driverPins = [
+    { name: 'Marcus', stops: 28, color: '#34D399', coords: [-81.52, 41.09] },
+    { name: 'Darnell', stops: 24, color: '#2DD4BF', coords: [-81.60, 41.12] },
+    { name: 'Steve', stops: 22, color: '#818CF8', coords: [-81.39, 40.88] },
+    { name: 'Kim', stops: 26, color: '#FBBF24', coords: [-81.47, 41.04] },
+    { name: 'Ray', stops: 20, color: '#F87171', coords: [-81.50, 41.07] },
   ];
 
-  // Route lines from pharmacies to area stops
-  var routeLines = [
-    { from: [-81.5185, 41.0534], to: [-81.52, 41.09] },
-    { from: [-81.5185, 41.0534], to: [-81.60, 41.12] },
-    { from: [-81.5185, 41.0534], to: [-81.47, 41.04] },
-    { from: [-81.5185, 41.0534], to: [-81.50, 41.07] },
-    { from: [-81.3784, 40.7989], to: [-81.39, 40.88] },
-    { from: [-81.3784, 40.7989], to: [-81.35, 40.85] },
-    { from: [-81.5185, 41.0534], to: [-81.55, 41.06] },
-    { from: [-81.3784, 40.7989], to: [-81.42, 40.82] },
+  var routeCoords = [
+    [-81.5185, 41.0534],
+    [-81.52, 41.09],
+    [-81.60, 41.12],
+    [-81.5185, 41.0534],
+    [-81.47, 41.04],
+    [-81.50, 41.07],
+    [-81.3784, 40.7989],
+    [-81.39, 40.88],
   ];
 
-  function initMainMap() {
+  function createPharmacyMarker(pin) {
+    var el = document.createElement('div');
+    el.style.cssText = 'display:flex;flex-direction:column;align-items:center;position:relative;';
+    el.innerHTML =
+      '<div style="position:absolute;width:32px;height:32px;border-radius:50%;background:rgba(239,68,68,0.3);animation:pulse-ring 2s ease-out infinite;top:0;left:50%;transform:translateX(-50%);"></div>' +
+      '<div style="width:32px;height:32px;background:#EF4444;border:3px solid #fff;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;box-shadow:0 2px 12px rgba(239,68,68,0.4);position:relative;z-index:1;">+</div>' +
+      '<div style="margin-top:4px;background:rgba(0,0,0,0.7);padding:3px 8px;border-radius:4px;font-size:11px;color:#fff;white-space:nowrap;">' + pin.name + '</div>';
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.6s cubic-bezier(0.4,0,0.2,1)';
+    var marker = new mapboxgl.Marker({ element: el, anchor: 'top' })
+      .setLngLat(pin.coords)
+      .addTo(map);
+    return { marker: marker, el: el };
+  }
+
+  function createDriverMarker(pin) {
+    var el = document.createElement('div');
+    el.style.cssText = 'display:flex;flex-direction:column;align-items:center;';
+    el.innerHTML =
+      '<div style="background:' + pin.color + ';color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:12px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,0.3);">' + pin.name + ' · ' + pin.stops + '</div>' +
+      '<div style="width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid ' + pin.color + ';"></div>';
+    el.style.opacity = '0';
+    el.style.transition = 'opacity 0.6s cubic-bezier(0.4,0,0.2,1)';
+    var marker = new mapboxgl.Marker({ element: el, anchor: 'bottom' })
+      .setLngLat(pin.coords)
+      .addTo(map);
+    return { marker: marker, el: el };
+  }
+
+  function initMap() {
     if (mapInitialized) return;
     mapInitialized = true;
 
-    mapboxgl.accessToken = MAPBOX_TOKEN;
-    mainMap = new mapboxgl.Map({
-      container: 'lyn-map',
+    mapboxgl.accessToken = 'pk.eyJ1IjoiY3V0cnVmZWxsbzIxIiwiYSI6ImNtODljeHgxNjBheTYybHB3bm14a3V5dnoifQ.pCGbVeMn6MHSfKaDSJWCuQ';
+    map = new mapboxgl.Map({
+      container: 'map-container',
       style: 'mapbox://styles/mapbox/dark-v11',
       center: [-81.48, 41.00],
       zoom: 10.5,
-      attributionControl: false
-    });
-
-    mainMap.addControl(new mapboxgl.NavigationControl(), 'top-right');
-
-    mainMap.on('load', function() {
-      // Add route source (empty initially)
-      mainMap.addSource('routes', {
-        type: 'geojson',
-        data: { type: 'FeatureCollection', features: [] }
-      });
-      mainMap.addLayer({
-        id: 'route-lines',
-        type: 'line',
-        source: 'routes',
-        paint: {
-          'line-color': '#2DD4BF',
-          'line-width': 2,
-          'line-opacity': 0.6,
-          'line-dasharray': [3, 3]
-        }
-      });
-    });
-  }
-
-  function addPharmacyMarker(map, pharmacy) {
-    var el = document.createElement('div');
-    el.className = 'pharmacy-marker';
-
-    var marker = new mapboxgl.Marker(el)
-      .setLngLat([pharmacy.lng, pharmacy.lat])
-      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<strong>' + pharmacy.name + '</strong>'))
-      .addTo(map);
-
-    mapMarkers.push(marker);
-    return marker;
-  }
-
-  function addDriverMarker(map, driver) {
-    var el = document.createElement('div');
-    el.className = 'driver-marker';
-    el.textContent = driver.initial;
-
-    var marker = new mapboxgl.Marker(el)
-      .setLngLat([driver.lng, driver.lat])
-      .setPopup(new mapboxgl.Popup({ offset: 25 }).setHTML('<strong>' + driver.name + '</strong>'))
-      .addTo(map);
-
-    mapMarkers.push(marker);
-    return marker;
-  }
-
-  function showRouteLines() {
-    if (!mainMap || !mainMap.getSource('routes')) return;
-
-    var features = routeLines.map(function(r) {
-      return {
-        type: 'Feature',
-        geometry: {
-          type: 'LineString',
-          coordinates: [r.from, r.to]
-        }
-      };
-    });
-
-    mainMap.getSource('routes').setData({
-      type: 'FeatureCollection',
-      features: features
-    });
-  }
-
-  // ==========================================
-  // MINI MAP INIT
-  // ==========================================
-  function initMiniMap() {
-    if (miniMapInitialized) return;
-    miniMapInitialized = true;
-
-    mapboxgl.accessToken = MAPBOX_TOKEN;
-    miniMap = new mapboxgl.Map({
-      container: 'mini-map',
-      style: 'mapbox://styles/mapbox/dark-v11',
-      center: [-81.50, 41.02],
-      zoom: 10,
       attributionControl: false,
       interactive: true
     });
 
-    miniMap.on('load', function() {
-      // Add pharmacy markers
-      pharmacies.forEach(function(p) {
-        var el = document.createElement('div');
-        el.className = 'pharmacy-marker';
-        el.style.width = '20px';
-        el.style.height = '20px';
-        new mapboxgl.Marker(el).setLngLat([p.lng, p.lat]).addTo(miniMap);
+    map.on('mousedown', function() { mapUserInteracted = true; });
+    map.on('touchstart', function() { mapUserInteracted = true; });
+
+    map.on('load', function() {
+      // Create pharmacy markers
+      pharmacyPins.forEach(function(pin) {
+        mapMarkers.push(createPharmacyMarker(pin));
       });
-      // Add driver markers
-      drivers.forEach(function(d) {
-        var el = document.createElement('div');
-        el.className = 'driver-marker';
-        el.style.width = '18px';
-        el.style.height = '18px';
-        el.style.fontSize = '8px';
-        el.textContent = d.initial;
-        new mapboxgl.Marker(el).setLngLat([d.lng, d.lat]).addTo(miniMap);
+
+      // Create driver markers
+      driverPins.forEach(function(pin) {
+        driverMarkers.push(createDriverMarker(pin));
       });
-    });
-  }
 
-  // ==========================================
-  // POD SIGNATURE DRAWING
-  // ==========================================
-  var signatureDrawn = false;
-  function drawSignature() {
-    if (signatureDrawn) return;
-    signatureDrawn = true;
-
-    var canvas = document.getElementById('pod-signature-canvas');
-    if (!canvas) return;
-    var ctx = canvas.getContext('2d');
-    var w = canvas.width;
-    var h = canvas.height;
-
-    ctx.clearRect(0, 0, w, h);
-    ctx.strokeStyle = '#FFFFFF';
-    ctx.lineWidth = 2;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
-
-    // Signature path points
-    var points = [
-      [30, 55], [40, 35], [55, 50], [65, 30], [80, 55],
-      [100, 25], [115, 50], [130, 35], [150, 50],
-      [170, 30], [185, 55], [200, 40], [220, 50],
-      [240, 25], [260, 45], [275, 35], [295, 50],
-      [310, 30], [330, 55], [345, 40], [360, 50],
-      [380, 30], [400, 55], [415, 40], [430, 48]
-    ];
-
-    var totalPoints = points.length;
-    var drawn = 0;
-    var speed = 40;
-
-    function drawStep() {
-      if (drawn >= totalPoints - 1) return;
-      ctx.beginPath();
-      if (drawn === 0) {
-        ctx.moveTo(points[0][0], points[0][1]);
-      } else {
-        ctx.moveTo(points[drawn][0], points[drawn][1]);
-      }
-      ctx.lineTo(points[drawn + 1][0], points[drawn + 1][1]);
-      ctx.stroke();
-      drawn++;
-      if (drawn < totalPoints - 1) {
-        setTimeout(drawStep, speed);
-      }
-    }
-
-    drawStep();
-  }
-
-  // ==========================================
-  // COUNTER ANIMATION (Section 7)
-  // ==========================================
-  var countersAnimated = false;
-
-  function animateCounters() {
-    if (countersAnimated) return;
-    countersAnimated = true;
-
-    var stats = document.querySelectorAll('#proof-section .proof-stat');
-    stats.forEach(function(stat, index) {
-      var target = parseInt(stat.getAttribute('data-target'), 10);
-      var suffix = stat.getAttribute('data-suffix') || '';
-      var valueEl = stat.querySelector('.proof-stat-value');
-
-      stat.classList.add('visible');
-      stat.style.transitionDelay = (index * 0.15) + 's';
-
-      if (target === 0) {
-        valueEl.textContent = '0';
-        return;
-      }
-
-      var start = 0;
-      var duration = 2000;
-      var startTime = null;
-
-      function step(timestamp) {
-        if (!startTime) startTime = timestamp;
-        var elapsed = timestamp - startTime;
-        var progress = Math.min(elapsed / duration, 1);
-        // Ease out
-        var eased = 1 - Math.pow(1 - progress, 3);
-        var current = Math.round(start + (target - start) * eased);
-        valueEl.textContent = current + suffix;
-        if (progress < 1) {
-          requestAnimationFrame(step);
+      // Add route source and layer
+      map.addSource('route', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: routeCoords
+          }
         }
-      }
+      });
 
-      requestAnimationFrame(step);
+      map.addLayer({
+        id: 'route-line',
+        type: 'line',
+        source: 'route',
+        layout: { 'line-join': 'round', 'line-cap': 'round' },
+        paint: {
+          'line-color': '#2DD4BF',
+          'line-width': 2,
+          'line-dasharray': [2, 4],
+          'line-opacity': 0
+        }
+      });
+      routeLayerAdded = true;
     });
   }
 
-  // Intersection Observer for counters
-  var proofSection = document.getElementById('proof-section');
-  var counterObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        animateCounters();
-        counterObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.3 });
-  counterObserver.observe(proofSection);
-
-  // ==========================================
-  // INTERSECTION OBSERVER FOR MAPS
-  // ==========================================
+  // Lazy init map
   var mapObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
-        initMainMap();
-        mapObserver.unobserve(entry.target);
+        initMap();
+        mapObserver.disconnect();
       }
     });
-  }, { threshold: 0.05 });
+  }, { rootMargin: '200px' });
   mapObserver.observe(mapSection);
 
-  var miniMapObserver = new IntersectionObserver(function(entries) {
-    entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        initMiniMap();
-        miniMapObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.05 });
-  miniMapObserver.observe(deliverySection);
-
-  // ==========================================
-  // INTERSECTION OBSERVER FOR DOORS
-  // ==========================================
-  var doorLeft = document.getElementById('door-left');
-  var doorRight = document.getElementById('door-right');
+  // ============================================
+  // DOORS INTERSECTION OBSERVER
+  // ============================================
+  var doorsVisible = false;
   var doorsObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      if (entry.isIntersecting) {
-        doorLeft.classList.add('visible');
-        doorRight.classList.add('visible');
-        doorsObserver.unobserve(entry.target);
-      }
+      if (entry.isIntersecting) doorsVisible = true;
     });
   }, { threshold: 0.2 });
-  doorsObserver.observe(document.getElementById('doors-section'));
+  doorsObserver.observe(document.getElementById('doors'));
 
-  // ==========================================
-  // ARRIVAL ANIMATION — immediate on load
-  // ==========================================
-  setTimeout(function() {
-    arrivalLogo.classList.add('visible');
-  }, 300);
+  // ============================================
+  // STATE TRACKING
+  // ============================================
+  var prevDeliveredCount = 0;
+  var deliveredStates = new Array(12).fill(false);
 
-  // ==========================================
-  // MAIN SCROLL HANDLER
-  // ==========================================
-  var currentDeliveryCount = 311;
-  var deliveriesCompleted = 0;
-
-  function onScroll() {
+  // ============================================
+  // MAIN ANIMATION LOOP
+  // ============================================
+  function tick() {
     var scrollY = window.scrollY || window.pageYOffset;
+    var vh = window.innerHeight;
 
-    // -- NAV visibility --
-    if (scrollY > window.innerHeight * 0.2) {
-      floatingNav.classList.add('visible');
+    // ---- NAV ----
+    if (scrollY > vh * 0.3) {
+      nav.classList.add('visible');
     } else {
-      floatingNav.classList.remove('visible');
+      nav.classList.remove('visible');
     }
 
-    // -- SECTION 1: ARRIVAL --
-    // Words appear based on scroll position in the first 80vh
-    var arrivalProgress = Math.min(1, scrollY / (window.innerHeight * 0.6));
-    if (arrivalProgress > 0.1) word1.classList.add('visible');
-    if (arrivalProgress > 0.3) word2.classList.add('visible');
-    if (arrivalProgress > 0.5) word3.classList.add('visible');
-    if (arrivalProgress > 0.7) arrivalHint.classList.add('visible');
+    // ---- SECTION 1: ARRIVAL ----
+    var arrivalProgress = Math.min(1, scrollY / vh);
+    var everyP = subProgress(arrivalProgress, 0, 0.15);
+    var deliveryP = subProgress(arrivalProgress, 0.15, 0.35);
+    var provenP = subProgress(arrivalProgress, 0.35, 0.55);
+    var hintP = subProgress(arrivalProgress, 0.55, 0.75);
 
-    // -- SECTION 2: THE PROBLEM --
-    var problemProgress = getScrollProgress(problemEl);
-    if (problemProgress > 0.0) problem1.classList.add('visible');
-    else problem1.classList.remove('visible');
-    if (problemProgress > 0.33) problem2.classList.add('visible');
-    else problem2.classList.remove('visible');
-    if (problemProgress > 0.66) problem3.classList.add('visible');
-    else problem3.classList.remove('visible');
+    wordEvery.style.opacity = lerp(everyP, 0, 1);
+    wordDelivery.style.opacity = lerp(deliveryP, 0, 1);
+    wordProven.style.opacity = lerp(provenP, 0, 1);
+    arrivalHint.style.opacity = lerp(hintP, 0, 1);
 
-    // -- SECTION 3: THE MAP --
-    var mapProgress = getScrollProgress(mapSection);
+    // ---- SECTION 2: PROBLEM ----
+    var pp = scrollProgress(problemSection);
 
-    if (mainMap && mainMap.loaded()) {
-      // Pharmacy 1
-      if (mapProgress > 0.15 && !mapMarkersState.pharmacy1) {
-        mapMarkersState.pharmacy1 = true;
-        addPharmacyMarker(mainMap, pharmacies[0]);
-      }
-      // Pharmacy 2
-      if (mapProgress > 0.25 && !mapMarkersState.pharmacy2) {
-        mapMarkersState.pharmacy2 = true;
-        addPharmacyMarker(mainMap, pharmacies[1]);
-      }
-      // Drivers
-      drivers.forEach(function(d, i) {
-        var threshold = 0.35 + (i * 0.04);
-        if (mapProgress > threshold && !mapMarkersState.drivers[i]) {
-          mapMarkersState.drivers[i] = true;
-          addDriverMarker(mainMap, d);
-        }
-      });
-      // Routes
-      if (mapProgress > 0.55 && !mapMarkersState.routes) {
-        mapMarkersState.routes = true;
-        showRouteLines();
-      }
+    var s1FadeIn = subProgress(pp, 0.0, 0.15);
+    var s1Hold = subProgress(pp, 0.15, 0.30);
+    var s1FadeOut = subProgress(pp, 0.30, 0.38);
+    var s1Opacity;
+    if (pp < 0.15) {
+      s1Opacity = lerp(s1FadeIn, 0, 1);
+    } else if (pp < 0.30) {
+      s1Opacity = 1;
+    } else {
+      s1Opacity = lerp(s1FadeOut, 1, 0.15);
+    }
+    var s1Y = pp < 0.15 ? lerp(s1FadeIn, 40, 0) : 0;
+    ps1.style.opacity = s1Opacity;
+    ps1.style.transform = 'translateY(' + s1Y + 'px)';
+
+    var s2FadeIn = subProgress(pp, 0.30, 0.45);
+    var s2FadeOut = subProgress(pp, 0.55, 0.63);
+    var s2Opacity;
+    if (pp < 0.30) {
+      s2Opacity = 0;
+    } else if (pp < 0.45) {
+      s2Opacity = lerp(s2FadeIn, 0, 1);
+    } else if (pp < 0.55) {
+      s2Opacity = 1;
+    } else {
+      s2Opacity = lerp(s2FadeOut, 1, 0.15);
+    }
+    var s2Y = (pp >= 0.30 && pp < 0.45) ? lerp(s2FadeIn, 30, 0) : 0;
+    ps2.style.opacity = s2Opacity;
+    ps2.style.transform = 'translateY(' + s2Y + 'px)';
+
+    var s3FadeIn = subProgress(pp, 0.58, 0.73);
+    var s3FadeOut = subProgress(pp, 0.90, 1.0);
+    var s3Opacity;
+    if (pp < 0.58) {
+      s3Opacity = 0;
+    } else if (pp < 0.73) {
+      s3Opacity = lerp(s3FadeIn, 0, 1);
+    } else if (pp < 0.90) {
+      s3Opacity = 1;
+    } else {
+      s3Opacity = lerp(s3FadeOut, 1, 0);
+    }
+    var s3Y = (pp >= 0.58 && pp < 0.73) ? lerp(s3FadeIn, 30, 0) : 0;
+    ps3.style.opacity = s3Opacity;
+    ps3.style.transform = 'translateY(' + s3Y + 'px)';
+
+    // ---- SECTION 3: MAP ----
+    var mp = scrollProgress(mapSection);
+
+    // Map container opacity
+    var mapFade = subProgress(mp, 0.0, 0.05);
+    mapContainer.style.opacity = lerp(mapFade, 0, 1);
+
+    // Map drift
+    if (map && !mapUserInteracted && mp > 0.05 && mp < 0.95) {
+      mapDriftAngle += 0.008;
+      var dx = Math.cos(mapDriftAngle) * 0.08;
+      var dy = Math.sin(mapDriftAngle) * 0.06;
+      map.panBy([dx, dy], { duration: 0 });
+    }
+
+    // Pharmacy pins
+    if (mapMarkers.length >= 2) {
+      var ph1p = subProgress(mp, 0.05, 0.15);
+      mapMarkers[0].el.style.opacity = lerp(ph1p, 0, 1);
+
+      var ph2p = subProgress(mp, 0.15, 0.25);
+      mapMarkers[1].el.style.opacity = lerp(ph2p, 0, 1);
+    }
+
+    // Driver pins
+    var driverStarts = [0.25, 0.31, 0.37, 0.43, 0.49];
+    driverMarkers.forEach(function(dm, idx) {
+      var dp = subProgress(mp, driverStarts[idx], driverStarts[idx] + 0.05);
+      dm.el.style.opacity = lerp(dp, 0, 1);
+    });
+
+    // Route line opacity
+    if (map && routeLayerAdded) {
+      var routeP = subProgress(mp, 0.55, 0.75);
+      try {
+        map.setPaintProperty('route-line', 'line-opacity', lerp(routeP, 0, 0.5));
+      } catch(e) {}
     }
 
     // HUD
-    if (mapProgress > 0.80) {
-      mapHud.classList.add('visible');
+    var hudP = subProgress(mp, 0.75, 0.90);
+    mapHud.style.opacity = lerp(hudP, 0, 1);
+
+    // ---- SECTION 4: DELIVERY ----
+    var dp = scrollProgress(deliverySection);
+
+    // Slide in layout
+    var slideP = subProgress(dp, 0.0, 0.15);
+    delLeft.style.opacity = lerp(slideP, 0, 1);
+    delLeft.style.transform = 'translateX(' + lerp(slideP, -30, 0) + 'px)';
+    delRight.style.opacity = lerp(slideP, 0, 1);
+    delRight.style.transform = 'translateX(' + lerp(slideP, 30, 0) + 'px)';
+
+    // Rows stagger in
+    deliveryRowEls.forEach(function(row, idx) {
+      var rowP = subProgress(dp, 0.15 + idx * 0.008, 0.15 + idx * 0.008 + 0.03);
+      row.style.opacity = lerp(rowP, 0, 1);
+      row.style.transform = 'translateY(' + lerp(rowP, 10, 0) + 'px)';
+    });
+
+    // Delivery completions
+    // Row 0 at 0.25, row 1 at 0.55-0.65, rows 2-4 at 0.65-0.85
+    var completionThresholds = [0.25, 0.58, 0.68, 0.75, 0.82];
+    var deliveredCount = 0;
+    for (var ci = 0; ci < completionThresholds.length; ci++) {
+      if (dp >= completionThresholds[ci]) {
+        deliveredCount = ci + 1;
+      }
+    }
+
+    // Update badges and dots
+    for (var bi = 0; bi < 12; bi++) {
+      var shouldBeDelivered = bi < deliveredCount;
+      if (shouldBeDelivered !== deliveredStates[bi]) {
+        deliveredStates[bi] = shouldBeDelivered;
+        if (shouldBeDelivered) {
+          deliveryBadges[bi].className = 'badge badge-delivered';
+          deliveryBadges[bi].innerHTML = '<span class="badge-dot"></span>Delivered';
+          deliveryRowEls[bi].classList.add('flash');
+          setTimeout((function(idx) { return function() { deliveryRowEls[idx].classList.remove('flash'); }; })(bi), 800);
+        } else {
+          deliveryBadges[bi].className = 'badge badge-pending';
+          deliveryBadges[bi].innerHTML = '<span class="badge-dot"></span>Pending';
+        }
+        // Route dot
+        if (bi < routeDotEls.length) {
+          if (shouldBeDelivered) {
+            routeDotEls[bi].classList.add('done');
+          } else {
+            routeDotEls[bi].classList.remove('done');
+          }
+        }
+      }
+    }
+
+    // Counter
+    delCounter.textContent = 311 + deliveredCount;
+
+    // ---- POD CARD ----
+    var podShowP = subProgress(dp, 0.30, 0.55);
+    var podHideP = subProgress(dp, 0.55, 0.65);
+    var podVisible = dp >= 0.30 && dp < 0.65;
+
+    if (dp < 0.30) {
+      podOverlay.style.opacity = 0;
+      podOverlay.style.transform = 'translateY(60px) scale(0.95)';
+      podOverlay.style.pointerEvents = 'none';
+    } else if (dp < 0.55) {
+      podOverlay.style.opacity = lerp(podShowP, 0, 1);
+      podOverlay.style.transform = 'translateY(' + lerp(podShowP, 60, 0) + 'px) scale(' + lerp(podShowP, 0.95, 1) + ')';
+      podOverlay.style.pointerEvents = 'auto';
+      podOverlay.style.boxShadow = '0 ' + lerp(podShowP, 4, 16) + 'px ' + lerp(podShowP, 20, 60) + 'px rgba(0,0,0,' + lerp(podShowP, 0.2, 0.6) + ')';
     } else {
-      mapHud.classList.remove('visible');
+      podOverlay.style.opacity = lerp(podHideP, 1, 0);
+      podOverlay.style.transform = 'translateY(' + lerp(podHideP, 0, -20) + 'px)';
+      podOverlay.style.pointerEvents = 'none';
     }
 
-    // -- SECTION 4: A DELIVERY HAPPENS --
-    var delProgress = getScrollProgress(deliverySection);
+    // POD inner elements
+    var photosP = subProgress(dp, 0.32, 0.35);
+    podPhotos.style.opacity = lerp(photosP, 0, 1);
 
-    if (delProgress > 0.05) {
-      deliveryLeft.classList.add('visible');
-      deliveryRight.classList.add('visible');
-    }
+    var sigShowP = subProgress(dp, 0.35, 0.36);
+    podSig.style.opacity = lerp(sigShowP, 0, 1);
+    var sigDrawP = subProgress(dp, 0.36, 0.44);
+    drawSignature(sigDrawP);
 
-    // First delivery completes
-    if (delProgress > 0.20 && deliveriesCompleted < 1) {
-      deliveriesCompleted = 1;
-      deliveryStatuses[0] = 'delivered';
-      currentDeliveryCount = 312;
-      deliveryCount.textContent = currentDeliveryCount;
-      renderDeliveryTable();
-    }
+    // GPS text typing
+    var gpsFullText = '41.0891\u00B0 N, 81.5123\u00B0 W';
+    var gpsP = subProgress(dp, 0.44, 0.48);
+    var gpsChars = Math.floor(gpsP * gpsFullText.length);
+    gpsText.textContent = gpsFullText.substring(0, gpsChars);
 
-    // POD card appears
-    if (delProgress > 0.35 && delProgress < 0.75) {
-      podOverlay.classList.add('visible');
-      drawSignature();
+    // Delivery note
+    var noteP = subProgress(dp, 0.48, 0.49);
+    noteText.style.opacity = lerp(noteP, 0, 1);
+    if (noteP > 0) {
+      noteText.textContent = 'Left at front door per patient request';
     } else {
-      podOverlay.classList.remove('visible');
+      noteText.textContent = '';
     }
 
-    // Second delivery completes
-    if (delProgress > 0.55 && deliveriesCompleted < 2) {
-      deliveriesCompleted = 2;
-      deliveryStatuses[1] = 'delivered';
-      currentDeliveryCount = 313;
-      deliveryCount.textContent = currentDeliveryCount;
-      renderDeliveryTable();
+    // Geofence
+    var geoP = subProgress(dp, 0.50, 0.51);
+    geoStatus.style.opacity = lerp(geoP, 0, 1);
+    if (geoP > 0) {
+      geoStatus.textContent = '\u2713 Verified \u2014 42 ft';
+    } else {
+      geoStatus.textContent = '';
     }
 
-    // Three more complete rapidly
-    if (delProgress > 0.75 && deliveriesCompleted < 5) {
-      deliveriesCompleted = 5;
-      deliveryStatuses[2] = 'delivered';
-      deliveryStatuses[3] = 'delivered';
-      deliveryStatuses[4] = 'delivered';
-      currentDeliveryCount = 316;
-      deliveryCount.textContent = currentDeliveryCount;
-      renderDeliveryTable();
+    // Time and driver
+    var metaP = subProgress(dp, 0.52, 0.53);
+    timeText.style.opacity = lerp(metaP, 0, 1);
+    driverText.style.opacity = lerp(metaP, 0, 1);
+    if (metaP > 0) {
+      timeText.textContent = 'Today 10:47 AM';
+      driverText.textContent = 'Marcus T.';
+    } else {
+      timeText.textContent = '';
+      driverText.textContent = '';
     }
 
-    // -- SECTION 5: PHARMACY PORTAL --
-    var pharmProgress = getScrollProgress(pharmacySection);
-    if (pharmProgress > 0.1) {
-      pharmacyMockup.classList.add('visible');
+    // ---- SECTION 5: PHARMACY ----
+    var php = scrollProgress(pharmacySection);
+
+    var portalInP = subProgress(php, 0.0, 0.25);
+    portalMock.style.opacity = lerp(portalInP, 0, 1);
+    portalMock.style.transform = 'scale(' + lerp(portalInP, 0.97, 1) + ')';
+
+    var pt1p = subProgress(php, 0.30, 0.40);
+    var pt2p = subProgress(php, 0.40, 0.50);
+    var pt3p = subProgress(php, 0.50, 0.60);
+    pharmT1.style.opacity = lerp(pt1p, 0, 1);
+    pharmT1.style.transform = 'translateY(' + lerp(pt1p, 20, 0) + 'px)';
+    pharmT2.style.opacity = lerp(pt2p, 0, 1);
+    pharmT2.style.transform = 'translateY(' + lerp(pt2p, 20, 0) + 'px)';
+    pharmT3.style.opacity = lerp(pt3p, 0, 1);
+    pharmT3.style.transform = 'translateY(' + lerp(pt3p, 20, 0) + 'px)';
+
+    // ---- SECTION 6: DISPATCH ----
+    var dip = scrollProgress(dispatchSection);
+
+    var dispInP = subProgress(dip, 0.0, 0.25);
+    dispatchMock.style.opacity = lerp(dispInP, 0, 1);
+    dispatchMock.style.transform = 'scale(' + lerp(dispInP, 0.97, 1) + ')';
+
+    var dt1p = subProgress(dip, 0.30, 0.45);
+    var dt2p = subProgress(dip, 0.45, 0.60);
+    dispT1.style.opacity = lerp(dt1p, 0, 1);
+    dispT1.style.transform = 'translateY(' + lerp(dt1p, 20, 0) + 'px)';
+    dispT2.style.opacity = lerp(dt2p, 0, 1);
+    dispT2.style.transform = 'translateY(' + lerp(dt2p, 20, 0) + 'px)';
+
+    // ---- SECTION 7: STATS (scroll-driven counters) ----
+    var statsEl = document.getElementById('stats');
+    var statsRect = statsEl.getBoundingClientRect();
+    var statsProgress = 0;
+    if (statsRect.top < vh && statsRect.bottom > 0) {
+      statsProgress = Math.max(0, Math.min(1, 1 - (statsRect.top / vh)));
     }
-    if (pharmProgress > 0.4) {
-      pharmacyText.classList.add('visible');
+    var countP = Math.max(0, Math.min(1, statsProgress));
+
+    document.getElementById('stat-300').textContent = Math.round(lerp(countP, 0, 300)) + '+';
+    document.getElementById('stat-100').textContent = Math.round(lerp(countP, 0, 100)) + '%';
+    document.getElementById('stat-17').textContent = Math.round(lerp(countP, 0, 17));
+    document.getElementById('stat-0').textContent = '0';
+
+    // ---- SECTION 8: DOORS ----
+    if (doorsVisible) {
+      var doorsEl = document.getElementById('doors');
+      var doorsRect = doorsEl.getBoundingClientRect();
+      var doorsP = Math.max(0, Math.min(1, 1 - (doorsRect.top / (vh * 0.7))));
+
+      doorLeft.style.opacity = lerp(doorsP, 0, 1);
+      doorLeft.style.transform = 'translateX(' + lerp(doorsP, -40, 0) + 'px)';
+      doorRight.style.opacity = lerp(doorsP, 0, 1);
+      doorRight.style.transform = 'translateX(' + lerp(doorsP, 40, 0) + 'px)';
+    } else {
+      doorLeft.style.opacity = 0;
+      doorLeft.style.transform = 'translateX(-40px)';
+      doorRight.style.opacity = 0;
+      doorRight.style.transform = 'translateX(40px)';
     }
 
-    // -- SECTION 6: DISPATCH PORTAL --
-    var dispProgress = getScrollProgress(dispatchSection);
-    if (dispProgress > 0.1) {
-      dispatchMockup.classList.add('visible');
-    }
-    if (dispProgress > 0.4) {
-      dispatchText.classList.add('visible');
-    }
+    requestAnimationFrame(tick);
   }
 
-  // Throttle with rAF
-  var ticking = false;
-  window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(function() {
-        onScroll();
-        ticking = false;
-      });
-      ticking = true;
-    }
-  });
-
-  // Initial call
-  onScroll();
+  requestAnimationFrame(tick);
 
 })();
 </script>
