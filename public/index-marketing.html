@@ -171,7 +171,7 @@ input, textarea { font-family: inherit; }
 }
 
 .hero-top {
-  padding: 80px 48px 28px;
+  padding: 72px 48px 16px;
   max-width: 900px;
   will-change: opacity, transform;
   position: relative;
@@ -179,12 +179,12 @@ input, textarea { font-family: inherit; }
 }
 
 .hero-headline {
-  font-size: clamp(48px, 6vw, 72px);
+  font-size: clamp(40px, 5vw, 60px);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--white);
   line-height: 1.08;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 .hero-headline .accent {
@@ -192,12 +192,12 @@ input, textarea { font-family: inherit; }
 }
 
 .hero-sub {
-  font-size: clamp(15px, 1.8vw, 19px);
+  font-size: clamp(14px, 1.5vw, 17px);
   font-weight: 400;
   color: var(--gray-light);
   max-width: 560px;
-  line-height: 1.6;
-  margin-bottom: 24px;
+  line-height: 1.5;
+  margin-bottom: 16px;
 }
 
 .hero-ctas {
@@ -206,9 +206,9 @@ input, textarea { font-family: inherit; }
 }
 
 .hero-cta {
-  padding: 12px 28px;
-  border-radius: 10px;
-  font-size: 14px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -272,19 +272,19 @@ input, textarea { font-family: inherit; }
 .hero-full-topbar {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 48px;
+  gap: 10px;
+  padding: 8px 20px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
   border-top: 1px solid rgba(255,255,255,0.06);
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--white);
 }
 
 .hero-full-avatar {
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
   background: linear-gradient(135deg, #2563EB, #7C3AED);
   display: flex;
   align-items: center;
@@ -2823,15 +2823,17 @@ input, textarea { font-family: inherit; }
 }
 
 .hero-sidebar {
-  width: 200px;
+  width: 170px;
   background: #141416;
   border-right: 1px solid rgba(255,255,255,0.06);
   flex-shrink: 0;
+  padding-top: 6px;
+  position: relative;
 }
 
 .hero-sidebar-item {
-  padding: 10px 16px;
-  font-size: 13px;
+  padding: 7px 14px;
+  font-size: 12px;
   color: var(--gray-light);
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
@@ -2854,41 +2856,41 @@ input, textarea { font-family: inherit; }
 .hero-dash-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  padding: 16px 24px;
+  gap: 8px;
+  padding: 10px 20px;
 }
 
 .hero-dash-stat-card {
   background: #141416;
   border: 1px solid rgba(255,255,255,0.06);
-  border-radius: 10px;
-  padding: 16px;
+  border-radius: 8px;
+  padding: 10px 12px;
 }
 
 .hero-dash-stat-num {
-  font-size: 24px;
+  font-size: 20px;
   font-weight: 800;
 }
 
 .hero-dash-stat-label {
-  font-size: 11px;
+  font-size: 10px;
   color: var(--gray);
-  margin-bottom: 4px;
+  margin-bottom: 2px;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
 .hero-dash-stat-change {
-  font-size: 11px;
-  margin-top: 4px;
+  font-size: 10px;
+  margin-top: 2px;
 }
 
 .hero-dash-activity {
-  padding: 0 24px 12px;
+  padding: 0 20px 8px;
 }
 
 .hero-dash-progress {
-  height: 6px;
+  height: 4px;
   background: rgba(255,255,255,0.06);
   border-radius: 3px;
   overflow: hidden;
@@ -2904,8 +2906,8 @@ input, textarea { font-family: inherit; }
 .hero-dash-table-head {
   display: grid;
   grid-template-columns: 1.2fr 1.2fr 0.8fr 0.5fr 0.8fr 0.6fr 0.4fr;
-  padding: 10px 24px;
-  font-size: 12px;
+  padding: 6px 20px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--gray);
   text-transform: uppercase;
@@ -2917,9 +2919,9 @@ input, textarea { font-family: inherit; }
 .hero-dash-row {
   display: grid;
   grid-template-columns: 1.2fr 1.2fr 0.8fr 0.5fr 0.8fr 0.6fr 0.4fr;
-  padding: 10px 24px;
+  padding: 7px 20px;
   align-items: center;
-  font-size: 13px;
+  font-size: 12px;
   color: var(--white);
   border-bottom: 1px solid rgba(255,255,255,0.04);
   transition: background 0.4s;
@@ -3079,12 +3081,13 @@ input, textarea { font-family: inherit; }
       <div class="hero-dash">
         <!-- Sidebar -->
         <div class="hero-sidebar">
-          <div style="padding:20px 16px 24px;font-size:15px;font-weight:700;color:var(--white);letter-spacing:-0.01em;">LYN<span style="color:var(--emerald)">.</span></div>
+          <div style="padding:12px 14px 16px;font-size:14px;font-weight:700;color:var(--white);letter-spacing:-0.01em;">LYN<span style="color:var(--emerald)">.</span></div>
           <div class="hero-sidebar-item active">Dashboard</div>
           <div class="hero-sidebar-item">Deliveries</div>
           <div class="hero-sidebar-item">POD Records</div>
           <div class="hero-sidebar-item">Reports</div>
           <div class="hero-sidebar-item">Settings</div>
+          <div style="position:absolute;bottom:12px;left:14px;font-size:9px;color:var(--gray);opacity:0.5;">Powered by LYN Software</div>
         </div>
         <!-- Main content -->
         <div class="hero-dash-main">
@@ -3117,15 +3120,15 @@ input, textarea { font-family: inherit; }
           </div>
           <!-- Today's Activity -->
           <div class="hero-dash-activity">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-              <span style="font-size:13px;font-weight:600;color:var(--white);">Today's Activity</span>
-              <span style="font-size:12px;color:var(--gray-light);">72% complete</span>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+              <span style="font-size:11px;font-weight:600;color:var(--white);">Today's Activity</span>
+              <span style="font-size:10px;color:var(--gray-light);">72% complete</span>
             </div>
             <div class="hero-dash-progress"><div class="hero-dash-progress-fill"></div></div>
           </div>
           <!-- Recent Deliveries table -->
-          <div style="padding:0 24px;">
-            <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px;">Recent Deliveries</div>
+          <div style="padding:0 20px;">
+            <div style="font-size:11px;font-weight:600;color:var(--white);margin-bottom:4px;">Recent Deliveries</div>
           </div>
           <div class="hero-dash-table-head"><span>Patient</span><span>Address</span><span>City</span><span>ZIP</span><span>Driver</span><span>Status</span><span>POD</span></div>
           <div class="hero-dash-row"><span style="font-weight:500">Margaret Johnson</span><span style="color:var(--gray-light)">1423 Oak St</span><span style="color:var(--gray-light)">Fairlawn</span><span style="color:var(--gray-light)">44333</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
