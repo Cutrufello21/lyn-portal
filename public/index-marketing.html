@@ -133,14 +133,13 @@ input, textarea { font-family: inherit; }
   .nav { padding: 12px 20px; }
   .nav-links { gap: 16px; }
   .nav-links a:not(.nav-cta) { display: none; }
-  #beat1 .sticky-panel { flex-direction: column; align-items: stretch; justify-content: flex-start; }
-  .hero-top { padding: 100px 24px 32px; max-width: 100%; }
-  .hero-headline { font-size: clamp(32px, 8vw, 48px); white-space: normal; }
+  .hero-top { padding: 80px 24px 24px; max-width: 100%; }
+  .hero-headline { font-size: clamp(36px, 10vw, 52px); }
   .hero-ctas { flex-direction: column; }
-  .hero-portal-preview { width: 95vw; }
-  .hero-portal-table-head, .hero-portal-table-row { grid-template-columns: 1.5fr 1fr 0.8fr; }
-  .hero-portal-table-head > :nth-child(2), .hero-portal-table-head > :nth-child(5),
-  .hero-portal-table-row > :nth-child(2), .hero-portal-table-row > :nth-child(5) { display: none; }
+  .hero-full-table-head, .hero-full-row { padding-left: 20px; padding-right: 20px; grid-template-columns: 1.5fr 1fr 0.8fr; }
+  .hero-full-table-head > :nth-child(2), .hero-full-row > :nth-child(2) { display: none; }
+  .hero-full-topbar { padding-left: 20px; padding-right: 20px; }
+  .hero-full-table-head > :nth-child(5), .hero-full-row > :nth-child(5) { display: none; }
 }
 
 /* ========================================
@@ -165,31 +164,30 @@ input, textarea { font-family: inherit; }
 /* ========================================
    BEAT 1 — LINEAR-STYLE HERO
    ======================================== */
-#beat1 { height: 160vh; position: relative; }
+#beat1 { height: 100vh; position: relative; }
 
 #beat1 .sticky-panel {
-  flex-direction: row;
+  flex-direction: column;
   padding: 0;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
 }
 
 .hero-top {
-  padding: 0 48px;
-  max-width: 600px;
+  padding: 100px 48px 40px;
+  max-width: 900px;
   will-change: opacity, transform;
   position: relative;
   z-index: 2;
 }
 
 .hero-headline {
-  font-size: clamp(36px, 4.5vw, 58px);
+  font-size: clamp(48px, 6vw, 72px);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--white);
-  line-height: 1.1;
+  line-height: 1.08;
   margin-bottom: 20px;
-  white-space: nowrap;
 }
 
 .hero-headline .accent {
@@ -243,59 +241,63 @@ input, textarea { font-family: inherit; }
   background: rgba(255,255,255,0.04);
 }
 
-/* Hero right-side portal panel */
-.hero-right-portal {
-  position: absolute;
-  right: 48px;
-  top: 50%;
-  transform: perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(-50%) translateY(20px);
-  width: 480px;
-  z-index: 2;
+/* Hero full-width portal */
+.hero-full-portal {
+  flex: 1;
+  width: 100%;
+  background: #1C1C1E;
+  position: relative;
+  overflow: hidden;
   opacity: 0;
-  animation: heroPortalIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
-  will-change: opacity, transform;
+  transform: translateY(16px);
+  animation: heroFullPortalIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.6s forwards;
 }
 
-@keyframes heroPortalIn {
+@keyframes heroFullPortalIn {
   to {
     opacity: 1;
-    transform: perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(-50%) translateY(0);
+    transform: translateY(0);
   }
 }
 
-.hero-right-card {
-  background: linear-gradient(145deg, #1E1E22, #1A1A1E);
-  border: 1px solid rgba(45,212,191,0.08);
-  border-radius: 14px;
-  overflow: hidden;
-  box-shadow: 0 40px 80px rgba(45,212,191,0.12), 0 0 0 1px rgba(45,212,191,0.08);
+.hero-full-portal::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(transparent, var(--bg));
+  z-index: 2;
+  pointer-events: none;
 }
 
-.hero-right-topbar {
+.hero-full-topbar {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 20px;
+  gap: 12px;
+  padding: 12px 48px;
   border-bottom: 1px solid rgba(255,255,255,0.06);
-  font-size: 13px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-size: 14px;
   font-weight: 600;
   color: var(--white);
 }
 
-.hero-right-avatar {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: var(--emerald);
+.hero-full-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #2563EB, #7C3AED);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 700;
-  color: var(--bg);
+  color: white;
 }
 
-.hero-right-stats {
+.hero-full-stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1px;
@@ -303,30 +305,32 @@ input, textarea { font-family: inherit; }
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.hero-right-stat {
+.hero-full-stat {
   background: #1C1C1E;
   text-align: center;
-  padding: 12px 8px;
+  padding: 16px 8px;
 }
 
-.hero-right-stat-num {
+.hero-full-stat-num {
   display: block;
-  font-size: 18px;
+  font-size: clamp(18px, 2vw, 24px);
   font-weight: 800;
 }
 
-.hero-right-stat-lbl {
+.hero-full-stat-lbl {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--gray);
-  margin-top: 2px;
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-.hero-right-table-head {
+.hero-full-table-head {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 0.8fr 0.5fr;
-  padding: 8px 20px;
-  font-size: 10px;
+  grid-template-columns: 1.5fr 1.5fr 1fr 0.8fr 0.5fr;
+  padding: 10px 48px;
+  font-size: 12px;
   font-weight: 600;
   color: var(--gray);
   text-transform: uppercase;
@@ -334,33 +338,23 @@ input, textarea { font-family: inherit; }
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
-.hero-right-row {
+.hero-full-row {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 0.8fr 0.5fr;
-  padding: 10px 20px;
+  grid-template-columns: 1.5fr 1.5fr 1fr 0.8fr 0.5fr;
+  padding: 13px 48px;
   align-items: center;
-  font-size: 12px;
+  font-size: 14px;
   color: var(--white);
   border-bottom: 1px solid rgba(255,255,255,0.04);
   transition: background 0.4s;
 }
 
-.hero-right-row:last-child { border-bottom: none; }
-
-.hero-right-row.flash-green {
+.hero-full-row.flash-green {
   background: rgba(16,185,129,0.08);
 }
 
-@media (max-width: 1024px) {
-  .hero-right-portal { display: none; }
-}
-
 .hero-portal-preview {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%) translateY(65%);
-  width: min(1100px, 92vw);
+  display: none;
   will-change: transform, opacity;
   z-index: 1;
 }
@@ -2858,45 +2852,25 @@ input, textarea { font-family: inherit; }
         <a href="#contact" class="hero-cta hero-cta--ghost">Let's Talk</a>
       </div>
     </div>
-    <div class="hero-right-portal" id="heroRightPortal">
-      <div class="hero-right-card">
-        <div class="hero-right-topbar">
-          <div class="hero-right-avatar">GE</div>
-          <span>Giant Eagle Pharmacy</span>
-        </div>
-        <div class="hero-right-stats">
-          <div class="hero-right-stat"><span class="hero-right-stat-num" style="color:var(--white)">387</span><span class="hero-right-stat-lbl">Total</span></div>
-          <div class="hero-right-stat"><span class="hero-right-stat-num" style="color:var(--emerald)">312</span><span class="hero-right-stat-lbl">Delivered</span></div>
-          <div class="hero-right-stat"><span class="hero-right-stat-num" style="color:var(--amber)">68</span><span class="hero-right-stat-lbl">Pending</span></div>
-          <div class="hero-right-stat"><span class="hero-right-stat-num" style="color:var(--red)">7</span><span class="hero-right-stat-lbl">Failed</span></div>
-        </div>
-        <div class="hero-right-table-head"><span>Patient</span><span>Driver</span><span>Status</span><span>POD</span></div>
-        <div class="hero-right-row"><span style="font-weight:500">M. Johnson</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
-        <div class="hero-right-row"><span style="font-weight:500">S. Williams</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
-        <div class="hero-right-row" id="heroFlipRow1"><span style="font-weight:500">R. Davis</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
-        <div class="hero-right-row"><span style="font-weight:500">K. Thompson</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
-        <div class="hero-right-row" id="heroFlipRow2"><span style="font-weight:500">L. Martinez</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+    <div class="hero-full-portal" id="heroFullPortal">
+      <div class="hero-full-topbar">
+        <div class="hero-full-avatar">GE</div>
+        <span>Giant Eagle Pharmacy</span>
       </div>
-    </div>
-    <div class="hero-portal-preview" id="heroPortal">
-      <div class="hero-portal-card">
-        <div class="hero-portal-topbar">
-          <div class="hero-portal-avatar">GE</div>
-          <div class="hero-portal-name">Giant Eagle Pharmacy</div>
-        </div>
-        <div class="hero-portal-stats">
-          <div class="hero-portal-stat"><span class="hero-portal-stat-num" style="color:var(--white)">387</span><span class="hero-portal-stat-label">Total</span></div>
-          <div class="hero-portal-stat"><span class="hero-portal-stat-num" style="color:var(--emerald)">312</span><span class="hero-portal-stat-label">Delivered</span></div>
-          <div class="hero-portal-stat"><span class="hero-portal-stat-num" style="color:var(--amber)">68</span><span class="hero-portal-stat-label">Pending</span></div>
-          <div class="hero-portal-stat"><span class="hero-portal-stat-num" style="color:var(--red)">7</span><span class="hero-portal-stat-label">Failed</span></div>
-        </div>
-        <div class="hero-portal-table-head"><span>Patient</span><span>Address</span><span>Driver</span><span>Status</span><span>POD</span></div>
-        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">M. Johnson</span><span style="color:var(--gray-light)">1423 Oak St, Fairlawn</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></span></div>
-        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">S. Williams</span><span style="color:var(--gray-light)">892 Elm Ave, Akron</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></span></div>
-        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">R. Davis</span><span style="color:var(--gray-light)">2205 Maple Dr, Canton</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
-        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">K. Thompson</span><span style="color:var(--gray-light)">567 Pine Rd, Stow</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></span></div>
-        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">L. Martinez</span><span style="color:var(--gray-light)">3340 Cedar Ln, Hudson</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></span></div>
+      <div class="hero-full-stats">
+        <div class="hero-full-stat"><span class="hero-full-stat-num" style="color:var(--white)">387</span><span class="hero-full-stat-lbl">Total</span></div>
+        <div class="hero-full-stat"><span class="hero-full-stat-num" style="color:var(--emerald)">312</span><span class="hero-full-stat-lbl">Delivered</span></div>
+        <div class="hero-full-stat"><span class="hero-full-stat-num" style="color:var(--amber)">68</span><span class="hero-full-stat-lbl">Pending</span></div>
+        <div class="hero-full-stat"><span class="hero-full-stat-num" style="color:var(--red)">7</span><span class="hero-full-stat-lbl">Failed</span></div>
       </div>
+      <div class="hero-full-table-head"><span>Patient</span><span>Address</span><span>Driver</span><span>Status</span><span>POD</span></div>
+      <div class="hero-full-row"><span style="font-weight:500">M. Johnson</span><span style="color:var(--gray-light)">1423 Oak St, Fairlawn</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
+      <div class="hero-full-row"><span style="font-weight:500">S. Williams</span><span style="color:var(--gray-light)">892 Elm Ave, Akron</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
+      <div class="hero-full-row" id="heroFlipRow1"><span style="font-weight:500">R. Davis</span><span style="color:var(--gray-light)">2205 Maple Dr, Canton</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+      <div class="hero-full-row"><span style="font-weight:500">K. Thompson</span><span style="color:var(--gray-light)">567 Pine Rd, Stow</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
+      <div class="hero-full-row" id="heroFlipRow2"><span style="font-weight:500">L. Martinez</span><span style="color:var(--gray-light)">3340 Cedar Ln, Hudson</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+      <div class="hero-full-row"><span style="font-weight:500">P. Garcia</span><span style="color:var(--gray-light)">4501 Walnut Ct, Kent</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
+      <div class="hero-full-row"><span style="font-weight:500">A. Robinson</span><span style="color:var(--gray-light)">780 Spruce Way, Cuyahoga</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
     </div>
   </div>
 </section>
@@ -3575,8 +3549,7 @@ input, textarea { font-family: inherit; }
   // ========================================
   const nav = document.getElementById('mainNav');
   const heroTop = document.getElementById('heroTop');
-  const heroPortal = document.getElementById('heroPortal');
-  const heroRightPortal = document.getElementById('heroRightPortal');
+  const heroFullPortal = document.getElementById('heroFullPortal');
 
   const beat1 = document.getElementById('beat1');
   const beat2 = document.getElementById('beat2');
@@ -4073,31 +4046,7 @@ input, textarea { font-family: inherit; }
       nav.classList.remove('visible');
     }
 
-    // ---- BEAT 1 — Linear-style hero ----
-    {
-      const p = sectionProgress(beat1);
-      // Hero text exits — fully gone by 0.3
-      const textFade = sub(p, 0.1, 0.3);
-      heroTop.style.opacity = 1 - easeOut(textFade);
-      heroTop.style.transform = 'translateY(' + lerp(easeOut(textFade), 0, -60) + 'px)';
-
-      // Right portal exits with text — fades out and slides right, fully gone by 0.35
-      if (heroRightPortal) {
-        const rpFade = easeOut(sub(p, 0.1, 0.35));
-        const rpOpacity = 1 - rpFade;
-        heroRightPortal.style.opacity = rpOpacity;
-        heroRightPortal.style.visibility = rpOpacity <= 0 ? 'hidden' : 'visible';
-        heroRightPortal.style.transform = 'perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(-50%) translateX(' + lerp(rpFade, 0, 40) + 'px)';
-      }
-
-      // Bottom portal — only starts well after hero portal is completely gone
-      // Big gap: hero portal done at 0.35, bottom portal starts at 0.75
-      const portalRise = sub(p, 0.75, 0.95);
-      const portalE = easeOut(portalRise);
-      heroPortal.style.opacity = portalE;
-      heroPortal.style.visibility = portalE <= 0 ? 'hidden' : 'visible';
-      heroPortal.style.transform = 'translateX(-50%) translateY(' + lerp(portalE, 65, -5) + '%)';
-    }
+    // ---- BEAT 1 — Linear-style hero (static, no scroll animation needed) ----
 
     // ---- BEAT 2 ----
     {
