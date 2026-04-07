@@ -256,35 +256,27 @@ input, textarea { font-family: inherit; }
 
 .beat3-layout {
   display: flex;
-  width: 100%;
-  height: 100%;
-  align-items: center;
-  padding: 0 48px;
-  gap: 48px;
+  align-items: stretch;
+  height: 100vh;
+  padding: 0;
 }
 
 .beat3-text-col {
-  flex: 0 0 38%;
+  flex: 0 0 35%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 48px;
   will-change: opacity, transform;
 }
 
-.beat3-text-col h2 {
-  font-size: clamp(24px, 3vw, 36px);
-  font-weight: 700;
-  line-height: 1.3;
-  letter-spacing: -0.02em;
-  color: var(--white);
-}
-
 .beat3-map-col {
-  flex: 1;
+  flex: 0 0 65%;
   position: relative;
-  height: 65vh;
-  min-height: 400px;
-  max-height: 500px;
-  border-radius: 16px;
+  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
-  border: 1px solid var(--card-border);
+  border-left: 1px solid rgba(255,255,255,0.06);
   will-change: opacity, transform;
 }
 
@@ -384,11 +376,11 @@ input, textarea { font-family: inherit; }
 @media (max-width: 768px) {
   .beat3-layout {
     flex-direction: column;
-    padding: 80px 20px 20px;
-    gap: 24px;
+    height: 100vh;
+    padding: 0;
   }
-  .beat3-text-col { flex: none; width: 100%; }
-  .beat3-map-col { width: 100%; height: 50vh; }
+  .beat3-text-col { flex: none; width: 100%; padding: 60px 20px 20px; justify-content: flex-start; }
+  .beat3-map-col { flex: 1; width: 100%; height: auto; min-height: 0; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
 }
 
 /* ========================================
@@ -398,16 +390,17 @@ input, textarea { font-family: inherit; }
 
 .beat4-layout {
   display: flex;
-  width: 100%;
-  height: 100%;
+  flex-direction: column;
   align-items: center;
-  padding: 0 48px;
-  gap: 48px;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 24px;
+  gap: 24px;
 }
 
 .beat4-text-col {
-  flex: 0 0 38%;
   will-change: opacity, transform;
+  text-align: center;
 }
 
 .beat4-text-col h2 {
@@ -418,18 +411,27 @@ input, textarea { font-family: inherit; }
 }
 
 .photo-card {
-  flex: 0 0 340px;
-  background: linear-gradient(145deg, var(--card), #1E1E22);
-  border: 1px solid rgba(45, 212, 191, 0.15);
+  width: min(600px, 85vw);
+  background: linear-gradient(145deg, #1E1E22, #1A1A1E);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
   overflow: hidden;
   will-change: opacity, transform;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.beat4-caption {
+  font-size: clamp(14px, 1.8vw, 18px);
+  font-weight: 500;
+  color: var(--gray-light);
+  line-height: 1.6;
+  text-align: center;
+  will-change: opacity;
 }
 
 .photo-card-image {
   width: 100%;
-  height: 240px;
+  height: 280px;
   background: linear-gradient(135deg, #141416, #1A1A1E);
   display: flex;
   flex-direction: column;
@@ -475,12 +477,10 @@ input, textarea { font-family: inherit; }
 
 @media (max-width: 768px) {
   .beat4-layout {
-    flex-direction: column;
-    padding: 80px 20px 20px;
-    gap: 24px;
+    padding: 60px 20px 20px;
+    gap: 20px;
   }
-  .beat4-text-col { flex: none; width: 100%; }
-  .photo-card { flex: none; width: 100%; max-width: 340px; }
+  .photo-card { width: min(600px, 92vw); }
 }
 
 /* ========================================
@@ -490,16 +490,17 @@ input, textarea { font-family: inherit; }
 
 .beat5-layout {
   display: flex;
-  width: 100%;
-  height: 100%;
+  flex-direction: column;
   align-items: center;
-  padding: 0 48px;
-  gap: 48px;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 24px;
+  gap: 24px;
 }
 
 .beat5-text-col {
-  flex: 0 0 38%;
   will-change: opacity, transform;
+  text-align: center;
 }
 
 .beat5-text-col h2 {
@@ -507,7 +508,7 @@ input, textarea { font-family: inherit; }
   font-weight: 700;
   line-height: 1.3;
   letter-spacing: -0.02em;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .beat5-text-col p {
@@ -517,13 +518,37 @@ input, textarea { font-family: inherit; }
 }
 
 .sig-card {
-  flex: 0 0 400px;
-  background: linear-gradient(145deg, var(--card), #1E1E22);
-  border: 1px solid rgba(45, 212, 191, 0.15);
+  width: min(600px, 85vw);
+  background: linear-gradient(145deg, #1E1E22, #1A1A1E);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 24px;
+  padding: 32px;
   will-change: opacity, transform;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+}
+
+.sig-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.sig-meta-item label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.sig-meta-item span {
+  font-size: 14px;
+  color: var(--white);
 }
 
 .sig-card-label {
@@ -550,12 +575,11 @@ input, textarea { font-family: inherit; }
 
 @media (max-width: 768px) {
   .beat5-layout {
-    flex-direction: column;
-    padding: 80px 20px 20px;
-    gap: 24px;
+    padding: 60px 20px 20px;
+    gap: 20px;
   }
-  .beat5-text-col { flex: none; width: 100%; }
-  .sig-card { flex: none; width: 100%; max-width: 400px; }
+  .sig-card { width: min(600px, 92vw); }
+  .sig-meta { grid-template-columns: 1fr; gap: 12px; }
 }
 
 /* ========================================
@@ -586,24 +610,25 @@ input, textarea { font-family: inherit; }
 
 .note-card {
   flex: 1;
-  max-width: 480px;
-  background: linear-gradient(145deg, var(--card), #1E1E22);
-  border: 1px solid rgba(45, 212, 191, 0.15);
+  max-width: none;
+  width: min(600px, 85vw);
+  background: linear-gradient(145deg, #1E1E22, #1A1A1E);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 24px;
+  padding: 28px;
   will-change: opacity, transform;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.03), 0 20px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 .note-pills {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
 .note-pill {
-  padding: 8px 16px;
+  padding: 10px 18px;
   font-size: 14px;
   font-weight: 500;
   color: var(--gray-light);
@@ -665,13 +690,18 @@ input, textarea { font-family: inherit; }
 
 .beat7-text {
   position: absolute;
-  top: 10vh;
+  top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   will-change: opacity, transform;
-  z-index: 2;
+  z-index: 3;
   padding: 0 24px;
+  pointer-events: none;
 }
 
 .beat7-text h2 {
@@ -683,19 +713,24 @@ input, textarea { font-family: inherit; }
 
 .portal-wrap {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(60px);
-  width: min(92vw, 900px);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #1C1C1E;
+  overflow: hidden;
   will-change: opacity, transform;
   opacity: 0;
 }
 
 .portal {
-  background: var(--card);
-  border: 1px solid var(--card-border);
-  border-radius: 16px;
+  background: #1C1C1E;
+  border: none;
+  border-radius: 0;
   overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .portal-topbar {
@@ -733,8 +768,8 @@ input, textarea { font-family: inherit; }
 }
 
 .portal-stat {
-  background: var(--card);
-  padding: 16px 20px;
+  background: #1C1C1E;
+  padding: 20px 24px;
   text-align: center;
 }
 
@@ -753,13 +788,16 @@ input, textarea { font-family: inherit; }
 }
 
 .portal-table {
+  flex: 1;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .portal-table-head {
   display: grid;
   grid-template-columns: 1.5fr 1.2fr 1fr 0.8fr 0.6fr;
-  padding: 10px 24px;
+  padding: 10px 48px;
   font-size: 12px;
   font-weight: 600;
   color: var(--gray);
@@ -771,7 +809,7 @@ input, textarea { font-family: inherit; }
 .portal-table-row {
   display: grid;
   grid-template-columns: 1.5fr 1.2fr 1fr 0.8fr 0.6fr;
-  padding: 12px 24px;
+  padding: 12px 48px;
   align-items: center;
   font-size: 14px;
   border-bottom: 1px solid rgba(42, 42, 46, 0.5);
@@ -825,7 +863,7 @@ input, textarea { font-family: inherit; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
-  width: min(88vw, 440px);
+  width: min(90vw, 640px);
   background: linear-gradient(145deg, var(--card), #1E1E22);
   border: 1px solid rgba(45, 212, 191, 0.15);
   border-radius: 16px;
@@ -883,7 +921,7 @@ input, textarea { font-family: inherit; }
 
 .pod-photo-placeholder {
   flex: 1;
-  height: 90px;
+  height: 120px;
   background: linear-gradient(135deg, #141416, #1A1A1E);
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -896,7 +934,8 @@ input, textarea { font-family: inherit; }
 }
 
 .pod-sig-preview {
-  height: 50px;
+  width: 100%;
+  height: 60px;
   background: #18181B;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1246,6 +1285,38 @@ input, textarea { font-family: inherit; }
 .mapboxgl-ctrl-logo {
   display: none !important;
 }
+
+/* ========================================
+   PRODUCT UI — Hero Treatment
+   ======================================== */
+.ui-panel {
+  background: linear-gradient(145deg, #1E1E22, #1A1A1E);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.03),
+    0 20px 60px rgba(0,0,0,0.5),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  overflow: hidden;
+  will-change: opacity, transform;
+}
+
+.ui-entrance {
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.beat-caption {
+  font-size: clamp(14px, 1.8vw, 18px);
+  font-weight: 500;
+  color: var(--gray-light);
+  max-width: 280px;
+  line-height: 1.6;
+}
+
+.beat-caption strong {
+  color: var(--white);
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -1294,7 +1365,7 @@ input, textarea { font-family: inherit; }
     <div class="proof-breadcrumb" id="proofBreadcrumb3">Proof.</div>
     <div class="beat3-layout">
       <div class="beat3-text-col" id="beat3Text">
-        <h2>Proof they were at the right address.</h2>
+        <p class="beat-caption"><strong>Proof they were at the right address.</strong> Geofence-verified. GPS-confirmed. Every stop.</p>
       </div>
       <div class="beat3-map-col" id="beat3MapCol">
         <div id="map3" style="width:100%;height:100%;"></div>
@@ -1319,12 +1390,12 @@ input, textarea { font-family: inherit; }
   <div class="sticky-panel">
     <div class="proof-breadcrumb" id="proofBreadcrumb4">Proof.</div>
     <div class="beat4-layout">
-      <div class="beat4-text-col" id="beat4Text">
+      <div class="beat4-text-col" id="beat4Text" style="display:none;">
         <h2>Proof the package was there.</h2>
       </div>
       <div class="photo-card" id="photoCard">
         <div class="photo-card-image">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
           <span style="font-size:13px;color:var(--gray);font-weight:500;letter-spacing:0.3px;">CAPTURED</span>
         </div>
         <div class="photo-card-body">
@@ -1332,6 +1403,7 @@ input, textarea { font-family: inherit; }
           <div class="photo-card-gps">41.0891° N, 81.5123° W</div>
         </div>
       </div>
+      <p class="beat4-caption" id="beat4Caption">Every package photographed. Timestamped. GPS-located.</p>
     </div>
   </div>
 </section>
@@ -1343,16 +1415,22 @@ input, textarea { font-family: inherit; }
   <div class="sticky-panel">
     <div class="proof-breadcrumb" id="proofBreadcrumb5">Proof.</div>
     <div class="beat5-layout">
-      <div class="beat5-text-col" id="beat5Text">
+      <div class="beat5-text-col" id="beat5Text" style="display:none;">
         <h2>Proof someone received it.</h2>
         <p>Signed on glass. Or marked attempted. Every outcome documented.</p>
       </div>
       <div class="sig-card" id="sigCard">
         <div class="sig-card-label">Signature</div>
         <div class="sig-canvas-wrap">
-          <canvas id="sigCanvas" width="352" height="70"></canvas>
+          <canvas id="sigCanvas" width="536" height="70"></canvas>
+        </div>
+        <div class="sig-meta">
+          <div class="sig-meta-item"><label>Patient</label><span>M. Johnson</span></div>
+          <div class="sig-meta-item"><label>Timestamp</label><span>10:47 AM · Apr 6, 2026</span></div>
+          <div class="sig-meta-item"><label>Driver</label><span>Rivera, A.</span></div>
         </div>
       </div>
+      <p class="beat-caption" style="text-align:center;">Signed on glass. Every outcome documented.</p>
     </div>
   </div>
 </section>
@@ -1734,7 +1812,7 @@ input, textarea { font-family: inherit; }
     canvas.style.height = cssH + 'px';
   }
 
-  setupCanvas(sigCanvas, 352, 70);
+  setupCanvas(sigCanvas, 536, 70);
   const podSigCanvas = document.getElementById('podSigCanvas');
   setupCanvas(podSigCanvas, 400, 50);
   // Draw full sig on pod modal canvas
@@ -1774,8 +1852,8 @@ input, textarea { font-family: inherit; }
     var container = document.getElementById('map3');
     var mc = document.getElementById('beat3MapCol');
     mc.style.opacity = '1';
-    container.style.height = mc.offsetHeight + 'px';
-    container.style.width = mc.offsetWidth + 'px';
+    container.style.height = '100%';
+    container.style.width = '100%';
     map3 = new mapboxgl.Map({
       container: 'map3',
       style: 'mapbox://styles/mapbox/dark-v11',
@@ -1993,11 +2071,10 @@ input, textarea { font-family: inherit; }
       beat3Text.style.opacity = textE;
       beat3Text.style.transform = 'translateY(' + lerp(textE, 30, 0) + 'px)';
 
-      // Map
-      const mapIn = sub(p, 0.0, 0.2);
+      // Map — always visible once section is reached, no translateX
+      const mapIn = sub(p, 0.0, 0.1);
       const mapE = easeOut(mapIn);
       beat3MapCol.style.opacity = mapE;
-      beat3MapCol.style.transform = 'translateX(' + lerp(mapE, 40, 0) + 'px)';
       if (map3 && mapE > 0.5 && !map3._resized) { map3.resize(); map3._resized = true; }
 
       // Driver marker
@@ -2034,38 +2111,35 @@ input, textarea { font-family: inherit; }
       geoCard.style.transform = 'translateY(' + lerp(cardE, 20, 0) + 'px)';
     }
 
-    // ---- BEAT 4 — Package Photo ----
+    // ---- BEAT 4 — Package Photo (Stripe entrance) ----
     {
       const p = sectionProgress(beat4);
 
       proofBreadcrumb4.style.opacity = p > 0.01 ? 0.6 : 0;
 
-      const textIn = sub(p, 0.0, 0.3);
-      const textE = easeOut(textIn);
-      beat4Text.style.opacity = textE;
-      beat4Text.style.transform = 'translateY(' + lerp(textE, 30, 0) + 'px)';
-
-      const cardIn = sub(p, 0.3, 0.7);
+      // Card: Stripe entrance — scale 0.97→1, opacity 0→1
+      const cardIn = sub(p, 0.1, 0.5);
       const cardE = easeOut(cardIn);
       photoCard.style.opacity = cardE;
-      photoCard.style.transform = 'translateY(' + lerp(cardE, 50, 0) + 'px) scale(' + lerp(cardE, 0.96, 1) + ')';
+      photoCard.style.transform = 'scale(' + lerp(cardE, 0.97, 1) + ')';
+
+      // Caption fades in after card
+      const capIn = sub(p, 0.4, 0.6);
+      const beat4Caption = document.getElementById('beat4Caption');
+      if (beat4Caption) beat4Caption.style.opacity = easeOut(capIn);
     }
 
-    // ---- BEAT 5 — Signature ----
+    // ---- BEAT 5 — Signature (Stripe entrance) ----
     {
       const p = sectionProgress(beat5);
 
       proofBreadcrumb5.style.opacity = p > 0.01 ? 0.6 : 0;
 
-      const textIn = sub(p, 0.0, 0.25);
-      const textE = easeOut(textIn);
-      beat5Text.style.opacity = textE;
-      beat5Text.style.transform = 'translateY(' + lerp(textE, 30, 0) + 'px)';
-
-      const cardIn = sub(p, 0.15, 0.3);
+      // Card: Stripe entrance — scale 0.97→1, opacity 0→1
+      const cardIn = sub(p, 0.1, 0.4);
       const cardE = easeOut(cardIn);
       sigCard.style.opacity = cardE;
-      sigCard.style.transform = 'translateY(' + lerp(cardE, 40, 0) + 'px)';
+      sigCard.style.transform = 'scale(' + lerp(cardE, 0.97, 1) + ')';
 
       // Signature draw
       const sigP = sub(p, 0.3, 0.8);
@@ -2119,17 +2193,19 @@ input, textarea { font-family: inherit; }
     {
       const p = sectionProgress(beat7);
 
-      // Text and portal arrive TOGETHER
-      const textIn = sub(p, 0.0, 0.2);
+      // Text fades IN then OUT as portal fades IN (crossfade)
+      const textIn = sub(p, 0.0, 0.15);
+      const textOut = sub(p, 0.15, 0.3);
       const textE = easeOut(textIn);
-      beat7TextEl.style.opacity = textE;
+      const textFadeOut = easeOut(textOut);
+      beat7TextEl.style.opacity = textE * (1 - textFadeOut);
       beat7TextEl.style.transform = 'translateY(' + lerp(textE, 30, 0) + 'px)';
 
-      // Portal slides up simultaneously with text
-      const portalIn = sub(p, 0.05, 0.25);
+      // Portal slides up from below, crossfading with text
+      const portalIn = sub(p, 0.1, 0.3);
       const portalE = easeOut(portalIn);
       portalWrap.style.opacity = portalE;
-      portalWrap.style.transform = 'translate(-50%, -50%) translateY(' + lerp(portalE, 60, 0) + 'px)';
+      portalWrap.style.transform = 'translateY(' + lerp(portalE, 60, 0) + 'px)';
 
       // POD Modal — only after text has cleared (later in scroll)
       const modalIn = sub(p, 0.55, 0.7);
