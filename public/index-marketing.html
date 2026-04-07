@@ -133,7 +133,8 @@ input, textarea { font-family: inherit; }
   .nav { padding: 12px 20px; }
   .nav-links { gap: 16px; }
   .nav-links a:not(.nav-cta) { display: none; }
-  .hero-top { padding: 100px 24px 32px; }
+  #beat1 .sticky-panel { flex-direction: column; align-items: stretch; justify-content: flex-start; }
+  .hero-top { padding: 100px 24px 32px; max-width: 100%; }
   .hero-headline { font-size: clamp(32px, 8vw, 48px); }
   .hero-ctas { flex-direction: column; }
   .hero-portal-preview { width: 95vw; }
@@ -164,18 +165,18 @@ input, textarea { font-family: inherit; }
 /* ========================================
    BEAT 1 — LINEAR-STYLE HERO
    ======================================== */
-#beat1 { height: 160vh; }
+#beat1 { height: 160vh; z-index: 10; position: relative; }
 
 #beat1 .sticky-panel {
-  flex-direction: column;
+  flex-direction: row;
   padding: 0;
-  align-items: stretch;
+  align-items: center;
   justify-content: flex-start;
 }
 
 .hero-top {
-  padding: 120px 48px 40px;
-  max-width: 900px;
+  padding: 0 48px;
+  max-width: 560px;
   will-change: opacity, transform;
   position: relative;
   z-index: 2;
@@ -263,10 +264,10 @@ input, textarea { font-family: inherit; }
 
 .hero-right-card {
   background: linear-gradient(145deg, #1E1E22, #1A1A1E);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid rgba(45,212,191,0.08);
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 40px 80px rgba(45,212,191,0.15), 0 0 0 1px rgba(255,255,255,0.03);
+  box-shadow: 0 40px 80px rgba(45,212,191,0.12), 0 0 0 1px rgba(45,212,191,0.08);
 }
 
 .hero-right-topbar {
@@ -1601,6 +1602,8 @@ input, textarea { font-family: inherit; }
 .linear-text-section {
   padding: 160px 48px 120px;
   max-width: 1200px;
+  position: relative;
+  z-index: 5;
   margin: 0 auto;
 }
 
@@ -2098,7 +2101,7 @@ input, textarea { font-family: inherit; }
     <div class="breathing-gradient"></div>
     <div class="hero-top" id="heroTop">
       <h1 class="hero-headline">Every delivery.<br><span class="accent">Proven.</span></h1>
-      <p class="hero-sub">Real-time proof of delivery for pharmacies. Dispatch infrastructure for courier companies. Built by operators who run 300+ deliveries a day.</p>
+      <p class="hero-sub">Built by operators. Proven on 300+ deliveries a day.</p>
       <div class="hero-ctas">
         <a href="#beat7" class="hero-cta hero-cta--primary">See the Platform</a>
         <a href="#contact" class="hero-cta hero-cta--ghost">Let's Talk</a>
@@ -2993,18 +2996,20 @@ input, textarea { font-family: inherit; }
     // ---- BEAT 1 — Linear-style hero ----
     {
       const p = sectionProgress(beat1);
-      // Hero text exits FIRST — fully gone by 0.45
-      const textFade = sub(p, 0.2, 0.45);
+      // Hero text exits — fully gone by 0.35
+      const textFade = sub(p, 0.15, 0.35);
       heroTop.style.opacity = 1 - easeOut(textFade);
       heroTop.style.transform = 'translateY(' + lerp(easeOut(textFade), 0, -60) + 'px)';
 
-      // Right portal fades out with the hero text
+      // Right portal exits with text — fades out and slides right
       if (heroRightPortal) {
-        heroRightPortal.style.opacity = 1 - easeOut(textFade);
+        const rpFade = easeOut(sub(p, 0.15, 0.4));
+        heroRightPortal.style.opacity = 1 - rpFade;
+        heroRightPortal.style.transform = 'perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(-50%) translateX(' + lerp(rpFade, 0, 40) + 'px)';
       }
 
-      // Portal doesn't start until hero is completely gone (0.55) — 100px scroll buffer
-      const portalRise = sub(p, 0.55, 0.95);
+      // Bottom portal only starts after hero is completely gone (0.65)
+      const portalRise = sub(p, 0.65, 0.95);
       const portalE = easeOut(portalRise);
       heroPortal.style.transform = 'translateX(-50%) translateY(' + lerp(portalE, 65, -5) + '%)';
       heroPortal.style.opacity = portalE;
