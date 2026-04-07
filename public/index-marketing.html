@@ -241,6 +241,118 @@ input, textarea { font-family: inherit; }
   background: rgba(255,255,255,0.04);
 }
 
+/* Hero right-side portal panel */
+.hero-right-portal {
+  position: absolute;
+  right: 48px;
+  top: 50%;
+  transform: perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(-50%) translateY(20px);
+  width: 480px;
+  z-index: 2;
+  opacity: 0;
+  animation: heroPortalIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards;
+  will-change: opacity, transform;
+}
+
+@keyframes heroPortalIn {
+  to {
+    opacity: 1;
+    transform: perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(-50%) translateY(0);
+  }
+}
+
+.hero-right-card {
+  background: linear-gradient(145deg, #1E1E22, #1A1A1E);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(45,212,191,0.15), 0 0 0 1px rgba(255,255,255,0.03);
+}
+
+.hero-right-topbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.hero-right-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--emerald);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--bg);
+}
+
+.hero-right-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.hero-right-stat {
+  background: #1C1C1E;
+  text-align: center;
+  padding: 12px 8px;
+}
+
+.hero-right-stat-num {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.hero-right-stat-lbl {
+  display: block;
+  font-size: 9px;
+  color: var(--gray);
+  margin-top: 2px;
+}
+
+.hero-right-table-head {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 0.8fr 0.5fr;
+  padding: 8px 20px;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.hero-right-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 0.8fr 0.5fr;
+  padding: 10px 20px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--white);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.4s;
+}
+
+.hero-right-row:last-child { border-bottom: none; }
+
+.hero-right-row.flash-green {
+  background: rgba(16,185,129,0.08);
+}
+
+@media (max-width: 1024px) {
+  .hero-right-portal { display: none; }
+}
+
 .hero-portal-preview {
   position: absolute;
   bottom: 0;
@@ -934,15 +1046,15 @@ input, textarea { font-family: inherit; }
 
 .portal-stat {
   background: #1C1C1E;
-  padding: 20px 24px;
+  padding: 24px 24px;
   text-align: center;
 }
 
 .portal-stat-num {
-  font-size: clamp(20px, 2.5vw, 28px);
+  font-size: clamp(24px, 3vw, 34px);
   font-weight: 700;
   line-height: 1;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .portal-stat-label {
@@ -974,7 +1086,7 @@ input, textarea { font-family: inherit; }
 .portal-table-row {
   display: grid;
   grid-template-columns: 1.5fr 1.2fr 1fr 0.8fr 0.6fr;
-  padding: 12px 48px;
+  padding: 14px 48px;
   align-items: center;
   font-size: 14px;
   border-bottom: 1px solid rgba(42, 42, 46, 0.5);
@@ -1536,24 +1648,121 @@ input, textarea { font-family: inherit; }
 }
 
 .linear-feature-card:hover {
-  border-color: rgba(16,185,129,0.2);
+  border-color: rgba(45,212,191,0.3);
   background: linear-gradient(145deg, #1E1E22, #1A1A1E);
   transform: translateY(-4px);
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.04);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3), 0 0 20px rgba(45,212,191,0.08), inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
 .linear-feature-fig {
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  min-height: 120px;
   display: flex;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
   margin-bottom: 8px;
   transition: opacity 0.3s;
 }
 
+.mini-ui {
+  width: 100%;
+  background: #141416;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 14px;
+  font-size: 11px;
+  color: var(--gray-light);
+}
+
+.mini-ui-label {
+  font-size: 9px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--emerald);
+  margin-bottom: 10px;
+}
+
+.mini-pod-photos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.mini-pod-photo {
+  background: #1C1C1E;
+  border: 1px solid rgba(255,255,255,0.04);
+  border-radius: 6px;
+  padding: 14px;
+  text-align: center;
+}
+
+.mini-pod-photo svg { opacity: 0.4; }
+.mini-pod-photo .mini-time { font-size: 8px; color: var(--gray); margin-top: 4px; }
+
+.mini-pod-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 8px;
+  background: #1C1C1E;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 10px;
+}
+
+.mini-route-row {
+  display: grid;
+  grid-template-columns: 50px 1fr 28px;
+  gap: 6px;
+  align-items: center;
+  padding: 5px 0;
+  font-size: 10px;
+  color: var(--white);
+}
+
+.mini-route-bar {
+  height: 3px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.mini-route-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--emerald), var(--teal));
+  border-radius: 2px;
+}
+
+.mini-route-pct {
+  font-size: 10px;
+  color: var(--emerald);
+  font-weight: 600;
+  text-align: right;
+}
+
+.mini-rx-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 8px;
+  font-size: 10px;
+  color: var(--white);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.mini-rx-row:last-child { border-bottom: none; }
+
+.mini-badge {
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-size: 8px;
+  font-weight: 600;
+}
+
 .linear-feature-card:hover .linear-feature-fig {
-  opacity: 0.3;
+  opacity: 0.15;
 }
 
 .linear-feature-title {
@@ -1581,7 +1790,7 @@ input, textarea { font-family: inherit; }
   bottom: 0;
   background: linear-gradient(145deg, #1E1E22, #18181B);
   border-radius: 16px;
-  padding: 20px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -1597,12 +1806,12 @@ input, textarea { font-family: inherit; }
 }
 
 .preview-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--emerald);
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .preview-row {
@@ -1657,7 +1866,7 @@ input, textarea { font-family: inherit; }
 }
 
 .linear-showcase {
-  padding: 80px 48px 160px;
+  padding: 100px 48px 200px;
   max-width: 1200px;
   margin: 0 auto;
 }
@@ -1695,6 +1904,13 @@ input, textarea { font-family: inherit; }
   border: 1px solid rgba(255,255,255,0.06);
   border-radius: 16px;
   overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.linear-showcase-panel:hover {
+  border-color: rgba(45,212,191,0.25);
+  box-shadow: inset 0 0 0 0px transparent, 0 0 16px rgba(45,212,191,0.06);
 }
 
 .linear-showcase-panel-header {
@@ -1725,7 +1941,7 @@ input, textarea { font-family: inherit; }
 }
 
 .linear-showcase-panel-ui {
-  padding: 20px;
+  padding: 28px;
 }
 
 .showcase-topbar {
@@ -1763,14 +1979,14 @@ input, textarea { font-family: inherit; }
 
 .showcase-stat {
   text-align: center;
-  padding: 10px 8px;
+  padding: 14px 8px;
   background: rgba(255,255,255,0.02);
   border-radius: 8px;
 }
 
 .showcase-stat-num {
   display: block;
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 800;
 }
 
@@ -1791,7 +2007,7 @@ input, textarea { font-family: inherit; }
   grid-template-columns: 1fr auto auto;
   gap: 16px;
   align-items: center;
-  padding: 10px 16px;
+  padding: 13px 16px;
   font-size: 13px;
   color: var(--white);
   border-bottom: 1px solid rgba(255,255,255,0.04);
@@ -1814,7 +2030,7 @@ input, textarea { font-family: inherit; }
 .showcase-drivers {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 }
 
 .showcase-driver {
@@ -1888,6 +2104,26 @@ input, textarea { font-family: inherit; }
         <a href="#contact" class="hero-cta hero-cta--ghost">Let's Talk</a>
       </div>
     </div>
+    <div class="hero-right-portal" id="heroRightPortal">
+      <div class="hero-right-card">
+        <div class="hero-right-topbar">
+          <div class="hero-right-avatar">GE</div>
+          <span>Giant Eagle Pharmacy</span>
+        </div>
+        <div class="hero-right-stats">
+          <div class="hero-right-stat"><span class="hero-right-stat-num" style="color:var(--white)">387</span><span class="hero-right-stat-lbl">Total</span></div>
+          <div class="hero-right-stat"><span class="hero-right-stat-num" style="color:var(--emerald)">312</span><span class="hero-right-stat-lbl">Delivered</span></div>
+          <div class="hero-right-stat"><span class="hero-right-stat-num" style="color:var(--amber)">68</span><span class="hero-right-stat-lbl">Pending</span></div>
+          <div class="hero-right-stat"><span class="hero-right-stat-num" style="color:var(--red)">7</span><span class="hero-right-stat-lbl">Failed</span></div>
+        </div>
+        <div class="hero-right-table-head"><span>Patient</span><span>Driver</span><span>Status</span><span>POD</span></div>
+        <div class="hero-right-row"><span style="font-weight:500">M. Johnson</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
+        <div class="hero-right-row"><span style="font-weight:500">S. Williams</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
+        <div class="hero-right-row" id="heroFlipRow1"><span style="font-weight:500">R. Davis</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+        <div class="hero-right-row"><span style="font-weight:500">K. Thompson</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
+        <div class="hero-right-row" id="heroFlipRow2"><span style="font-weight:500">L. Martinez</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+      </div>
+    </div>
     <div class="hero-portal-preview" id="heroPortal">
       <div class="hero-portal-card">
         <div class="hero-portal-topbar">
@@ -1928,35 +2164,36 @@ input, textarea { font-family: inherit; }
     <div class="linear-features-grid">
       <div class="linear-feature-card">
         <div class="linear-feature-fig">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1" style="color: rgba(255,255,255,0.15);">
-            <rect x="8" y="8" width="48" height="48" rx="8"/>
-            <circle cx="32" cy="28" r="8"/>
-            <path d="M16 52c0-8.837 7.163-16 16-16s16 7.163 16 16"/>
-            <path d="M44 20l4-4m0 0l4 4m-4-4v12" stroke="rgba(16,185,129,0.5)" stroke-width="1.5"/>
-          </svg>
+          <div class="mini-ui">
+            <div class="mini-ui-label">POD Record</div>
+            <div class="mini-pod-photos">
+              <div class="mini-pod-photo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><div class="mini-time">Package</div></div>
+              <div class="mini-pod-photo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--teal);"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><div class="mini-time">Location</div></div>
+            </div>
+            <div class="mini-pod-row"><span style="color:var(--gray);">GPS</span><span style="font-family:monospace;font-size:9px;">41.089° N</span></div>
+            <div class="mini-pod-row"><span style="color:var(--gray);">Geofence</span><span style="color:var(--emerald);font-weight:600;">✓ 42 ft</span></div>
+          </div>
         </div>
         <h3 class="linear-feature-title">Proof of delivery</h3>
         <p class="linear-feature-desc">Every stop verified with timestamped photos, digital signatures, GPS coordinates, and geofence confirmation. Not a checkbox. Actual proof.</p>
         <div class="linear-feature-preview">
           <div class="preview-label">POD Record</div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-            <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:20px;text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);opacity:0.5;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><div style="font-size:9px;color:var(--gray);margin-top:6px;">Package · 10:47</div></div>
-            <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:20px;text-align:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--teal);opacity:0.5;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><div style="font-size:9px;color:var(--gray);margin-top:6px;">Location · 10:47</div></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+            <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:28px 20px;text-align:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);opacity:0.5;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><div style="font-size:10px;color:var(--gray);margin-top:8px;">Package · 10:47</div></div>
+            <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:28px 20px;text-align:center;"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--teal);opacity:0.5;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><div style="font-size:10px;color:var(--gray);margin-top:8px;">Location · 10:47</div></div>
           </div>
-          <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px 12px;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:var(--gray);">GPS</span><span style="font-size:11px;font-family:monospace;color:var(--gray-light);">41.089° N, 81.512° W</span></div>
-          <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:11px;color:var(--gray);">Geofence</span><span style="font-size:11px;color:var(--emerald);font-weight:600;">✓ Verified · 42 ft</span></div>
+          <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;color:var(--gray);">GPS</span><span style="font-size:13px;font-family:monospace;color:var(--gray-light);">41.089° N, 81.512° W</span></div>
+          <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;"><span style="font-size:13px;color:var(--gray);">Geofence</span><span style="font-size:13px;color:var(--emerald);font-weight:600;">✓ Verified · 42 ft</span></div>
         </div>
       </div>
       <div class="linear-feature-card">
         <div class="linear-feature-fig">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1" style="color: rgba(255,255,255,0.15);">
-            <rect x="4" y="12" width="56" height="40" rx="6"/>
-            <line x1="4" y1="24" x2="60" y2="24"/>
-            <rect x="12" y="30" width="16" height="6" rx="2" fill="rgba(16,185,129,0.3)" stroke="none"/>
-            <rect x="12" y="40" width="24" height="6" rx="2" fill="rgba(45,212,191,0.2)" stroke="none"/>
-            <circle cx="48" cy="33" r="4" fill="rgba(251,191,36,0.3)" stroke="none"/>
-            <circle cx="48" cy="43" r="4" fill="rgba(16,185,129,0.3)" stroke="none"/>
-          </svg>
+          <div class="mini-ui">
+            <div class="mini-ui-label">Route Overview</div>
+            <div class="mini-route-row"><span style="font-weight:500;">Marcus R.</span><div class="mini-route-bar"><div class="mini-route-fill" style="width:79%"></div></div><span class="mini-route-pct">79%</span></div>
+            <div class="mini-route-row"><span style="font-weight:500;">Angela F.</span><div class="mini-route-bar"><div class="mini-route-fill" style="width:73%"></div></div><span class="mini-route-pct">73%</span></div>
+            <div class="mini-route-row"><span style="font-weight:500;">Derek S.</span><div class="mini-route-bar"><div class="mini-route-fill" style="width:82%"></div></div><span class="mini-route-pct">82%</span></div>
+          </div>
         </div>
         <h3 class="linear-feature-title">Dispatch infrastructure</h3>
         <p class="linear-feature-desc">Route optimization, driver management, automated payroll, and real-time analytics. The entire operation in one system built by dispatchers.</p>
@@ -1971,14 +2208,12 @@ input, textarea { font-family: inherit; }
       </div>
       <div class="linear-feature-card">
         <div class="linear-feature-fig">
-          <svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1" style="color: rgba(255,255,255,0.15);">
-            <rect x="8" y="8" width="48" height="48" rx="8"/>
-            <rect x="16" y="16" width="12" height="8" rx="2" fill="rgba(16,185,129,0.3)" stroke="none"/>
-            <rect x="32" y="16" width="16" height="8" rx="2" fill="rgba(45,212,191,0.2)" stroke="none"/>
-            <rect x="16" y="28" width="32" height="4" rx="1" fill="rgba(255,255,255,0.06)" stroke="none"/>
-            <rect x="16" y="36" width="32" height="4" rx="1" fill="rgba(255,255,255,0.04)" stroke="none"/>
-            <rect x="16" y="44" width="24" height="4" rx="1" fill="rgba(255,255,255,0.04)" stroke="none"/>
-          </svg>
+          <div class="mini-ui">
+            <div class="mini-ui-label">Client View</div>
+            <div class="mini-rx-row"><span style="font-weight:500;">M. Johnson</span><span class="mini-badge" style="background:rgba(16,185,129,0.12);color:var(--emerald);">Delivered</span></div>
+            <div class="mini-rx-row"><span style="font-weight:500;">S. Williams</span><span class="mini-badge" style="background:rgba(16,185,129,0.12);color:var(--emerald);">Delivered</span></div>
+            <div class="mini-rx-row"><span style="font-weight:500;">R. Davis</span><span class="mini-badge" style="background:rgba(251,191,36,0.12);color:var(--amber);">Pending</span></div>
+          </div>
         </div>
         <h3 class="linear-feature-title">Pharmacy portal</h3>
         <p class="linear-feature-desc">White-labeled client portal with live delivery tracking, on-demand POD records, and compliance reporting. Your pharmacy clients see everything in real time.</p>
@@ -2027,6 +2262,10 @@ input, textarea { font-family: inherit; }
             <div class="showcase-row"><span>S. Williams</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
             <div class="showcase-row"><span>R. Davis</span><span class="status-badge status-pending">Pending</span><span></span></div>
             <div class="showcase-row"><span>K. Thompson</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
+            <div class="showcase-row"><span>L. Martinez</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
+            <div class="showcase-row"><span>P. Garcia</span><span class="status-badge status-pending">Pending</span><span></span></div>
+            <div class="showcase-row"><span>J. Robinson</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
+            <div class="showcase-row"><span>T. Brooks</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
           </div>
         </div>
       </div>
@@ -2043,6 +2282,17 @@ input, textarea { font-family: inherit; }
             <div class="showcase-driver"><span class="showcase-driver-name">Angela F.</span><div class="showcase-driver-bar"><div class="showcase-driver-fill" style="width:73%"></div></div><span class="showcase-driver-pct">73%</span></div>
             <div class="showcase-driver"><span class="showcase-driver-name">Derek S.</span><div class="showcase-driver-bar"><div class="showcase-driver-fill" style="width:82%"></div></div><span class="showcase-driver-pct">82%</span></div>
             <div class="showcase-driver"><span class="showcase-driver-name">Rachel K.</span><div class="showcase-driver-bar"><div class="showcase-driver-fill" style="width:69%"></div></div><span class="showcase-driver-pct">69%</span></div>
+            <div class="showcase-driver"><span class="showcase-driver-name">Tony B.</span><div class="showcase-driver-bar"><div class="showcase-driver-fill" style="width:91%"></div></div><span class="showcase-driver-pct">91%</span></div>
+            <div class="showcase-driver"><span class="showcase-driver-name">Lisa M.</span><div class="showcase-driver-bar"><div class="showcase-driver-fill" style="width:65%"></div></div><span class="showcase-driver-pct">65%</span></div>
+            <div class="showcase-driver"><span class="showcase-driver-name">Carlos V.</span><div class="showcase-driver-bar"><div class="showcase-driver-fill" style="width:77%"></div></div><span class="showcase-driver-pct">77%</span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding:14px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:10px;">
+            <span style="font-size:12px;color:var(--gray);">Week total</span>
+            <span style="font-size:14px;font-weight:700;color:var(--white);">$4,280</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;padding:14px 16px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:10px;">
+            <span style="font-size:12px;color:var(--gray);">Avg stops per driver</span>
+            <span style="font-size:14px;font-weight:700;color:var(--emerald);">74</span>
           </div>
         </div>
       </div>
@@ -2211,6 +2461,11 @@ input, textarea { font-family: inherit; }
           <div class="portal-table-row"><span>J. Anderson</span><span>118 Birch St</span><span>Brooks, T.</span><span><span class="status-badge status-failed">Failed</span></span><span></span></div>
           <div class="portal-table-row"><span>P. Garcia</span><span>4501 Walnut Ct</span><span>Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><button class="pod-btn">POD</button></span></div>
           <div class="portal-table-row"><span>A. Robinson</span><span>780 Spruce Way</span><span>Chen, D.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+          <div class="portal-table-row"><span>T. Brooks</span><span>215 Maple Ave</span><span>Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><button class="pod-btn">POD</button></span></div>
+          <div class="portal-table-row"><span>C. Nguyen</span><span>1087 Lake Rd</span><span>Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><button class="pod-btn">POD</button></span></div>
+          <div class="portal-table-row"><span>D. Patel</span><span>642 Ridge Dr</span><span>Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><button class="pod-btn">POD</button></span></div>
+          <div class="portal-table-row"><span>E. Washington</span><span>3301 Oak Blvd</span><span>Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+          <div class="portal-table-row"><span>F. Kim</span><span>455 Vine St</span><span>Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><button class="pod-btn">POD</button></span></div>
         </div>
       </div>
     </div>
@@ -2389,6 +2644,7 @@ input, textarea { font-family: inherit; }
   const nav = document.getElementById('mainNav');
   const heroTop = document.getElementById('heroTop');
   const heroPortal = document.getElementById('heroPortal');
+  const heroRightPortal = document.getElementById('heroRightPortal');
 
   const beat1 = document.getElementById('beat1');
   const beat2 = document.getElementById('beat2');
@@ -2742,6 +2998,11 @@ input, textarea { font-family: inherit; }
       heroTop.style.opacity = 1 - easeOut(textFade);
       heroTop.style.transform = 'translateY(' + lerp(easeOut(textFade), 0, -60) + 'px)';
 
+      // Right portal fades out with the hero text
+      if (heroRightPortal) {
+        heroRightPortal.style.opacity = 1 - easeOut(textFade);
+      }
+
       // Portal doesn't start until hero is completely gone (0.55) — 100px scroll buffer
       const portalRise = sub(p, 0.55, 0.95);
       const portalE = easeOut(portalRise);
@@ -2964,6 +3225,42 @@ input, textarea { font-family: inherit; }
 
   // Initial call
   onScroll();
+
+  // ========================================
+  // HERO PORTAL — live flip animation
+  // ========================================
+  (function() {
+    var flipRows = [
+      document.getElementById('heroFlipRow1'),
+      document.getElementById('heroFlipRow2')
+    ];
+    var currentFlip = 0;
+    setInterval(function() {
+      var row = flipRows[currentFlip];
+      if (!row) return;
+      // Flip status from Pending to Delivered
+      var statusSpan = row.querySelector('.status-badge');
+      if (statusSpan && statusSpan.classList.contains('status-pending')) {
+        statusSpan.classList.remove('status-pending');
+        statusSpan.classList.add('status-delivered');
+        statusSpan.textContent = 'Delivered';
+        // Add POD text
+        var podCell = row.children[3];
+        if (podCell) podCell.innerHTML = '<span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span>';
+        // Green flash
+        row.classList.add('flash-green');
+        setTimeout(function() { row.classList.remove('flash-green'); }, 600);
+        // After a delay, flip back so the cycle continues
+        setTimeout(function() {
+          statusSpan.classList.remove('status-delivered');
+          statusSpan.classList.add('status-pending');
+          statusSpan.textContent = 'Pending';
+          if (podCell) podCell.innerHTML = '';
+        }, 3000);
+      }
+      currentFlip = (currentFlip + 1) % flipRows.length;
+    }, 4000);
+  })();
 
   // ========================================
   // SMOOTH SCROLL for nav links
