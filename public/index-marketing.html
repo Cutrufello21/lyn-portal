@@ -136,10 +136,7 @@ input, textarea { font-family: inherit; }
   .hero-top { padding: 80px 24px 24px; max-width: 100%; }
   .hero-headline { font-size: clamp(36px, 10vw, 52px); }
   .hero-ctas { flex-direction: column; }
-  .hero-full-table-head, .hero-full-row { padding-left: 20px; padding-right: 20px; grid-template-columns: 1.5fr 1fr 0.8fr; }
-  .hero-full-table-head > :nth-child(2), .hero-full-row > :nth-child(2) { display: none; }
   .hero-full-topbar { padding-left: 20px; padding-right: 20px; }
-  .hero-full-table-head > :nth-child(5), .hero-full-row > :nth-child(5) { display: none; }
 }
 
 /* ========================================
@@ -2816,6 +2813,232 @@ input, textarea { font-family: inherit; }
   line-height: 1.7;
 }
 
+/* ==========================================
+   HERO DASHBOARD LAYOUT
+   ========================================== */
+.hero-dash {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+}
+
+.hero-sidebar {
+  width: 200px;
+  background: #141416;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  flex-shrink: 0;
+}
+
+.hero-sidebar-item {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: var(--gray-light);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.hero-sidebar-item:hover {
+  background: rgba(255,255,255,0.04);
+}
+
+.hero-sidebar-item.active {
+  color: var(--emerald);
+  background: rgba(16,185,129,0.08);
+}
+
+.hero-dash-main {
+  flex: 1;
+  overflow: hidden;
+}
+
+.hero-dash-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 16px 24px;
+}
+
+.hero-dash-stat-card {
+  background: #141416;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.hero-dash-stat-num {
+  font-size: 24px;
+  font-weight: 800;
+}
+
+.hero-dash-stat-label {
+  font-size: 11px;
+  color: var(--gray);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.hero-dash-stat-change {
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+.hero-dash-activity {
+  padding: 0 24px 12px;
+}
+
+.hero-dash-progress {
+  height: 6px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.hero-dash-progress-fill {
+  height: 100%;
+  width: 72%;
+  background: var(--emerald);
+  border-radius: 3px;
+}
+
+.hero-dash-table-head {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr 0.5fr 0.8fr 0.6fr 0.4fr;
+  padding: 10px 24px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.hero-dash-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr 0.8fr 0.5fr 0.8fr 0.6fr 0.4fr;
+  padding: 10px 24px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--white);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.4s;
+}
+
+.hero-dash-row.flash-green {
+  background: rgba(16,185,129,0.08);
+}
+
+/* ==========================================
+   POD GRID SECTION
+   ========================================== */
+.pod-grid-section {
+  padding: 120px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.pod-grid-headline {
+  font-size: clamp(28px, 3.5vw, 42px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--white);
+  margin-bottom: 12px;
+}
+
+.pod-grid-sub {
+  font-size: 16px;
+  color: var(--gray-light);
+  margin-bottom: 64px;
+  max-width: 520px;
+}
+
+.pod-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.pod-grid-card {
+  background: #1C1C1E;
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.3s;
+}
+
+.pod-grid-card.revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.pod-grid-card:hover {
+  border-color: rgba(45,212,191,0.2);
+}
+
+.pod-grid-card-photo {
+  height: 140px;
+  background: #141416;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pod-grid-card-photo svg {
+  color: var(--emerald);
+  opacity: 0.3;
+}
+
+.pod-grid-card-body {
+  padding: 16px;
+}
+
+.pod-grid-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 6px;
+}
+
+.pod-grid-card-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(16,185,129,0.12);
+  color: var(--emerald);
+  margin-bottom: 8px;
+}
+
+.pod-grid-card-addr {
+  font-size: 12px;
+  color: var(--gray-light);
+  margin-bottom: 4px;
+}
+
+.pod-grid-card-meta {
+  font-size: 12px;
+  color: var(--gray);
+}
+
+@media (max-width: 768px) {
+  .hero-sidebar { display: none; }
+  .hero-dash-stats { grid-template-columns: repeat(2, 1fr); }
+  .hero-dash-table-head, .hero-dash-row { grid-template-columns: 1.2fr 1fr 0.6fr; padding-left: 16px; padding-right: 16px; }
+  .hero-dash-table-head > :nth-child(3),
+  .hero-dash-table-head > :nth-child(4),
+  .hero-dash-table-head > :nth-child(7),
+  .hero-dash-row > :nth-child(3),
+  .hero-dash-row > :nth-child(4),
+  .hero-dash-row > :nth-child(7) { display: none; }
+  .pod-grid-section { padding: 80px 24px; }
+  .pod-grid { grid-template-columns: 1fr; }
+}
+
 @media (max-width: 768px) {
   .driver-app-section { padding: 80px 24px 100px; }
   .phones-row { flex-direction: column; align-items: center; gap: 24px; }
@@ -2853,24 +3076,65 @@ input, textarea { font-family: inherit; }
       </div>
     </div>
     <div class="hero-full-portal" id="heroFullPortal">
-      <div class="hero-full-topbar">
-        <div class="hero-full-avatar">GE</div>
-        <span>Giant Eagle Pharmacy</span>
+      <div class="hero-dash">
+        <!-- Sidebar -->
+        <div class="hero-sidebar">
+          <div style="padding:20px 16px 24px;font-size:15px;font-weight:700;color:var(--white);letter-spacing:-0.01em;">LYN<span style="color:var(--emerald)">.</span></div>
+          <div class="hero-sidebar-item active">Dashboard</div>
+          <div class="hero-sidebar-item">Deliveries</div>
+          <div class="hero-sidebar-item">POD Records</div>
+          <div class="hero-sidebar-item">Reports</div>
+          <div class="hero-sidebar-item">Settings</div>
+        </div>
+        <!-- Main content -->
+        <div class="hero-dash-main">
+          <div class="hero-full-topbar">
+            <div class="hero-full-avatar">GE</div>
+            <span>Giant Eagle Pharmacy</span>
+          </div>
+          <!-- Stat cards -->
+          <div class="hero-dash-stats">
+            <div class="hero-dash-stat-card">
+              <div class="hero-dash-stat-label">Total Deliveries</div>
+              <div class="hero-dash-stat-num" style="color:var(--white)">387</div>
+              <div class="hero-dash-stat-change" style="color:#10b981;">&#8593;12% vs last week</div>
+            </div>
+            <div class="hero-dash-stat-card">
+              <div class="hero-dash-stat-label">Delivered</div>
+              <div class="hero-dash-stat-num" style="color:var(--emerald)">312</div>
+              <div class="hero-dash-stat-change" style="color:#10b981;">&#8593;8%</div>
+            </div>
+            <div class="hero-dash-stat-card">
+              <div class="hero-dash-stat-label">Pending</div>
+              <div class="hero-dash-stat-num" style="color:var(--amber)">68</div>
+              <div class="hero-dash-stat-change" style="color:#ef4444;">&#8595;3%</div>
+            </div>
+            <div class="hero-dash-stat-card">
+              <div class="hero-dash-stat-label">Failed</div>
+              <div class="hero-dash-stat-num" style="color:var(--red)">7</div>
+              <div class="hero-dash-stat-change" style="color:var(--gray);">&mdash;</div>
+            </div>
+          </div>
+          <!-- Today's Activity -->
+          <div class="hero-dash-activity">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+              <span style="font-size:13px;font-weight:600;color:var(--white);">Today's Activity</span>
+              <span style="font-size:12px;color:var(--gray-light);">72% complete</span>
+            </div>
+            <div class="hero-dash-progress"><div class="hero-dash-progress-fill"></div></div>
+          </div>
+          <!-- Recent Deliveries table -->
+          <div style="padding:0 24px;">
+            <div style="font-size:13px;font-weight:600;color:var(--white);margin-bottom:8px;">Recent Deliveries</div>
+          </div>
+          <div class="hero-dash-table-head"><span>Patient</span><span>Address</span><span>City</span><span>ZIP</span><span>Driver</span><span>Status</span><span>POD</span></div>
+          <div class="hero-dash-row"><span style="font-weight:500">Margaret Johnson</span><span style="color:var(--gray-light)">1423 Oak St</span><span style="color:var(--gray-light)">Fairlawn</span><span style="color:var(--gray-light)">44333</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
+          <div class="hero-dash-row"><span style="font-weight:500">Samuel Williams</span><span style="color:var(--gray-light)">892 Elm Ave</span><span style="color:var(--gray-light)">Akron</span><span style="color:var(--gray-light)">44301</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
+          <div class="hero-dash-row" id="heroFlipRow1"><span style="font-weight:500">Robert Davis</span><span style="color:var(--gray-light)">2205 Maple Dr</span><span style="color:var(--gray-light)">Canton</span><span style="color:var(--gray-light)">44710</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+          <div class="hero-dash-row"><span style="font-weight:500">Karen Thompson</span><span style="color:var(--gray-light)">567 Pine Rd</span><span style="color:var(--gray-light)">Stow</span><span style="color:var(--gray-light)">44224</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
+          <div class="hero-dash-row" id="heroFlipRow2"><span style="font-weight:500">Luis Martinez</span><span style="color:var(--gray-light)">3340 Cedar Ln</span><span style="color:var(--gray-light)">Hudson</span><span style="color:var(--gray-light)">44236</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+        </div>
       </div>
-      <div class="hero-full-stats">
-        <div class="hero-full-stat"><span class="hero-full-stat-num" style="color:var(--white)">387</span><span class="hero-full-stat-lbl">Total</span></div>
-        <div class="hero-full-stat"><span class="hero-full-stat-num" style="color:var(--emerald)">312</span><span class="hero-full-stat-lbl">Delivered</span></div>
-        <div class="hero-full-stat"><span class="hero-full-stat-num" style="color:var(--amber)">68</span><span class="hero-full-stat-lbl">Pending</span></div>
-        <div class="hero-full-stat"><span class="hero-full-stat-num" style="color:var(--red)">7</span><span class="hero-full-stat-lbl">Failed</span></div>
-      </div>
-      <div class="hero-full-table-head"><span>Patient</span><span>Address</span><span>Driver</span><span>Status</span><span>POD</span></div>
-      <div class="hero-full-row"><span style="font-weight:500">M. Johnson</span><span style="color:var(--gray-light)">1423 Oak St, Fairlawn</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-      <div class="hero-full-row"><span style="font-weight:500">S. Williams</span><span style="color:var(--gray-light)">892 Elm Ave, Akron</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-      <div class="hero-full-row" id="heroFlipRow1"><span style="font-weight:500">R. Davis</span><span style="color:var(--gray-light)">2205 Maple Dr, Canton</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
-      <div class="hero-full-row"><span style="font-weight:500">K. Thompson</span><span style="color:var(--gray-light)">567 Pine Rd, Stow</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-      <div class="hero-full-row" id="heroFlipRow2"><span style="font-weight:500">L. Martinez</span><span style="color:var(--gray-light)">3340 Cedar Ln, Hudson</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
-      <div class="hero-full-row"><span style="font-weight:500">P. Garcia</span><span style="color:var(--gray-light)">4501 Walnut Ct, Kent</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-      <div class="hero-full-row"><span style="font-weight:500">A. Robinson</span><span style="color:var(--gray-light)">780 Spruce Way, Cuyahoga</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
     </div>
   </div>
 </section>
@@ -2979,21 +3243,26 @@ input, textarea { font-family: inherit; }
         </div>
         <div class="linear-showcase-panel-ui">
           <div class="showcase-topbar"><span class="showcase-avatar">GE</span><span>Giant Eagle Pharmacy</span></div>
-          <div class="showcase-stats-row">
-            <div class="showcase-stat"><span class="showcase-stat-num" style="color:var(--white)">387</span><span class="showcase-stat-lbl">Total</span></div>
-            <div class="showcase-stat"><span class="showcase-stat-num" style="color:var(--emerald)">312</span><span class="showcase-stat-lbl">Delivered</span></div>
-            <div class="showcase-stat"><span class="showcase-stat-num" style="color:var(--amber)">68</span><span class="showcase-stat-lbl">Pending</span></div>
-            <div class="showcase-stat"><span class="showcase-stat-num" style="color:var(--red)">7</span><span class="showcase-stat-lbl">Failed</span></div>
+          <!-- Toolbar -->
+          <div style="display:flex;align-items:center;gap:8px;padding:10px 16px;border-bottom:1px solid rgba(255,255,255,0.06);flex-wrap:wrap;">
+            <span style="font-size:11px;color:var(--white);background:rgba(255,255,255,0.06);padding:4px 10px;border-radius:6px;font-weight:500;">Apr 1 &ndash; Apr 7, 2026</span>
+            <input type="text" placeholder="Search patients..." style="font-size:11px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:6px;padding:4px 10px;color:var(--gray-light);outline:none;font-family:var(--font);flex:1;min-width:100px;" readonly>
+            <span style="font-size:11px;color:var(--gray-light);background:rgba(255,255,255,0.04);padding:4px 10px;border-radius:6px;">All Statuses</span>
+            <span style="font-size:11px;color:var(--gray-light);background:rgba(255,255,255,0.04);padding:4px 10px;border-radius:6px;">All Drivers</span>
           </div>
+          <!-- Table head -->
+          <div style="display:grid;grid-template-columns:1.2fr 1fr 0.7fr 0.5fr 0.8fr 0.6fr;padding:8px 16px;font-size:10px;font-weight:600;color:var(--gray);text-transform:uppercase;letter-spacing:0.05em;border-bottom:1px solid rgba(255,255,255,0.06);">
+            <span>Patient</span><span>Address</span><span>City</span><span>ZIP</span><span>Driver</span><span>Status</span>
+          </div>
+          <!-- Table rows -->
           <div class="showcase-rows">
-            <div class="showcase-row"><span>M. Johnson</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-            <div class="showcase-row"><span>S. Williams</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-            <div class="showcase-row"><span>R. Davis</span><span class="status-badge status-pending">Pending</span><span></span></div>
-            <div class="showcase-row"><span>K. Thompson</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-            <div class="showcase-row"><span>L. Martinez</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-            <div class="showcase-row"><span>P. Garcia</span><span class="status-badge status-pending">Pending</span><span></span></div>
-            <div class="showcase-row"><span>J. Robinson</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
-            <div class="showcase-row"><span>T. Brooks</span><span class="status-badge status-delivered">Delivered</span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></div>
+            <div style="display:grid;grid-template-columns:1.2fr 1fr 0.7fr 0.5fr 0.8fr 0.6fr;padding:7px 16px;align-items:center;font-size:12px;color:var(--white);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-weight:500">Margaret Johnson</span><span style="color:var(--gray-light)">1423 Oak St</span><span style="color:var(--gray-light)">Fairlawn</span><span style="color:var(--gray-light)">44333</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span></div>
+            <div style="display:grid;grid-template-columns:1.2fr 1fr 0.7fr 0.5fr 0.8fr 0.6fr;padding:7px 16px;align-items:center;font-size:12px;color:var(--white);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-weight:500">Samuel Williams</span><span style="color:var(--gray-light)">892 Elm Ave</span><span style="color:var(--gray-light)">Akron</span><span style="color:var(--gray-light)">44301</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span></div>
+            <div style="display:grid;grid-template-columns:1.2fr 1fr 0.7fr 0.5fr 0.8fr 0.6fr;padding:7px 16px;align-items:center;font-size:12px;color:var(--white);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-weight:500">Robert Davis</span><span style="color:var(--gray-light)">2205 Maple Dr</span><span style="color:var(--gray-light)">Canton</span><span style="color:var(--gray-light)">44710</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span></div>
+            <div style="display:grid;grid-template-columns:1.2fr 1fr 0.7fr 0.5fr 0.8fr 0.6fr;padding:7px 16px;align-items:center;font-size:12px;color:var(--white);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-weight:500">Karen Thompson</span><span style="color:var(--gray-light)">567 Pine Rd</span><span style="color:var(--gray-light)">Stow</span><span style="color:var(--gray-light)">44224</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span></div>
+            <div style="display:grid;grid-template-columns:1.2fr 1fr 0.7fr 0.5fr 0.8fr 0.6fr;padding:7px 16px;align-items:center;font-size:12px;color:var(--white);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-weight:500">Luis Martinez</span><span style="color:var(--gray-light)">3340 Cedar Ln</span><span style="color:var(--gray-light)">Hudson</span><span style="color:var(--gray-light)">44236</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span></div>
+            <div style="display:grid;grid-template-columns:1.2fr 1fr 0.7fr 0.5fr 0.8fr 0.6fr;padding:7px 16px;align-items:center;font-size:12px;color:var(--white);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-weight:500">Patricia Garcia</span><span style="color:var(--gray-light)">4501 Walnut Ct</span><span style="color:var(--gray-light)">Kent</span><span style="color:var(--gray-light)">44240</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span></div>
+            <div style="display:grid;grid-template-columns:1.2fr 1fr 0.7fr 0.5fr 0.8fr 0.6fr;padding:7px 16px;align-items:center;font-size:12px;color:var(--white);border-bottom:1px solid rgba(255,255,255,0.04);"><span style="font-weight:500">James Robinson</span><span style="color:var(--gray-light)">780 Spruce Way</span><span style="color:var(--gray-light)">Cuyahoga Falls</span><span style="color:var(--gray-light)">44221</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span></div>
           </div>
         </div>
       </div>
@@ -3128,6 +3397,70 @@ input, textarea { font-family: inherit; }
   </div>
 
   <p class="driver-app-footer">Every step logged. Every delivery proven. Before the driver leaves the driveway.</p>
+</section>
+
+<!-- ==========================================
+     POD Records Grid
+     ========================================== -->
+<section class="pod-grid-section" id="podGridSection">
+  <h2 class="pod-grid-headline">Every proof. On demand.</h2>
+  <p class="pod-grid-sub">Pharmacy staff can pull any POD record instantly. No phone calls. No waiting.</p>
+  <div class="pod-grid" id="podGrid">
+    <div class="pod-grid-card">
+      <div class="pod-grid-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="pod-grid-card-body">
+        <div class="pod-grid-card-name">Margaret Johnson</div>
+        <div class="pod-grid-card-badge">Delivered</div>
+        <div class="pod-grid-card-addr">1423 Oak St, Fairlawn OH 44333</div>
+        <div class="pod-grid-card-meta">Rivera, A. &middot; 10:47 AM</div>
+      </div>
+    </div>
+    <div class="pod-grid-card">
+      <div class="pod-grid-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="pod-grid-card-body">
+        <div class="pod-grid-card-name">Samuel Williams</div>
+        <div class="pod-grid-card-badge">Delivered</div>
+        <div class="pod-grid-card-addr">892 Elm Ave, Akron OH 44301</div>
+        <div class="pod-grid-card-meta">Chen, D. &middot; 10:52 AM</div>
+      </div>
+    </div>
+    <div class="pod-grid-card">
+      <div class="pod-grid-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="pod-grid-card-body">
+        <div class="pod-grid-card-name">Robert Davis</div>
+        <div class="pod-grid-card-badge">Delivered</div>
+        <div class="pod-grid-card-addr">2205 Maple Dr, Canton OH 44710</div>
+        <div class="pod-grid-card-meta">Rivera, A. &middot; 11:03 AM</div>
+      </div>
+    </div>
+    <div class="pod-grid-card">
+      <div class="pod-grid-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="pod-grid-card-body">
+        <div class="pod-grid-card-name">Karen Thompson</div>
+        <div class="pod-grid-card-badge">Delivered</div>
+        <div class="pod-grid-card-addr">567 Pine Rd, Stow OH 44224</div>
+        <div class="pod-grid-card-meta">Brooks, T. &middot; 11:15 AM</div>
+      </div>
+    </div>
+    <div class="pod-grid-card">
+      <div class="pod-grid-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="pod-grid-card-body">
+        <div class="pod-grid-card-name">Luis Martinez</div>
+        <div class="pod-grid-card-badge">Delivered</div>
+        <div class="pod-grid-card-addr">3340 Cedar Ln, Hudson OH 44236</div>
+        <div class="pod-grid-card-meta">Chen, D. &middot; 11:28 AM</div>
+      </div>
+    </div>
+    <div class="pod-grid-card">
+      <div class="pod-grid-card-photo"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+      <div class="pod-grid-card-body">
+        <div class="pod-grid-card-name">Patricia Garcia</div>
+        <div class="pod-grid-card-badge">Delivered</div>
+        <div class="pod-grid-card-addr">4501 Walnut Ct, Kent OH 44240</div>
+        <div class="pod-grid-card-meta">Rivera, A. &middot; 11:41 AM</div>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ==========================================
@@ -3303,14 +3636,20 @@ input, textarea { font-family: inherit; }
     <div class="pod-modal" id="podModal">
       <h3><span class="dot"></span> Proof of Delivery</h3>
       <div class="pod-detail-grid">
-        <div class="pod-detail"><label>Patient</label><span>M. Johnson</span></div>
-        <div class="pod-detail"><label>Address</label><span>1423 Oak St</span></div>
+        <div class="pod-detail"><label>Patient</label><span>Margaret Johnson</span></div>
         <div class="pod-detail"><label>Driver</label><span>Rivera, A.</span></div>
-        <div class="pod-detail"><label>Timestamp</label><span>10:47 AM</span></div>
+        <div class="pod-detail"><label>Address</label><span>1423 Oak St, Fairlawn OH 44333</span></div>
+        <div class="pod-detail"><label>Status</label><span><span class="status-badge status-delivered">Delivered</span></span></div>
+        <div class="pod-detail"><label>Cold Chain</label><span style="color:var(--teal);font-weight:600;font-size:12px;">Temperature Verified</span></div>
+        <div class="pod-detail"><label>Timestamp</label><span>10:47 AM &middot; Apr 7, 2026</span></div>
       </div>
       <div class="pod-photos">
-        <div class="pod-photo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--emerald);opacity:0.5;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span style="font-size:10px;color:var(--gray);font-weight:500;">Package · 10:47 AM</span></div>
-        <div class="pod-photo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal);opacity:0.5;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span style="font-size:10px;color:var(--gray);font-weight:500;">Delivery Location · 10:47 AM</span></div>
+        <div class="pod-photo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--emerald);opacity:0.5;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span style="font-size:10px;color:var(--gray);font-weight:500;">Package Photo &middot; 10:47 AM</span></div>
+        <div class="pod-photo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal);opacity:0.5;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span style="font-size:10px;color:var(--gray);font-weight:500;">Door Photo &middot; 10:47 AM</span></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5L6 11.5L13 4.5" stroke="var(--emerald)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:13px;color:var(--emerald);font-weight:600;">Signature Captured</span>
       </div>
       <div class="pod-sig-preview">
         <canvas id="podSigCanvas" width="400" height="50"></canvas>
@@ -4319,6 +4658,26 @@ input, textarea { font-family: inherit; }
   })();
 
   // ========================================
+  // POD GRID — staggered reveal
+  // ========================================
+  (function() {
+    var podCards = document.querySelectorAll('.pod-grid-card');
+    if (!podCards.length) return;
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var cards = entry.target.parentElement.querySelectorAll('.pod-grid-card');
+          cards.forEach(function(card, i) {
+            setTimeout(function() { card.classList.add('revealed'); }, i * 80);
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    observer.observe(podCards[0]);
+  })();
+
+  // ========================================
   // HERO PORTAL — live flip animation
   // ========================================
   (function() {
@@ -4337,7 +4696,7 @@ input, textarea { font-family: inherit; }
         statusSpan.classList.add('status-delivered');
         statusSpan.textContent = 'Delivered';
         // Add POD text
-        var podCell = row.children[3];
+        var podCell = row.children[6];
         if (podCell) podCell.innerHTML = '<span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span>';
         // Green flash
         row.classList.add('flash-green');
