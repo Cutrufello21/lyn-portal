@@ -280,6 +280,7 @@ input, textarea { font-family: inherit; }
   flex: 1;
   position: relative;
   height: 65vh;
+  min-height: 400px;
   max-height: 500px;
   border-radius: 16px;
   overflow: hidden;
@@ -825,14 +826,15 @@ input, textarea { font-family: inherit; }
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
   width: min(88vw, 440px);
-  background: var(--card);
-  border: 1px solid var(--card-border);
+  background: linear-gradient(145deg, var(--card), #1E1E22);
+  border: 1px solid rgba(45, 212, 191, 0.15);
   border-radius: 16px;
   padding: 28px;
-  z-index: 10;
+  z-index: 50;
   opacity: 0;
   will-change: opacity, transform;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+  pointer-events: none;
 }
 
 .pod-modal h3 {
@@ -881,13 +883,15 @@ input, textarea { font-family: inherit; }
 
 .pod-photo-placeholder {
   flex: 1;
-  height: 80px;
-  background: #18181B;
+  height: 90px;
+  background: linear-gradient(135deg, #141416, #1A1A1E);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   font-size: 24px;
 }
 
@@ -927,17 +931,19 @@ input, textarea { font-family: inherit; }
 /* ========================================
    BEAT 8 — FULL MAP
    ======================================== */
-#beat8 { height: 80vh; }
+#beat8 { height: 80vh; overflow: hidden; }
 
 .beat8-map-wrap {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   position: relative;
+  overflow: hidden;
 }
 
 #map8 {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  min-height: 600px;
 }
 
 .beat8-counter {
@@ -978,6 +984,10 @@ input, textarea { font-family: inherit; }
   align-items: center;
   justify-content: center;
   padding: 120px 24px;
+  position: relative;
+  z-index: 10;
+  background: var(--bg);
+  overflow: hidden;
 }
 
 .stats-grid {
@@ -1433,8 +1443,8 @@ input, textarea { font-family: inherit; }
         <div class="pod-detail"><label>Timestamp</label><span>10:47 AM</span></div>
       </div>
       <div class="pod-photos">
-        <div class="pod-photo-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--emerald);opacity:0.5;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
-        <div class="pod-photo-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal);opacity:0.5;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+        <div class="pod-photo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--emerald);opacity:0.5;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span style="font-size:10px;color:var(--gray);font-weight:500;">Package · 10:47 AM</span></div>
+        <div class="pod-photo-placeholder"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal);opacity:0.5;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span style="font-size:10px;color:var(--gray);font-weight:500;">Delivery Location · 10:47 AM</span></div>
       </div>
       <div class="pod-sig-preview">
         <canvas id="podSigCanvas" width="400" height="50"></canvas>
@@ -1649,48 +1659,70 @@ input, textarea { font-family: inherit; }
   // ========================================
   // SIGNATURE POINTS (pre-computed)
   // ========================================
-  const sigPoints = [];
-  let sx = 20;
-  // Use seeded-like random for consistency
-  const rands = [0.73,0.21,0.85,0.42,0.67,0.31,0.92,0.15,0.58,0.77,0.44,0.19,0.88,0.36,0.63,0.25,0.71,0.52,0.38,0.81,0.14,0.69,0.47,0.33,0.91,0.28,0.56,0.72];
+  // Realistic signature: multiple strokes with varying pressure, pen lifts, shakiness
+  const sigStrokes = [];
+  const rands = [0.73,0.21,0.85,0.42,0.67,0.31,0.92,0.15,0.58,0.77,0.44,0.19,0.88,0.36,0.63,0.25,0.71,0.52,0.38,0.81,0.14,0.69,0.47,0.33,0.91,0.28,0.56,0.72,0.65,0.18,0.79,0.34];
   let ri = 0;
   function prand() { return rands[ri++ % rands.length]; }
-  for (let i = 0; i < 14; i++) {
-    const cp1x = sx + 8 + prand() * 12;
-    const cp1y = 15 + prand() * 35;
-    sx += 22 + prand() * 8;
-    const endx = sx;
-    const endy = 20 + prand() * 25;
-    sigPoints.push({ cp1x, cp1y, endx, endy });
+  // Stroke 1: first name (loopy, fast)
+  var pts1 = []; var sx1 = 15;
+  for (var i = 0; i < 8; i++) {
+    pts1.push({ cpx: sx1 + 5 + prand()*14, cpy: 8 + prand()*40, ex: sx1 + 18 + prand()*10, ey: 18 + prand()*28, w: 1.5 + prand()*2.5 });
+    sx1 += 18 + prand()*10;
   }
+  sigStrokes.push({ points: pts1, startX: 15, startY: 30 });
+  // Stroke 2: pen lift, gap, last name (tighter)
+  var pts2 = []; var sx2 = sx1 + 8 + prand()*6;
+  for (var i = 0; i < 6; i++) {
+    pts2.push({ cpx: sx2 + 4 + prand()*10, cpy: 12 + prand()*35, ex: sx2 + 15 + prand()*8, ey: 20 + prand()*22, w: 1.2 + prand()*2 });
+    sx2 += 15 + prand()*8;
+  }
+  sigStrokes.push({ points: pts2, startX: sx1 + 8, startY: 25 + prand()*10 });
+  // Stroke 3: underline flourish
+  var ux = 20 + prand()*10;
+  sigStrokes.push({ points: [
+    { cpx: ux+40, cpy: 48+prand()*5, ex: ux+100+prand()*30, ey: 50-prand()*8, w: 1.8 },
+    { cpx: ux+130, cpy: 45+prand()*6, ex: ux+160+prand()*20, ey: 52+prand()*4, w: 0.8 },
+  ], startX: ux, startY: 50 });
+
+  var totalSigPts = sigStrokes.reduce(function(s,st){return s+st.points.length},0);
 
   function drawSignature(canvas, progress) {
-    const ctx = canvas.getContext('2d');
-    const dpr = window.devicePixelRatio || 1;
-    const w = canvas.width;
-    const h = canvas.height;
-    ctx.clearRect(0, 0, w, h);
+    var ctx = canvas.getContext('2d');
+    var dpr = window.devicePixelRatio || 1;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     if (progress <= 0) return;
-    ctx.strokeStyle = '#A1A1AA';
-    ctx.lineWidth = 2 * dpr;
     ctx.lineCap = 'round';
     ctx.lineJoin = 'round';
-    ctx.beginPath();
-    ctx.moveTo(20 * dpr, 35 * dpr);
-    const totalPoints = sigPoints.length;
-    const pointsToDraw = Math.ceil(progress * totalPoints);
-    for (let i = 0; i < pointsToDraw; i++) {
-      const p = sigPoints[i];
-      if (i === pointsToDraw - 1 && progress < 1) {
-        const segProgress = (progress * totalPoints) - i;
-        const cx = p.cp1x + (p.endx - p.cp1x) * segProgress;
-        const cy = p.cp1y + (p.endy - p.cp1y) * segProgress;
-        ctx.quadraticCurveTo(p.cp1x * dpr, p.cp1y * dpr, cx * dpr, cy * dpr);
-      } else {
-        ctx.quadraticCurveTo(p.cp1x * dpr, p.cp1y * dpr, p.endx * dpr, p.endy * dpr);
+    var drawn = 0;
+    var target = Math.ceil(progress * totalSigPts);
+    for (var si = 0; si < sigStrokes.length; si++) {
+      var stroke = sigStrokes[si];
+      if (drawn >= target) break;
+      ctx.beginPath();
+      ctx.moveTo(stroke.startX * dpr, stroke.startY * dpr);
+      for (var pi = 0; pi < stroke.points.length; pi++) {
+        if (drawn >= target) break;
+        var pt = stroke.points[pi];
+        // Vary stroke width per segment for pressure effect
+        ctx.strokeStyle = 'rgba(161,161,170,' + (0.6 + pt.w * 0.12) + ')';
+        ctx.lineWidth = pt.w * dpr;
+        // Add slight shakiness
+        var jx = (prand()-0.5)*1.5, jy = (prand()-0.5)*1.5;
+        if (drawn === target - 1 && progress < 1) {
+          var seg = (progress * totalSigPts) - drawn;
+          var mx = pt.cpx + (pt.ex - pt.cpx) * seg;
+          var my = pt.cpy + (pt.ey - pt.cpy) * seg;
+          ctx.quadraticCurveTo((pt.cpx+jx)*dpr, (pt.cpy+jy)*dpr, mx*dpr, my*dpr);
+        } else {
+          ctx.quadraticCurveTo((pt.cpx+jx)*dpr, (pt.cpy+jy)*dpr, (pt.ex+jx)*dpr, (pt.ey+jy)*dpr);
+        }
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo((pt.ex+jx)*dpr, (pt.ey+jy)*dpr);
+        drawn++;
       }
     }
-    ctx.stroke();
   }
 
   // Setup canvases for HiDPI
@@ -1738,9 +1770,12 @@ input, textarea { font-family: inherit; }
   function initMap3() {
     if (map3Inited) return;
     map3Inited = true;
-    // Ensure container is visible for Mapbox to render
+    // Ensure container has dimensions before Mapbox initializes
+    var container = document.getElementById('map3');
     var mc = document.getElementById('beat3MapCol');
     mc.style.opacity = '1';
+    container.style.height = mc.offsetHeight + 'px';
+    container.style.width = mc.offsetWidth + 'px';
     map3 = new mapboxgl.Map({
       container: 'map3',
       style: 'mapbox://styles/mapbox/dark-v11',
@@ -1749,7 +1784,7 @@ input, textarea { font-family: inherit; }
       interactive: false,
       attributionControl: false,
     });
-    map3.on('load', function() { map3.resize(); });
+    map3.on('load', function() { setTimeout(function(){ map3.resize(); }, 100); });
 
     // Driver marker
     const markerEl = document.createElement('div');
@@ -1766,6 +1801,9 @@ input, textarea { font-family: inherit; }
   function initMap8() {
     if (map8Inited) return;
     map8Inited = true;
+    var container8 = document.getElementById('map8');
+    container8.style.height = '100vh';
+    container8.style.minHeight = '600px';
     map8 = new mapboxgl.Map({
       container: 'map8',
       style: 'mapbox://styles/mapbox/dark-v11',
@@ -1774,7 +1812,7 @@ input, textarea { font-family: inherit; }
       interactive: false,
       attributionControl: false,
     });
-    map8.on('load', function() { map8.resize(); });
+    map8.on('load', function() { setTimeout(function(){ map8.resize(); }, 100); });
 
     // Driver pins (larger, teal)
     const driverPositions = [
@@ -2081,25 +2119,25 @@ input, textarea { font-family: inherit; }
     {
       const p = sectionProgress(beat7);
 
-      // Text
-      const textIn = sub(p, 0.0, 0.15);
+      // Text and portal arrive TOGETHER
+      const textIn = sub(p, 0.0, 0.2);
       const textE = easeOut(textIn);
       beat7TextEl.style.opacity = textE;
       beat7TextEl.style.transform = 'translateY(' + lerp(textE, 30, 0) + 'px)';
 
-      // Portal slide up
-      const portalIn = sub(p, 0.15, 0.4);
+      // Portal slides up simultaneously with text
+      const portalIn = sub(p, 0.05, 0.25);
       const portalE = easeOut(portalIn);
       portalWrap.style.opacity = portalE;
       portalWrap.style.transform = 'translate(-50%, -50%) translateY(' + lerp(portalE, 60, 0) + 'px)';
 
-      // POD Modal
-      const modalIn = sub(p, 0.5, 0.65);
-      const modalOut = sub(p, 0.75, 0.85);
+      // POD Modal — only after text has cleared (later in scroll)
+      const modalIn = sub(p, 0.55, 0.7);
+      const modalOut = sub(p, 0.82, 0.92);
       const modalInE = easeOut(modalIn);
       const modalOpacity = modalInE * (1 - easeOut(modalOut));
       podModal.style.opacity = modalOpacity;
-      podModal.style.transform = 'translate(-50%, -50%) scale(' + lerp(modalInE, 0.95, 1) + ')';
+      podModal.style.transform = 'translate(-50%, -50%) scale(' + lerp(modalInE, 0.95, 1) + ') translateY(' + lerp(modalInE, 40, 0) + 'px)';
     }
 
     // ---- BEAT 8 — Full Map ----
