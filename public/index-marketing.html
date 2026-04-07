@@ -240,8 +240,8 @@ input, textarea { font-family: inherit; }
 
 .beat2-text {
   font-size: clamp(22px, 3.5vw, 38px);
-  font-weight: 500;
-  color: var(--gray-light);
+  font-weight: 700;
+  color: var(--white);
   max-width: 700px;
   text-align: center;
   padding: 0 24px;
@@ -307,9 +307,14 @@ input, textarea { font-family: inherit; }
   pointer-events: none;
 }
 
+.geofence-ring--active {
+  animation: geoPulse 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 @keyframes geoPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
-  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.3; }
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; border-color: var(--emerald); }
+  50% { transform: translate(-50%, -50%) scale(1.35); opacity: 0.15; border-color: var(--teal); }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; border-color: var(--emerald); }
 }
 
 .driver-marker {
@@ -413,29 +418,34 @@ input, textarea { font-family: inherit; }
 
 .photo-card {
   flex: 0 0 340px;
-  background: var(--card);
-  border: 1px solid var(--card-border);
+  background: linear-gradient(145deg, var(--card), #1E1E22);
+  border: 1px solid rgba(45, 212, 191, 0.15);
   border-radius: 16px;
   overflow: hidden;
   will-change: opacity, transform;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
 .photo-card-image {
   width: 100%;
   height: 240px;
-  background: #18181B;
+  background: linear-gradient(135deg, #141416, #1A1A1E);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 64px;
+  gap: 16px;
   position: relative;
+  border-bottom: 1px solid var(--card-border);
 }
+
+.photo-card-image svg { color: var(--emerald); opacity: 0.6; }
 
 .photo-card-image::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(16, 185, 129, 0.03), rgba(45, 212, 191, 0.03));
+  background: radial-gradient(ellipse at center, rgba(16, 185, 129, 0.04), transparent 70%);
 }
 
 .photo-card-body {
@@ -507,11 +517,12 @@ input, textarea { font-family: inherit; }
 
 .sig-card {
   flex: 0 0 400px;
-  background: var(--card);
-  border: 1px solid var(--card-border);
+  background: linear-gradient(145deg, var(--card), #1E1E22);
+  border: 1px solid rgba(45, 212, 191, 0.15);
   border-radius: 16px;
   padding: 24px;
   will-change: opacity, transform;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
 .sig-card-label {
@@ -575,11 +586,12 @@ input, textarea { font-family: inherit; }
 .note-card {
   flex: 1;
   max-width: 480px;
-  background: var(--card);
-  border: 1px solid var(--card-border);
+  background: linear-gradient(145deg, var(--card), #1E1E22);
+  border: 1px solid rgba(45, 212, 191, 0.15);
   border-radius: 16px;
   padding: 24px;
   will-change: opacity, transform;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03);
 }
 
 .note-pills {
@@ -1302,11 +1314,11 @@ input, textarea { font-family: inherit; }
       </div>
       <div class="photo-card" id="photoCard">
         <div class="photo-card-image">
-          <span style="position:relative;z-index:1;">📦</span>
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <span style="font-size:13px;color:var(--gray);font-weight:500;letter-spacing:0.3px;">CAPTURED</span>
         </div>
         <div class="photo-card-body">
-          <div class="photo-card-label">Package Photo</div>
-          <div class="photo-card-meta">Today 10:47 AM</div>
+          <div class="photo-card-label">Package captured · 10:47 AM</div>
           <div class="photo-card-gps">41.0891° N, 81.5123° W</div>
         </div>
       </div>
@@ -1421,8 +1433,8 @@ input, textarea { font-family: inherit; }
         <div class="pod-detail"><label>Timestamp</label><span>10:47 AM</span></div>
       </div>
       <div class="pod-photos">
-        <div class="pod-photo-placeholder">📦</div>
-        <div class="pod-photo-placeholder">🏠</div>
+        <div class="pod-photo-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--emerald);opacity:0.5;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+        <div class="pod-photo-placeholder"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--teal);opacity:0.5;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
       </div>
       <div class="pod-sig-preview">
         <canvas id="podSigCanvas" width="400" height="50"></canvas>
@@ -1726,6 +1738,9 @@ input, textarea { font-family: inherit; }
   function initMap3() {
     if (map3Inited) return;
     map3Inited = true;
+    // Ensure container is visible for Mapbox to render
+    var mc = document.getElementById('beat3MapCol');
+    mc.style.opacity = '1';
     map3 = new mapboxgl.Map({
       container: 'map3',
       style: 'mapbox://styles/mapbox/dark-v11',
@@ -1734,6 +1749,7 @@ input, textarea { font-family: inherit; }
       interactive: false,
       attributionControl: false,
     });
+    map3.on('load', function() { map3.resize(); });
 
     // Driver marker
     const markerEl = document.createElement('div');
@@ -1758,6 +1774,7 @@ input, textarea { font-family: inherit; }
       interactive: false,
       attributionControl: false,
     });
+    map8.on('load', function() { map8.resize(); });
 
     // Driver pins (larger, teal)
     const driverPositions = [
@@ -1943,6 +1960,7 @@ input, textarea { font-family: inherit; }
       const mapE = easeOut(mapIn);
       beat3MapCol.style.opacity = mapE;
       beat3MapCol.style.transform = 'translateX(' + lerp(mapE, 40, 0) + 'px)';
+      if (map3 && mapE > 0.5 && !map3._resized) { map3.resize(); map3._resized = true; }
 
       // Driver marker
       if (map3Marker) {
@@ -1960,9 +1978,9 @@ input, textarea { font-family: inherit; }
           geofenceEl.style.opacity = ringE * 0.7;
           geofenceEl.style.transform = 'translate(-50%, -50%) scale(' + lerp(ringE, 0.3, 1) + ')';
           if (ringP >= 1) {
-            geofenceEl.style.animation = 'geoPulse 2s ease-in-out infinite';
+            geofenceEl.classList.add('geofence-ring--active');
           } else {
-            geofenceEl.style.animation = 'none';
+            geofenceEl.classList.remove('geofence-ring--active');
           }
         } else {
           geofenceEl.style.opacity = 0;
