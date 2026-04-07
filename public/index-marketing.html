@@ -245,7 +245,7 @@ input, textarea { font-family: inherit; }
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translateX(-50%) translateY(30%);
+  transform: translateX(-50%) translateY(65%);
   width: min(1100px, 92vw);
   will-change: transform, opacity;
   z-index: 1;
@@ -2222,15 +2222,16 @@ input, textarea { font-family: inherit; }
     // ---- BEAT 1 — Linear-style hero ----
     {
       const p = sectionProgress(beat1);
-      // Hero text stays visible, fades slightly as portal rises
-      const textFade = sub(p, 0.5, 0.9);
-      heroTop.style.opacity = 1 - easeOut(textFade) * 0.6;
+      // Hero text fades out as portal takes over
+      const textFade = sub(p, 0.4, 0.8);
+      heroTop.style.opacity = 1 - easeOut(textFade);
+      heroTop.style.transform = 'translateY(' + lerp(easeOut(textFade), 0, -40) + 'px)';
 
-      // Portal preview rises from below: starts at translateY(30%), ends at translateY(-5%)
-      const portalRise = sub(p, 0.0, 0.8);
+      // Portal rises from 65% below → 5% above center (fills screen)
+      const portalRise = sub(p, 0.15, 0.85);
       const portalE = easeOut(portalRise);
-      heroPortal.style.transform = 'translateX(-50%) translateY(' + lerp(portalE, 30, -5) + '%)';
-      heroPortal.style.opacity = Math.min(1, portalE * 1.5);
+      heroPortal.style.transform = 'translateX(-50%) translateY(' + lerp(portalE, 65, -5) + '%)';
+      heroPortal.style.opacity = Math.min(1, portalE * 2);
     }
 
     // ---- BEAT 2 ----
