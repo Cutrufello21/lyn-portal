@@ -133,6 +133,13 @@ input, textarea { font-family: inherit; }
   .nav { padding: 12px 20px; }
   .nav-links { gap: 16px; }
   .nav-links a:not(.nav-cta) { display: none; }
+  .hero-top { padding: 100px 24px 32px; }
+  .hero-headline { font-size: clamp(32px, 8vw, 48px); }
+  .hero-ctas { flex-direction: column; }
+  .hero-portal-preview { width: 95vw; }
+  .hero-portal-table-head, .hero-portal-table-row { grid-template-columns: 1.5fr 1fr 0.8fr; }
+  .hero-portal-table-head > :nth-child(2), .hero-portal-table-head > :nth-child(5),
+  .hero-portal-table-row > :nth-child(2), .hero-portal-table-row > :nth-child(5) { display: none; }
 }
 
 /* ========================================
@@ -155,23 +162,191 @@ input, textarea { font-family: inherit; }
 }
 
 /* ========================================
-   BEAT 1 — PROOF
+   BEAT 1 — LINEAR-STYLE HERO
    ======================================== */
-#beat1 { height: 60vh; min-height: 400px; }
+#beat1 { height: 160vh; }
 
 #beat1 .sticky-panel {
   flex-direction: column;
-  gap: 40px;
+  padding: 0;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.hero-top {
+  padding: 120px 48px 40px;
+  max-width: 900px;
+  will-change: opacity, transform;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-headline {
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.hero-headline .accent {
+  color: var(--emerald);
+}
+
+.hero-sub {
+  font-size: clamp(15px, 1.8vw, 19px);
+  font-weight: 400;
+  color: var(--gray-light);
+  max-width: 560px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.hero-ctas {
+  display: flex;
+  gap: 12px;
+}
+
+.hero-cta {
+  padding: 12px 28px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  font-family: var(--font);
+}
+
+.hero-cta--primary {
+  background: var(--emerald);
+  color: var(--bg);
+}
+
+.hero-cta--primary:hover {
+  background: #0fa875;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.3);
+}
+
+.hero-cta--ghost {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: var(--white);
+}
+
+.hero-cta--ghost:hover {
+  border-color: rgba(255,255,255,0.3);
+  background: rgba(255,255,255,0.04);
+}
+
+.hero-portal-preview {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(30%);
+  width: min(1100px, 92vw);
+  will-change: transform, opacity;
+  z-index: 1;
+}
+
+.hero-portal-card {
+  background: linear-gradient(145deg, #1E1E22, #1A1A1E);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -20px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03), inset 0 1px 0 rgba(255,255,255,0.05);
+  overflow: hidden;
+  padding: 0;
+}
+
+.hero-portal-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.hero-portal-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--emerald);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--bg);
+}
+
+.hero-portal-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.hero-portal-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,0.04);
+}
+
+.hero-portal-stat {
+  padding: 16px 20px;
+  background: linear-gradient(145deg, #1E1E22, #1A1A1E);
+  text-align: center;
+}
+
+.hero-portal-stat-num {
+  font-size: 24px;
+  font-weight: 800;
+  display: block;
+}
+
+.hero-portal-stat-label {
+  font-size: 11px;
+  color: var(--gray);
+  font-weight: 500;
+  margin-top: 2px;
+  display: block;
+}
+
+.hero-portal-table-row {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr 0.8fr 0.6fr;
+  padding: 12px 24px;
+  font-size: 13px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  align-items: center;
+}
+
+.hero-portal-table-row:nth-child(odd) {
+  background: rgba(255,255,255,0.01);
+}
+
+.hero-portal-table-head {
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 1fr 0.8fr 0.6fr;
+  padding: 10px 24px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--gray);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 
 .breathing-gradient {
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
-  width: 600px;
+  width: 800px;
   height: 600px;
   transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(45, 212, 191, 0.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse, rgba(45, 212, 191, 0.04) 0%, transparent 70%);
   animation: breathe 6s ease-in-out infinite;
   pointer-events: none;
 }
@@ -179,16 +354,6 @@ input, textarea { font-family: inherit; }
 @keyframes breathe {
   0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
   50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
-}
-
-.hero-word {
-  font-size: clamp(48px, 8vw, 96px);
-  font-weight: 900;
-  letter-spacing: -0.03em;
-  color: var(--white);
-  will-change: opacity, transform;
-  position: relative;
-  z-index: 1;
 }
 
 .scroll-hint {
@@ -1339,10 +1504,33 @@ input, textarea { font-family: inherit; }
 <section class="scroll-section" id="beat1">
   <div class="sticky-panel">
     <div class="breathing-gradient"></div>
-    <div class="hero-word" id="heroWord">Proof.</div>
-    <div class="scroll-hint" id="scrollHint">
-      <span>Scroll</span>
-      <div class="scroll-chevron"></div>
+    <div class="hero-top" id="heroTop">
+      <h1 class="hero-headline">Every delivery.<br><span class="accent">Proven.</span></h1>
+      <p class="hero-sub">Real-time proof of delivery for pharmacies. Dispatch infrastructure for courier companies. Built by operators who run 300+ deliveries a day.</p>
+      <div class="hero-ctas">
+        <a href="#beat7" class="hero-cta hero-cta--primary">See the Platform</a>
+        <a href="#contact" class="hero-cta hero-cta--ghost">Request Demo</a>
+      </div>
+    </div>
+    <div class="hero-portal-preview" id="heroPortal">
+      <div class="hero-portal-card">
+        <div class="hero-portal-topbar">
+          <div class="hero-portal-avatar">GE</div>
+          <div class="hero-portal-name">Giant Eagle Pharmacy</div>
+        </div>
+        <div class="hero-portal-stats">
+          <div class="hero-portal-stat"><span class="hero-portal-stat-num" style="color:var(--white)">387</span><span class="hero-portal-stat-label">Total</span></div>
+          <div class="hero-portal-stat"><span class="hero-portal-stat-num" style="color:var(--emerald)">312</span><span class="hero-portal-stat-label">Delivered</span></div>
+          <div class="hero-portal-stat"><span class="hero-portal-stat-num" style="color:var(--amber)">68</span><span class="hero-portal-stat-label">Pending</span></div>
+          <div class="hero-portal-stat"><span class="hero-portal-stat-num" style="color:var(--red)">7</span><span class="hero-portal-stat-label">Failed</span></div>
+        </div>
+        <div class="hero-portal-table-head"><span>Patient</span><span>Address</span><span>Driver</span><span>Status</span><span>POD</span></div>
+        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">M. Johnson</span><span style="color:var(--gray-light)">1423 Oak St, Fairlawn</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></span></div>
+        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">S. Williams</span><span style="color:var(--gray-light)">892 Elm Ave, Akron</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></span></div>
+        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">R. Davis</span><span style="color:var(--gray-light)">2205 Maple Dr, Canton</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span></span></div>
+        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">K. Thompson</span><span style="color:var(--gray-light)">567 Pine Rd, Stow</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></span></div>
+        <div class="hero-portal-table-row"><span style="color:var(--white);font-weight:500">L. Martinez</span><span style="color:var(--gray-light)">3340 Cedar Ln, Hudson</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span><span style="color:var(--emerald);font-size:12px;font-weight:600;">POD</span></span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1684,8 +1872,8 @@ input, textarea { font-family: inherit; }
   // DOM REFERENCES
   // ========================================
   const nav = document.getElementById('mainNav');
-  const heroWord = document.getElementById('heroWord');
-  const scrollHint = document.getElementById('scrollHint');
+  const heroTop = document.getElementById('heroTop');
+  const heroPortal = document.getElementById('heroPortal');
 
   const beat1 = document.getElementById('beat1');
   const beat2 = document.getElementById('beat2');
@@ -2031,16 +2219,18 @@ input, textarea { font-family: inherit; }
       nav.classList.remove('visible');
     }
 
-    // ---- BEAT 1 ----
+    // ---- BEAT 1 — Linear-style hero ----
     {
-      const p = scrollProgress(beat1);
-      const fadeIn = sub(p, 0.0, 0.3);
-      const fadeInE = easeOut(fadeIn);
-      heroWord.style.opacity = fadeInE;
-      heroWord.style.transform = 'translateY(' + lerp(fadeInE, 40, 0) + 'px)';
+      const p = sectionProgress(beat1);
+      // Hero text stays visible, fades slightly as portal rises
+      const textFade = sub(p, 0.5, 0.9);
+      heroTop.style.opacity = 1 - easeOut(textFade) * 0.6;
 
-      const hintP = sub(p, 0.4, 0.7);
-      scrollHint.style.opacity = hintP > 0 ? easeOut(hintP) : 0;
+      // Portal preview rises from below: starts at translateY(30%), ends at translateY(-5%)
+      const portalRise = sub(p, 0.0, 0.8);
+      const portalE = easeOut(portalRise);
+      heroPortal.style.transform = 'translateX(-50%) translateY(' + lerp(portalE, 30, -5) + '%)';
+      heroPortal.style.opacity = Math.min(1, portalE * 1.5);
     }
 
     // ---- BEAT 2 ----
