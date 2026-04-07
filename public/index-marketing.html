@@ -135,7 +135,7 @@ input, textarea { font-family: inherit; }
   .nav-links a:not(.nav-cta) { display: none; }
   #beat1 .sticky-panel { flex-direction: column; align-items: stretch; justify-content: flex-start; }
   .hero-top { padding: 100px 24px 32px; max-width: 100%; }
-  .hero-headline { font-size: clamp(32px, 8vw, 48px); }
+  .hero-headline { font-size: clamp(32px, 8vw, 48px); white-space: normal; }
   .hero-ctas { flex-direction: column; }
   .hero-portal-preview { width: 95vw; }
   .hero-portal-table-head, .hero-portal-table-row { grid-template-columns: 1.5fr 1fr 0.8fr; }
@@ -165,7 +165,7 @@ input, textarea { font-family: inherit; }
 /* ========================================
    BEAT 1 — LINEAR-STYLE HERO
    ======================================== */
-#beat1 { height: 160vh; z-index: 10; position: relative; }
+#beat1 { height: 160vh; position: relative; }
 
 #beat1 .sticky-panel {
   flex-direction: row;
@@ -176,19 +176,20 @@ input, textarea { font-family: inherit; }
 
 .hero-top {
   padding: 0 48px;
-  max-width: 560px;
+  max-width: 600px;
   will-change: opacity, transform;
   position: relative;
   z-index: 2;
 }
 
 .hero-headline {
-  font-size: clamp(40px, 6vw, 72px);
+  font-size: clamp(36px, 4.5vw, 58px);
   font-weight: 800;
   letter-spacing: -0.03em;
   color: var(--white);
   line-height: 1.1;
   margin-bottom: 20px;
+  white-space: nowrap;
 }
 
 .hero-headline .accent {
@@ -1602,8 +1603,6 @@ input, textarea { font-family: inherit; }
 .linear-text-section {
   padding: 160px 48px 120px;
   max-width: 1200px;
-  position: relative;
-  z-index: 5;
   margin: 0 auto;
 }
 
@@ -2085,8 +2084,6 @@ input, textarea { font-family: inherit; }
   padding: 120px 48px 140px;
   max-width: 1200px;
   margin: 0 auto;
-  position: relative;
-  z-index: 5;
 }
 
 .driver-app-headline {
@@ -3556,23 +3553,27 @@ input, textarea { font-family: inherit; }
     // ---- BEAT 1 — Linear-style hero ----
     {
       const p = sectionProgress(beat1);
-      // Hero text exits — fully gone by 0.35
-      const textFade = sub(p, 0.15, 0.35);
+      // Hero text exits — fully gone by 0.3
+      const textFade = sub(p, 0.1, 0.3);
       heroTop.style.opacity = 1 - easeOut(textFade);
       heroTop.style.transform = 'translateY(' + lerp(easeOut(textFade), 0, -60) + 'px)';
 
-      // Right portal exits with text — fades out and slides right
+      // Right portal exits with text — fades out and slides right, fully gone by 0.35
       if (heroRightPortal) {
-        const rpFade = easeOut(sub(p, 0.15, 0.4));
-        heroRightPortal.style.opacity = 1 - rpFade;
+        const rpFade = easeOut(sub(p, 0.1, 0.35));
+        const rpOpacity = 1 - rpFade;
+        heroRightPortal.style.opacity = rpOpacity;
+        heroRightPortal.style.visibility = rpOpacity <= 0 ? 'hidden' : 'visible';
         heroRightPortal.style.transform = 'perspective(1200px) rotateY(-3deg) rotateX(2deg) translateY(-50%) translateX(' + lerp(rpFade, 0, 40) + 'px)';
       }
 
-      // Bottom portal only starts after hero is completely gone (0.65)
-      const portalRise = sub(p, 0.65, 0.95);
+      // Bottom portal — only starts well after hero portal is completely gone
+      // Big gap: hero portal done at 0.35, bottom portal starts at 0.75
+      const portalRise = sub(p, 0.75, 0.95);
       const portalE = easeOut(portalRise);
-      heroPortal.style.transform = 'translateX(-50%) translateY(' + lerp(portalE, 65, -5) + '%)';
       heroPortal.style.opacity = portalE;
+      heroPortal.style.visibility = portalE <= 0 ? 'hidden' : 'visible';
+      heroPortal.style.transform = 'translateX(-50%) translateY(' + lerp(portalE, 65, -5) + '%)';
     }
 
     // ---- BEAT 2 ----
