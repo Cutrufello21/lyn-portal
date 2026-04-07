@@ -1870,7 +1870,7 @@ input, textarea { font-family: inherit; }
   <div class="nav-links">
     <a href="#beat7">Portal</a>
     <a href="#beat9">About</a>
-    <a href="#contact" class="nav-cta">Get Started</a>
+    <a href="#contact" class="nav-cta">Let's Talk</a>
   </div>
 </nav>
 
@@ -1885,7 +1885,7 @@ input, textarea { font-family: inherit; }
       <p class="hero-sub">Real-time proof of delivery for pharmacies. Dispatch infrastructure for courier companies. Built by operators who run 300+ deliveries a day.</p>
       <div class="hero-ctas">
         <a href="#beat7" class="hero-cta hero-cta--primary">See the Platform</a>
-        <a href="#contact" class="hero-cta hero-cta--ghost">Request Demo</a>
+        <a href="#contact" class="hero-cta hero-cta--ghost">Let's Talk</a>
       </div>
     </div>
     <div class="hero-portal-preview" id="heroPortal">
@@ -2737,16 +2737,16 @@ input, textarea { font-family: inherit; }
     // ---- BEAT 1 — Linear-style hero ----
     {
       const p = sectionProgress(beat1);
-      // Hero text fades out as portal takes over
-      const textFade = sub(p, 0.4, 0.8);
+      // Hero text exits FIRST — fully gone by 0.45
+      const textFade = sub(p, 0.2, 0.45);
       heroTop.style.opacity = 1 - easeOut(textFade);
-      heroTop.style.transform = 'translateY(' + lerp(easeOut(textFade), 0, -40) + 'px)';
+      heroTop.style.transform = 'translateY(' + lerp(easeOut(textFade), 0, -60) + 'px)';
 
-      // Portal rises from 65% below → 5% above center (fills screen)
-      const portalRise = sub(p, 0.15, 0.85);
+      // Portal doesn't start until hero is completely gone (0.55) — 100px scroll buffer
+      const portalRise = sub(p, 0.55, 0.95);
       const portalE = easeOut(portalRise);
       heroPortal.style.transform = 'translateX(-50%) translateY(' + lerp(portalE, 65, -5) + '%)';
-      heroPortal.style.opacity = Math.min(1, portalE * 2);
+      heroPortal.style.opacity = portalE;
     }
 
     // ---- BEAT 2 ----
