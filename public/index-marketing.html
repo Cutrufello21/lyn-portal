@@ -2931,6 +2931,15 @@ input, textarea { font-family: inherit; }
   background: rgba(16,185,129,0.08);
 }
 
+.hero-view {
+  flex: 1;
+  overflow: hidden;
+}
+
+.hero-sidebar-item[data-nav] {
+  cursor: pointer;
+}
+
 /* ==========================================
    POD GRID SECTION
    ========================================== */
@@ -3082,10 +3091,10 @@ input, textarea { font-family: inherit; }
         <!-- Sidebar -->
         <div class="hero-sidebar">
           <div style="padding:12px 14px 16px;font-size:14px;font-weight:700;color:var(--white);letter-spacing:-0.01em;">LYN<span style="color:var(--emerald)">.</span></div>
-          <div class="hero-sidebar-item active">Dashboard</div>
-          <div class="hero-sidebar-item">Deliveries</div>
-          <div class="hero-sidebar-item">POD Records</div>
-          <div class="hero-sidebar-item">Reports</div>
+          <div class="hero-sidebar-item active" data-nav="dashboard">Dashboard</div>
+          <div class="hero-sidebar-item" data-nav="deliveries">Deliveries</div>
+          <div class="hero-sidebar-item" data-nav="pod">POD Records</div>
+          <div class="hero-sidebar-item" data-nav="reports">Reports</div>
           <div class="hero-sidebar-item">Settings</div>
           <div style="position:absolute;bottom:12px;left:14px;font-size:9px;color:var(--gray);opacity:0.5;">Powered by LYN Software</div>
         </div>
@@ -3095,7 +3104,8 @@ input, textarea { font-family: inherit; }
             <div class="hero-full-avatar">GE</div>
             <span>Giant Eagle Pharmacy</span>
           </div>
-          <!-- Stat cards -->
+          <!-- === DASHBOARD VIEW === -->
+          <div class="hero-view" data-view="dashboard">
           <div class="hero-dash-stats">
             <div class="hero-dash-stat-card">
               <div class="hero-dash-stat-label">Total Deliveries</div>
@@ -3141,6 +3151,97 @@ input, textarea { font-family: inherit; }
           <div class="hero-dash-row"><span style="font-weight:500">James Anderson</span><span style="color:var(--gray-light)">118 Birch St</span><span style="color:var(--gray-light)">Barberton</span><span style="color:var(--gray-light)">44203</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
           <div class="hero-dash-row"><span style="font-weight:500">Dorothy Nguyen</span><span style="color:var(--gray-light)">1087 Lake Rd</span><span style="color:var(--gray-light)">Medina</span><span style="color:var(--gray-light)">44256</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
           <div class="hero-dash-row"><span style="font-weight:500">Thomas Patel</span><span style="color:var(--gray-light)">642 Ridge Dr</span><span style="color:var(--gray-light)">Wadsworth</span><span style="color:var(--gray-light)">44281</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--emerald);font-size:11px;font-weight:600;">POD</span></div>
+          </div><!-- /dashboard view -->
+
+          <!-- === DELIVERIES VIEW === -->
+          <div class="hero-view" data-view="deliveries" style="display:none;">
+            <div style="padding:10px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+              <div style="padding:5px 12px;background:#141416;border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:10px;color:var(--gray-light);">Apr 1 – Apr 7, 2026</div>
+              <div style="flex:1;min-width:120px;"><input type="text" placeholder="Search patients..." style="width:100%;padding:5px 10px;background:#141416;border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:10px;color:var(--white);outline:none;font-family:var(--font);"></div>
+              <div style="padding:5px 12px;background:#141416;border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:10px;color:var(--gray-light);">All Statuses</div>
+              <div style="padding:5px 12px;background:#141416;border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:10px;color:var(--gray-light);">All Drivers</div>
+            </div>
+            <div class="hero-dash-table-head"><span>Patient</span><span>Address</span><span>City</span><span>ZIP</span><span>Driver</span><span>Status</span><span>Time</span></div>
+            <div class="hero-dash-row"><span style="font-weight:500">Margaret Johnson</span><span style="color:var(--gray-light)">1423 Oak St</span><span style="color:var(--gray-light)">Fairlawn</span><span style="color:var(--gray-light)">44333</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--gray);font-size:10px;">10:47 AM</span></div>
+            <div class="hero-dash-row"><span style="font-weight:500">Samuel Williams</span><span style="color:var(--gray-light)">892 Elm Ave</span><span style="color:var(--gray-light)">Akron</span><span style="color:var(--gray-light)">44301</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--gray);font-size:10px;">10:52 AM</span></div>
+            <div class="hero-dash-row"><span style="font-weight:500">Robert Davis</span><span style="color:var(--gray-light)">2205 Maple Dr</span><span style="color:var(--gray-light)">Canton</span><span style="color:var(--gray-light)">44710</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-pending">Pending</span></span><span style="color:var(--gray);font-size:10px;">—</span></div>
+            <div class="hero-dash-row"><span style="font-weight:500">Karen Thompson</span><span style="color:var(--gray-light)">567 Pine Rd</span><span style="color:var(--gray-light)">Stow</span><span style="color:var(--gray-light)">44224</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--gray);font-size:10px;">11:15 AM</span></div>
+            <div class="hero-dash-row"><span style="font-weight:500">Luis Martinez</span><span style="color:var(--gray-light)">3340 Cedar Ln</span><span style="color:var(--gray-light)">Hudson</span><span style="color:var(--gray-light)">44236</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-pending">Pending</span></span><span style="color:var(--gray);font-size:10px;">—</span></div>
+            <div class="hero-dash-row"><span style="font-weight:500">Patricia Garcia</span><span style="color:var(--gray-light)">4501 Walnut Ct</span><span style="color:var(--gray-light)">Kent</span><span style="color:var(--gray-light)">44240</span><span style="color:var(--gray-light)">Rivera, A.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--gray);font-size:10px;">11:41 AM</span></div>
+            <div class="hero-dash-row"><span style="font-weight:500">Angela Robinson</span><span style="color:var(--gray-light)">780 Spruce Way</span><span style="color:var(--gray-light)">Cuyahoga Falls</span><span style="color:var(--gray-light)">44221</span><span style="color:var(--gray-light)">Brooks, T.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--gray);font-size:10px;">11:58 AM</span></div>
+            <div class="hero-dash-row"><span style="font-weight:500">James Anderson</span><span style="color:var(--gray-light)">118 Birch St</span><span style="color:var(--gray-light)">Barberton</span><span style="color:var(--gray-light)">44203</span><span style="color:var(--gray-light)">Chen, D.</span><span><span class="status-badge status-delivered">Delivered</span></span><span style="color:var(--gray);font-size:10px;">12:14 PM</span></div>
+          </div><!-- /deliveries view -->
+
+          <!-- === POD RECORDS VIEW === -->
+          <div class="hero-view" data-view="pod" style="display:none;">
+            <div style="padding:10px 20px;display:flex;gap:8px;align-items:center;">
+              <div style="flex:1;"><input type="text" placeholder="Search POD records..." style="width:100%;padding:5px 10px;background:#141416;border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:10px;color:var(--white);outline:none;font-family:var(--font);"></div>
+              <div style="padding:5px 12px;background:#141416;border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:10px;color:var(--gray-light);">Today</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:8px 20px;">
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;">
+                <div style="height:80px;background:#111113;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);opacity:0.3;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+                <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:600;color:var(--white);">Margaret Johnson</div><div style="font-size:9px;color:var(--gray-light);margin-top:2px;">1423 Oak St, Fairlawn OH</div><div style="display:flex;justify-content:space-between;margin-top:4px;"><span style="font-size:9px;color:var(--gray);">Rivera, A.</span><span style="font-size:9px;color:var(--emerald);font-weight:600;">Delivered</span></div></div>
+              </div>
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;">
+                <div style="height:80px;background:#111113;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);opacity:0.3;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+                <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:600;color:var(--white);">Samuel Williams</div><div style="font-size:9px;color:var(--gray-light);margin-top:2px;">892 Elm Ave, Akron OH</div><div style="display:flex;justify-content:space-between;margin-top:4px;"><span style="font-size:9px;color:var(--gray);">Chen, D.</span><span style="font-size:9px;color:var(--emerald);font-weight:600;">Delivered</span></div></div>
+              </div>
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;">
+                <div style="height:80px;background:#111113;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);opacity:0.3;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+                <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:600;color:var(--white);">Karen Thompson</div><div style="font-size:9px;color:var(--gray-light);margin-top:2px;">567 Pine Rd, Stow OH</div><div style="display:flex;justify-content:space-between;margin-top:4px;"><span style="font-size:9px;color:var(--gray);">Brooks, T.</span><span style="font-size:9px;color:var(--emerald);font-weight:600;">Delivered</span></div></div>
+              </div>
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;">
+                <div style="height:80px;background:#111113;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);opacity:0.3;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+                <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:600;color:var(--white);">Luis Martinez</div><div style="font-size:9px;color:var(--gray-light);margin-top:2px;">3340 Cedar Ln, Hudson OH</div><div style="display:flex;justify-content:space-between;margin-top:4px;"><span style="font-size:9px;color:var(--gray);">Chen, D.</span><span style="font-size:9px;color:var(--emerald);font-weight:600;">Delivered</span></div></div>
+              </div>
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;">
+                <div style="height:80px;background:#111113;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);opacity:0.3;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+                <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:600;color:var(--white);">Patricia Garcia</div><div style="font-size:9px;color:var(--gray-light);margin-top:2px;">4501 Walnut Ct, Kent OH</div><div style="display:flex;justify-content:space-between;margin-top:4px;"><span style="font-size:9px;color:var(--gray);">Rivera, A.</span><span style="font-size:9px;color:var(--emerald);font-weight:600;">Delivered</span></div></div>
+              </div>
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;">
+                <div style="height:80px;background:#111113;display:flex;align-items:center;justify-content:center;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--emerald);opacity:0.3;"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+                <div style="padding:8px 10px;"><div style="font-size:11px;font-weight:600;color:var(--white);">Angela Robinson</div><div style="font-size:9px;color:var(--gray-light);margin-top:2px;">780 Spruce Way, Cuyahoga Falls OH</div><div style="display:flex;justify-content:space-between;margin-top:4px;"><span style="font-size:9px;color:var(--gray);">Brooks, T.</span><span style="font-size:9px;color:var(--emerald);font-weight:600;">Delivered</span></div></div>
+              </div>
+            </div>
+          </div><!-- /pod view -->
+
+          <!-- === REPORTS VIEW === -->
+          <div class="hero-view" data-view="reports" style="display:none;">
+            <div style="padding:10px 20px;">
+              <div style="display:flex;gap:8px;margin-bottom:12px;">
+                <div style="padding:5px 12px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:6px;font-size:10px;color:var(--emerald);font-weight:600;">This Week</div>
+                <div style="padding:5px 12px;background:#141416;border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:10px;color:var(--gray-light);">This Month</div>
+                <div style="padding:5px 12px;background:#141416;border:1px solid rgba(255,255,255,0.08);border-radius:6px;font-size:10px;color:var(--gray-light);">Custom</div>
+              </div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 20px 12px;">
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Delivery Rate</div>
+                <div style="font-size:22px;font-weight:800;color:var(--emerald);">98.2%</div>
+                <div style="font-size:9px;color:var(--emerald);margin-top:2px;">&#8593;1.4% vs last week</div>
+              </div>
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">Avg Time/Stop</div>
+                <div style="font-size:22px;font-weight:800;color:var(--white);">4.2m</div>
+                <div style="font-size:9px;color:var(--emerald);margin-top:2px;">&#8593;0.3m faster</div>
+              </div>
+              <div style="background:#141416;border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;text-align:center;">
+                <div style="font-size:9px;color:var(--gray);text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;">POD Capture</div>
+                <div style="font-size:22px;font-weight:800;color:var(--emerald);">100%</div>
+                <div style="font-size:9px;color:var(--gray);margin-top:2px;">All stops verified</div>
+              </div>
+            </div>
+            <div style="padding:0 20px 8px;"><div style="font-size:11px;font-weight:600;color:var(--white);margin-bottom:8px;">Driver Performance</div></div>
+            <div style="padding:0 20px;">
+              <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:11px;"><span style="width:90px;font-weight:500;color:var(--white);">Rivera, A.</span><div style="flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;"><div style="width:91%;height:100%;background:linear-gradient(90deg,var(--emerald),var(--teal));border-radius:2px;"></div></div><span style="color:var(--emerald);font-weight:700;width:35px;text-align:right;">91%</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:11px;"><span style="width:90px;font-weight:500;color:var(--white);">Chen, D.</span><div style="flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;"><div style="width:87%;height:100%;background:linear-gradient(90deg,var(--emerald),var(--teal));border-radius:2px;"></div></div><span style="color:var(--emerald);font-weight:700;width:35px;text-align:right;">87%</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:11px;"><span style="width:90px;font-weight:500;color:var(--white);">Brooks, T.</span><div style="flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;"><div style="width:84%;height:100%;background:linear-gradient(90deg,var(--emerald),var(--teal));border-radius:2px;"></div></div><span style="color:var(--emerald);font-weight:700;width:35px;text-align:right;">84%</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.04);font-size:11px;"><span style="width:90px;font-weight:500;color:var(--white);">Marcus, R.</span><div style="flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;"><div style="width:79%;height:100%;background:linear-gradient(90deg,var(--emerald),var(--teal));border-radius:2px;"></div></div><span style="color:var(--emerald);font-weight:700;width:35px;text-align:right;">79%</span></div>
+              <div style="display:flex;align-items:center;gap:10px;padding:6px 0;font-size:11px;"><span style="width:90px;font-weight:500;color:var(--white);">Angela, F.</span><div style="flex:1;height:4px;background:rgba(255,255,255,0.06);border-radius:2px;overflow:hidden;"><div style="width:73%;height:100%;background:linear-gradient(90deg,var(--emerald),var(--teal));border-radius:2px;"></div></div><span style="color:var(--emerald);font-weight:700;width:35px;text-align:right;">73%</span></div>
+            </div>
+          </div><!-- /reports view -->
+
         </div>
       </div>
     </div>
@@ -4683,6 +4784,37 @@ input, textarea { font-family: inherit; }
       });
     }, { threshold: 0.2 });
     observer.observe(podCards[0]);
+  })();
+
+  // ========================================
+  // HERO DASHBOARD — sidebar navigation
+  // ========================================
+  (function() {
+    var navItems = document.querySelectorAll('.hero-sidebar-item[data-nav]');
+    var views = document.querySelectorAll('.hero-view[data-view]');
+    navItems.forEach(function(item) {
+      item.addEventListener('click', function() {
+        var target = item.dataset.nav;
+        // Update active state
+        document.querySelectorAll('.hero-sidebar-item').forEach(function(n) { n.classList.remove('active'); });
+        item.classList.add('active');
+        // Switch view with fade
+        views.forEach(function(v) {
+          if (v.dataset.view === target) {
+            v.style.display = '';
+            v.style.opacity = '0';
+            v.style.transform = 'translateY(6px)';
+            requestAnimationFrame(function() {
+              v.style.transition = 'opacity 0.3s, transform 0.3s';
+              v.style.opacity = '1';
+              v.style.transform = 'translateY(0)';
+            });
+          } else {
+            v.style.display = 'none';
+          }
+        });
+      });
+    });
   })();
 
   // ========================================
