@@ -546,6 +546,46 @@ body {
   font-size: 13px;
 }
 
+/* ===== SORT & FILTER EXTRAS ===== */
+.lyn__th--sortable {
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+}
+.lyn__th--sortable:hover {
+  color: var(--lyn-emerald);
+}
+.lyn__sort-icon {
+  font-size: 10px;
+  margin-left: 4px;
+  opacity: 0.35;
+}
+.lyn__sort-icon--active {
+  opacity: 1;
+  color: var(--lyn-emerald);
+}
+.lyn__clear-btn {
+  background: transparent;
+  border: 1px solid var(--lyn-emerald);
+  color: var(--lyn-emerald);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+.lyn__clear-btn:hover {
+  background: var(--lyn-emerald);
+  color: var(--lyn-bg);
+}
+.lyn__filter-count {
+  font-size: 13px;
+  color: var(--lyn-gray-dark);
+  font-weight: 500;
+}
+
 /* ===== MODAL ===== */
 .lyn__modal-backdrop {
   position: fixed;
